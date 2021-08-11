@@ -365,7 +365,7 @@
         <version>${jackson.version}</version>
       </dependency>
 
-      <!-- protobuf dependencies -->
+      <!-- proto buf dependencies -->
       <dependency>
         <groupId>com.google.protobuf</groupId>
         <artifactId>protobuf-java</artifactId>
