@@ -182,7 +182,7 @@
     <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.6.3</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
     <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
@@ -884,8 +884,17 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version><!--$NO-MVN-MAN-VER$-->
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven-javadoc-plugin.version}</version>
+        <version>${maven-javadoc-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
         <configuration>
           <additionalparam>-notimestamp</additionalparam>
           <!-- Prevent missing javadoc comments from being marked as errors -->
