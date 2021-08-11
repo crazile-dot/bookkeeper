@@ -182,7 +182,7 @@
     <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
     <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
@@ -879,10 +879,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version><!--$NO-MVN-MAN-VER$-->
         <configuration>
         <forceJavacCompilerUse>true</forceJavacCompilerUse>
-          <source>1.8</source>
-          <target>1.8</target>
+          <release>11</release>
         </configuration>
       </plugin>
       <plugin>
@@ -933,7 +933,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
+        <version>${maven-source-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -946,7 +946,7 @@
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
-        <version>${apache-rat-plugin.version}</version>
+        <version>${apache-rat-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
         <configuration>
           <excludes>
             <!-- Intellij -->
