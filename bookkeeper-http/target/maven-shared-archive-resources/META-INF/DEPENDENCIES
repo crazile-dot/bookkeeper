@@ -6,6 +6,10 @@
 Apache BookKeeper :: Http
 
 
+From: 'Oracle Corporation' (http://www.oracle.com/)
+  - Java Architecture for XML Binding (http://jaxb.java.net/) javax.xml.bind:jaxb-api:jar:2.2.11
+    License: CDDL 1.1  (https://glassfish.java.net/public/CDDL+GPL_1_1.html)    License: GPL2 w/ CPE  (https://glassfish.java.net/public/CDDL+GPL_1_1.html)
+
 From: 'QOS.ch' (http://www.qos.ch)
   - SLF4J API Module (http://www.slf4j.org) org.slf4j:slf4j-api:jar:1.7.25
     License: MIT License  (http://www.opensource.org/licenses/mit-license.php)
