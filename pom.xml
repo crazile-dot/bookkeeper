@@ -821,6 +821,10 @@
     <pluginManagement>
       <plugins>
       	<plugin>
+		   <groupId>org.apache.maven.plugins</groupId>
+		   <artifactId>maven-shade-plugin</artifactId>
+		</plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${maven-checkstyle-plugin.version}</version>
