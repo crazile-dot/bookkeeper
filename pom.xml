@@ -13,6 +13,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+   bla bla bla
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -127,7 +128,7 @@
     <curator.version>5.1.0</curator.version>
     <dropwizard.version>3.2.5</dropwizard.version>
     <etcd.version>0.5.4</etcd.version>
-    <freebuilder.version>2.7.0</freebuilder.version>
+    <freebuilder.version>1.14.9</freebuilder.version>
     <google.code.version>3.0.2</google.code.version>
     <google.errorprone.version>2.4.0</google.errorprone.version>
     <grpc.version>1.33.0</grpc.version>
@@ -137,6 +138,7 @@
     <hamcrest.version>1.3</hamcrest.version>
     <hdrhistogram.version>2.1.10</hdrhistogram.version>
     <jackson.version>2.11.0</jackson.version>
+    <jackson-mapper-asl.version>1.9.11</jackson-mapper-asl.version>
     <jcommander.version>1.78</jcommander.version>
     <jetty.version>9.4.33.v20201020</jetty.version>
     <jmh.version>1.19</jmh.version>
@@ -145,11 +147,11 @@
     <junit.version>4.12</junit.version>
     <libthrift5.version>0.5.0-1</libthrift5.version>
     <libthrift9.version>0.12.0</libthrift9.version>
-    <lombok.version>1.18.20</lombok.version>
+    <lombok.version>1.18.10</lombok.version>
     <lz4.version>1.3.0</lz4.version>
     <mockito.version>3.0.0</mockito.version>
-    <netty.version>4.1.63.Final</netty.version>
-    <netty-boringssl.version>2.0.38.Final</netty-boringssl.version>
+    <netty.version>4.1.50.Final</netty.version>
+    <netty-boringssl.version>2.0.31.Final</netty-boringssl.version>
     <ostrich.version>9.1.3</ostrich.version>
     <powermock.version>2.0.2</powermock.version>
     <prometheus.version>0.8.1</prometheus.version>
@@ -159,14 +161,14 @@
     <protoc3.version>3.14.0</protoc3.version>
     <protoc-gen-grpc-java.version>${grpc.version}</protoc-gen-grpc-java.version>
     <reflections.version>0.9.11</reflections.version>
-    <rocksdb.version>6.16.4</rocksdb.version>
+    <rocksdb.version>6.10.2</rocksdb.version>
     <shrinkwrap.version>3.0.1</shrinkwrap.version>
     <slf4j.version>1.7.25</slf4j.version>
     <snakeyaml.version>1.19</snakeyaml.version>
     <spotbugs-annotations.version>3.1.8</spotbugs-annotations.version>
     <javax-annotations-api.version>1.3.2</javax-annotations-api.version>
     <testcontainers.version>1.15.1</testcontainers.version>
-    <vertx.version>3.9.8</vertx.version>
+    <vertx.version>3.5.3</vertx.version>
     <zookeeper.version>3.6.2</zookeeper.version>
     <snappy.version>1.1.7</snappy.version>
     <jctools.version>2.1.2</jctools.version>
@@ -182,7 +184,7 @@
     <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
     <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
     <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
@@ -191,8 +193,6 @@
     <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
     <nar-maven-plugin.version>3.5.2</nar-maven-plugin.version>
     <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
@@ -200,17 +200,18 @@
     <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
     <forkCount.variable>1</forkCount.variable>
     <servlet-api.version>4.0.0</servlet-api.version>
+	  <sonar.projectKey>mirkobaffo:${project.groupId}:${project.artifactId}</sonar.projectKey>
+    <sonar.links.homepage>https://github.com/mirkobaffo/My_Bookkeeper</sonar.links.homepage>
+    <sonar.links.ci>https://travis-ci.com/mirkobaffo/My_Bookkeeper</sonar.links.ci>
+    <sonar.links.scm>https://github.com/mirkobaffo/My_Bookkeeper</sonar.links.scm>
+    <!--<sonar.links.issue>https://github.com/mirkobaffo/My_Bookkeeper/issues</sonar.links.issue> -->
+    <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
   </properties>
 
   <!-- dependency definitions -->
   <dependencyManagement>
     <dependencies>
       <!-- provided dependencies -->
-      <dependency>
-		<groupId>org.apache.bookkeeper</groupId>
-		<artifactId>bookkeeper-server-shaded</artifactId>
-		<version>4.14.1</version>
-	  </dependency>	
       <dependency>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-annotations</artifactId>
@@ -240,7 +241,6 @@
         <groupId>org.inferred</groupId>
         <artifactId>freebuilder</artifactId>
         <version>${freebuilder.version}</version>
-        <optional>true</optional>
       </dependency>
 
       <!-- logging dependencies -->
@@ -370,6 +370,12 @@
         <groupId>com.fasterxml.jackson.module</groupId>
         <artifactId>jackson-module-scala_2.11</artifactId>
         <version>${jackson.version}</version>
+      </dependency>
+      <!-- dependency needed for zookeeper jetty admin server -->
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>${jackson-mapper-asl.version}</version>
       </dependency>
 
       <!-- protobuf dependencies -->
@@ -663,6 +669,7 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+		<scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
@@ -766,12 +773,6 @@
       <scope>provided</scope>
     </dependency>
 
-	<dependency>
-	    <groupId>javax.xml.bind</groupId>
-	    <artifactId>jaxb-api</artifactId>
-	    <version>2.2.11</version>
-	</dependency>
-	
     <!-- compilation dependencies (available at all classpaths) -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -825,6 +826,20 @@
     </extensions>
     <pluginManagement>
       <plugins>
+		 <plugin>
+           <groupId>org.sonarsource.scanner.maven</groupId>
+    	   <artifactId>sonar-maven-plugin</artifactId>
+    	   <version>3.6.0.1398</version>
+        </plugin> 
+        <plugin>
+    		<groupId>org.codehaus.mojo</groupId>
+   			<artifactId>sonar-maven-plugin</artifactId>
+		</plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.4</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -866,12 +881,27 @@
           <excludeFilterFile>${session.executionRootDirectory}/buildtools/src/main/resources/bookkeeper/findbugsExclude.xml</excludeFilterFile>
         </configuration>
       </plugin>
-      
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${javac.target}</source>
+          <target>${javac.target}</target>
+          <compilerArgs>
+            <compilerArg>-Werror</compilerArg>
+            <compilerArg>-Xlint:deprecation</compilerArg>
+            <compilerArg>-Xlint:unchecked</compilerArg>
+            <!-- https://issues.apache.org/jira/browse/MCOMPILER-205 -->
+            <compilerArg>-Xpkginfo:always</compilerArg>
+	      </compilerArgs>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
+  		  <useFile>false</useFile>
           <argLine>-Xmx2G -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid</argLine>
           <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
           <forkCount>${forkCount.variable}</forkCount>
@@ -879,15 +909,6 @@
           <trimStackTrace>false</trimStackTrace>
           <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
           <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-        <forceJavacCompilerUse>true</forceJavacCompilerUse>
-          <release>11</release>
         </configuration>
       </plugin>
       <plugin>
@@ -938,7 +959,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
+        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -951,7 +972,7 @@
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
-        <version>${apache-rat-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
+        <version>${apache-rat-plugin.version}</version>
         <configuration>
           <excludes>
             <!-- Intellij -->
@@ -1027,6 +1048,28 @@
     </plugins>
   </build>
   <profiles>
+  <profile>
+      <id>coverage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <!-- profile used by jenkins CI -->
       <id>code-coverage</id>
@@ -1150,3 +1193,5 @@
     </profile>
   </profiles>
 </project>
+pom.xml
+Visualizzazione di pom.xml.
