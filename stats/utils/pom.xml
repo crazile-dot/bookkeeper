@@ -28,6 +28,11 @@
   <artifactId>bookkeeper-stats-utils</artifactId>
   <name>Apache BookKeeper :: Stats :: Utils</name>
   <dependencies>
+	<dependency>
+		<groupId>org.apache.bookkeeper</groupId>
+		<artifactId>bookkeeper-server-shaded</artifactId>
+		<version>4.14.1</version>
+	</dependency>	  
     <dependency>
       <groupId>org.apache.bookkeeper.stats</groupId>
       <artifactId>bookkeeper-stats-api</artifactId>
