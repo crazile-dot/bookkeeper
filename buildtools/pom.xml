@@ -24,5 +24,5 @@
   </parent>
   <artifactId>buildtools</artifactId>
   <name>Apache BookKeeper :: Build Tools</name>
-  <version>4.15.0-SNAPSHOT</version>
+  <version>4.14.0-SNAPSHOT</version>
 </project>
