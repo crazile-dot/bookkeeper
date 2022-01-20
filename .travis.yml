@@ -1,11 +1,5 @@
 language: java
 
-addons:
-  sonarcloud:
-    organization: "mirkobaffo"
-    token:
-      secure: "CQif1jEQtcqWlJLzJ9j32k7tJh0cFidpv79svxJkHSIgFi9FDMbO9vuZSea5MG5ZdFDbqscOgDabJ2oDgincxkN1EoP+hVUEaZNVg+AeDbTGd5RvXirRTBoH30M44sUjXkbHzxZCEs6ELOYcooamjD5dxFF2vKAuSDj+DLVl2QCsUvlexBbLKRCYhVrnKQ9iE9lZp/TA08wZPQgE1O3zXGmkIlFTnMuvmagcKALhh6yyTCDP14cNERwn9Nr/m7UM55Rz184ZXBh3P3GVvSRl6Z+2/ycfTcmVyfGvgKBXZQ/DGgexoQxL1rVCpWrOLI/X2OUNQRITRoN3aIdo9C7D8kcgOfp+2XH5NvlcXKzS8zA1YDHKueo/TSpujH8X2YnwuQIyephkntLhm8tZWrorJiKZ5NnmKHYMHWF91Bosobuh5uRoZQAm59eVY97+sDq8u75XuE+cf9CXQ09k0/FCjN43K+S688iydzH+hDOarfH7Kp0dXYWVoGiCBPIpygjVYtEu2keCyJrtNi8jssEUrP9/jnLc3fjwOcPgzsgqhN8AdClHNkeA7oJkS8pKCgr52HvcQv6vZuVIVS9mZh3/X5HZe4/BrvUOFJBG+ZfDXrUrBNGEkNYFZruZy9Q/YOKaAy1R+8D0Q4P9qzbo8IMg1LxOwvbm8+BB8SIKNwql7Ug=" # encrypted value of your token
-
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=mirkobaffo_My_Bookkeeper && cd bookkeeper-server && mvn org.pitest:pitest-maven:mutationCoverage surefire:test -Dtest=WriteCacheTest
+  #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=mirkobaffo_My_Bookkeeper && cd bookkeeper-server && mvn org.pitest:pitest-maven:mutationCoverage surefire:test -Dtest=WriteCacheTest
