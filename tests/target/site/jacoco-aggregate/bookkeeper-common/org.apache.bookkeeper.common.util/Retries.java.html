@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>Retries.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">Tests</a> &gt; <a href="../index.html" class="el_bundle">bookkeeper-common</a> &gt; <a href="index.source.html" class="el_package">org.apache.bookkeeper.common.util</a> &gt; <span class="el_source">Retries.java</span></div><h1>Retries.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.bookkeeper.common.util;
+
+import java.util.Iterator;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+import org.apache.bookkeeper.common.concurrent.FutureUtils;
+
+/**
+ * A util class for supporting retries with customized backoff.
+ */
+public final class Retries {
+
+    private Retries() {
+    }
+
+<span class="nc" id="L37">    public static final Predicate&lt;Throwable&gt; NonFatalPredicate =</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        cause -&gt; !(cause instanceof RuntimeException);</span>
+
+    /**
+     * Retry a given {@code task} on failures.
+     *
+     * &lt;p&gt;It is a shortcut of {@link #run(Stream, Predicate, Supplier, OrderedScheduler, Object)}
+     * that runs retries on any threads in the provided {@code scheduler}.
+     *
+     * @param backoffs       a stream of backoff delays, in milliseconds.
+     * @param retryPredicate a predicate to test if failures are retryable.
+     * @param task           a task to execute.
+     * @param scheduler      scheduler to schedule the task and complete the futures.
+     * @param &lt;ReturnT&gt;      the return type
+     * @return future represents the result of the task with retries.
+     */
+    public static &lt;ReturnT&gt; CompletableFuture&lt;ReturnT&gt; run(
+        Stream&lt;Long&gt; backoffs,
+        Predicate&lt;Throwable&gt; retryPredicate,
+        Supplier&lt;CompletableFuture&lt;ReturnT&gt;&gt; task,
+        OrderedScheduler scheduler) {
+<span class="nc" id="L58">        return run(backoffs, retryPredicate, task, scheduler, null);</span>
+    }
+
+    /**
+     * Retry a given {@code task} on failures.
+     *
+     * &lt;p&gt;It will only retry the tasks when the predicate {@code retryPredicate} tests
+     * it as a retryable failure and it doesn't exhaust the retry budget. The retry delays
+     * are defined in a stream of delay values (in milliseconds).
+     *
+     * &lt;p&gt;If a schedule {@code key} is provided, the {@code task} will be submitted to the
+     * scheduler using the provided schedule {@code key} and also the returned future
+     * will be completed in the same thread. Otherwise, the task and the returned future will
+     * be executed and scheduled on any threads in the scheduler.
+     *
+     * @param backoffs       a stream of backoff delays, in milliseconds.
+     * @param retryPredicate a predicate to test if failures are retryable.
+     * @param task           a task to execute.
+     * @param scheduler      scheduler to schedule the task and complete the futures.
+     * @param key            the submit key for the scheduler.
+     * @param &lt;ReturnT&gt;      the return tye.
+     * @return future represents the result of the task with retries.
+     */
+    public static &lt;ReturnT&gt; CompletableFuture&lt;ReturnT&gt; run(
+        Stream&lt;Long&gt; backoffs,
+        Predicate&lt;Throwable&gt; retryPredicate,
+        Supplier&lt;CompletableFuture&lt;ReturnT&gt;&gt; task,
+        OrderedScheduler scheduler,
+        Object key) {
+<span class="nc" id="L87">        CompletableFuture&lt;ReturnT&gt; future = FutureUtils.createFuture();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (null == key) {</span>
+<span class="nc" id="L89">            execute(</span>
+                future,
+<span class="nc" id="L91">                backoffs.iterator(),</span>
+                retryPredicate,
+                task,
+                scheduler,
+                null);
+        } else {
+<span class="nc" id="L97">            scheduler.executeOrdered(key, () -&gt; {</span>
+<span class="nc" id="L98">                execute(</span>
+                    future,
+<span class="nc" id="L100">                    backoffs.iterator(),</span>
+                    retryPredicate,
+                    task,
+                    scheduler,
+                    key);
+<span class="nc" id="L105">            });</span>
+        }
+<span class="nc" id="L107">        return future;</span>
+    }
+
+    private static &lt;ReturnT&gt; void execute(
+        CompletableFuture&lt;ReturnT&gt; finalResult,
+        Iterator&lt;Long&gt; backoffIter,
+        Predicate&lt;Throwable&gt; retryPredicate,
+        Supplier&lt;CompletableFuture&lt;ReturnT&gt;&gt; task,
+        OrderedScheduler scheduler,
+        Object key) {
+
+<span class="nc" id="L118">        FutureUtils.whenCompleteAsync(task.get(), (result, cause) -&gt; {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (null == cause) {</span>
+<span class="nc" id="L120">                finalResult.complete(result);</span>
+<span class="nc" id="L121">                return;</span>
+            }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (retryPredicate.test(cause)) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                if (!backoffIter.hasNext()) {</span>
+                    // exhausts all the retry budgets, fail the task now
+<span class="nc" id="L126">                    finalResult.completeExceptionally(cause);</span>
+<span class="nc" id="L127">                    return;</span>
+                }
+<span class="nc" id="L129">                long nextRetryDelayMs = backoffIter.next();</span>
+<span class="nc" id="L130">                scheduler.scheduleOrdered(key, () -&gt; execute(</span>
+                    finalResult,
+                    backoffIter,
+                    retryPredicate,
+                    task,
+                    scheduler,
+                    key), nextRetryDelayMs, TimeUnit.MILLISECONDS);
+<span class="nc" id="L137">            } else {</span>
+                // the exception can not be retried
+<span class="nc" id="L139">                finalResult.completeExceptionally(cause);</span>
+            }
+<span class="nc" id="L141">        }, scheduler, key);</span>
+<span class="nc" id="L142">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

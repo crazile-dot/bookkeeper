@@ -35,8 +35,6 @@ public class StorageConfiguration extends ComponentConfiguration {
 
     private static final String CHECKPOINT_CHECKSUM_COMPATIBLE = "checkpoint.checksum.compatible";
 
-    private static final String LOCAL_STORAGE_CLEANUP_ENABLE = "local.storage.cleanup.enable";
-
     public StorageConfiguration(CompositeConfiguration conf) {
         super(conf, COMPONENT_PREFIX);
     }
@@ -103,7 +101,4 @@ public class StorageConfiguration extends ComponentConfiguration {
         return getBoolean(CHECKPOINT_CHECKSUM_COMPATIBLE, true);
     }
 
-    public boolean getLocalStorageCleanupEnable() {
-        return getBoolean(LOCAL_STORAGE_CLEANUP_ENABLE, true);
-    }
 }

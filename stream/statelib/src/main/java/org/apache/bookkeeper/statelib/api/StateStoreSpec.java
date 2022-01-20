@@ -55,7 +55,4 @@ public class StateStoreSpec {
     private boolean checkpointChecksumEnable = true;
     @Default
     private boolean checkpointChecksumCompatible = true;
-
-    @Default
-    private boolean localStorageCleanupEnable = false;
 }

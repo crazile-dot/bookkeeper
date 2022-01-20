@@ -2,11 +2,10 @@ language: java
 
 addons:
   sonarcloud:
-    organization: "crazile-dot"
+    organization: "mirkobaffo"
     token:
-      secure: "UGKWksZ7YMSvIaTjHT0FrLpFtrpx92VUjUa6jourpTndde2P7AXOCEqzJcdD9NtmT1sx8o6ENt/whNOrDsghYXJoko2PyfhQphy3GdKzut8waz4Ge5KvNXOORy4PXFMUJajT7VXd8+aE7uqei56Q0K8HhIZntECR2kvMlt37K7cRMwBJ4/jWaT0yM2sbD+QVNAVUu0VQnoNWsDtLmsPHiaLix+vVPgpraYwDvkMzJzWgFT7Kk4t8OUsgYzVtykUX9VL6TvAAk882MPl5KWzLR2spxolLVKb+H+6Wl7OsKi0FPb1h4stEzmwnYqS8xFUwNCwm/Isa7mt18M4d2DBS61R7hZ2II8kAX/457lsMcxw1yh/dgxvG8kdpxlkjEB4XCfCO0Y5p5BJGvJoLZvjaUs7Jm1g7/D+sphi1PqRf3lyYWna6NKEyy/V9L/efPmrhQDdr/0de/y9OSxmTCIIc1Vln52MvRN5QZFfCXEOyUmNfNaIS3p/4nIBtK/Q7VWhR9hap/m0h5FX1UFxqeXYIo8iB2Q5MoGRTM7zLLZO1rqRNZ8nkrv+RLJCBGwZiPLydGhyBgq+lKQJEsmztO+4BdG6ENU2CHaJyIzIZ15sHvRhvWOr2OVpE2MgLShxypdIUm1IT3pVjJvvKEAOyBtZUXx4+wvLyHXfE7swJSP9UKnA=" # encrypted value of your token
+      secure: "CQif1jEQtcqWlJLzJ9j32k7tJh0cFidpv79svxJkHSIgFi9FDMbO9vuZSea5MG5ZdFDbqscOgDabJ2oDgincxkN1EoP+hVUEaZNVg+AeDbTGd5RvXirRTBoH30M44sUjXkbHzxZCEs6ELOYcooamjD5dxFF2vKAuSDj+DLVl2QCsUvlexBbLKRCYhVrnKQ9iE9lZp/TA08wZPQgE1O3zXGmkIlFTnMuvmagcKALhh6yyTCDP14cNERwn9Nr/m7UM55Rz184ZXBh3P3GVvSRl6Z+2/ycfTcmVyfGvgKBXZQ/DGgexoQxL1rVCpWrOLI/X2OUNQRITRoN3aIdo9C7D8kcgOfp+2XH5NvlcXKzS8zA1YDHKueo/TSpujH8X2YnwuQIyephkntLhm8tZWrorJiKZ5NnmKHYMHWF91Bosobuh5uRoZQAm59eVY97+sDq8u75XuE+cf9CXQ09k0/FCjN43K+S688iydzH+hDOarfH7Kp0dXYWVoGiCBPIpygjVYtEu2keCyJrtNi8jssEUrP9/jnLc3fjwOcPgzsgqhN8AdClHNkeA7oJkS8pKCgr52HvcQv6vZuVIVS9mZh3/X5HZe4/BrvUOFJBG+ZfDXrUrBNGEkNYFZruZy9Q/YOKaAy1R+8D0Q4P9qzbo8IMg1LxOwvbm8+BB8SIKNwql7Ug=" # encrypted value of your token
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=crazile-dot_bookkeeper
-
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=mirkobaffo_My_Bookkeeper && cd bookkeeper-server && mvn org.pitest:pitest-maven:mutationCoverage surefire:test -Dtest=WriteCacheTest

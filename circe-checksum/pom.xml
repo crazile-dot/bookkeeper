@@ -36,6 +36,7 @@
   <properties>
     <nar.runtime>dynamic</nar.runtime>
     <nar.cpp.optionSet>-msse4.2 -mpclmul</nar.cpp.optionSet>
+	<sonar.coverage.jacoco.xmlReportPaths>${basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <dependencies>
@@ -101,7 +102,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
         <configuration>
             <excludes>
                 <!-- this class is generated -->
@@ -225,6 +225,44 @@
               </cpp>
               <linker>
                 <libSet>rt</libSet>
+              </linker>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  
+   <profile>
+      <id>Windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.maven-nar</groupId>
+            <artifactId>nar-maven-plugin</artifactId>
+            <version>${nar-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <runtime>${nar.runtime}</runtime>
+              <output>circe-checksum</output>
+              <libraries>
+                <library>
+                  <type>jni</type>
+                  <narSystemPackage>com.scurrilous.circe.checksum</narSystemPackage>
+                </library>
+              </libraries>
+              <cpp>
+                <optionSet>${nar.cpp.optionSet}</optionSet>
+                <exceptions>false</exceptions>
+                <rtti>false</rtti>
+                <optimize>full</optimize>
+              </cpp>
+              <linker>
+                <name>g++</name>
               </linker>
             </configuration>
           </plugin>
