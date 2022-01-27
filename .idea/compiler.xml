@@ -74,9 +74,9 @@
       <module name="bookkeeper-tools-framework" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="bookkeeper-tools-ledger" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="buildtools" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h /Users/mirko/git/My_Bookkeeper/circe-checksum/target/nar/javah-include" />
+      <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\I_bookkeeper\circe-checksum\target/nar/javah-include" />
       <module name="codahale-metrics-provider" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="cpu-affinity" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h /Users/mirko/git/My_Bookkeeper/cpu-affinity/target/nar/javah-include" />
+      <module name="cpu-affinity" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\I_bookkeeper\cpu-affinity\target/nar/javah-include" />
       <module name="distributedlog-common" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-core" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-core-shaded" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
@@ -94,7 +94,7 @@
       <module name="stream-storage-java-client" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="stream-storage-java-client-base" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="stream-storage-java-kv-client" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="stream-storage-parent" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
+      <module name="stream-storage-parent" options="" />
       <module name="stream-storage-proto" options="-Xlint:unchecked -Xpkginfo:always" />
       <module name="stream-storage-server" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="stream-storage-service-api" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
