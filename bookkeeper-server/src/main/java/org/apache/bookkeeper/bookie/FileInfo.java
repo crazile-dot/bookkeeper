@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * </p>
  */
 
-class FileInfo extends Watchable<LastAddConfirmedUpdateNotification> {
+public class FileInfo extends Watchable<LastAddConfirmedUpdateNotification> {
     private static final Logger LOG = LoggerFactory.getLogger(FileInfo.class);
 
     static final int NO_MASTER_KEY = -1;
