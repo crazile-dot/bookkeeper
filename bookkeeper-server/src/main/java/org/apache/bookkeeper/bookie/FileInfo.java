@@ -59,6 +59,7 @@ import org.slf4j.LoggerFactory;
  * in entry loggers.
  * </p>
  */
+
 class FileInfo extends Watchable<LastAddConfirmedUpdateNotification> {
     private static final Logger LOG = LoggerFactory.getLogger(FileInfo.class);
 
