@@ -18,7 +18,7 @@
  * under the License.
  *
  */
-package org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint;
+/*package org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
@@ -41,7 +41,7 @@ import org.apache.bookkeeper.stream.proto.kv.store.FileInfo;
 /**
  * CheckpointFile encapsulates the attributes and operations for a file in checkpoint.
  */
-@Slf4j
+/*@Slf4j
 @lombok.Builder
 @lombok.EqualsAndHashCode
 public class CheckpointFile {
@@ -58,7 +58,7 @@ public class CheckpointFile {
     /**
      * CheckpointFileBuilder for building instances of CheckpointFile objects.
      */
-    public static class CheckpointFileBuilder {
+    /*public static class CheckpointFileBuilder {
         CheckpointFileBuilder file(File file) {
             this.file = file;
             this.isSstFile = RocksUtils.isSstFile(this.file);
@@ -224,4 +224,4 @@ public class CheckpointFile {
             .setChecksum(checksum)
             .build();
     }
-}
+}*/
