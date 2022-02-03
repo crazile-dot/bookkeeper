@@ -923,16 +923,16 @@
           <additionalparam>-notimestamp</additionalparam>
           <!-- Prevent missing javadoc comments from being marked as errors -->
           <doclint>none</doclint>
-          <subpackages>org.apache.bookkeeper.client:org.apache.bookkeeper.client.api:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature:org.apache.bookkeeper.stats</subpackages>
+          <!--<subpackages>org.apache.bookkeeper.client:org.apache.bookkeeper.client.api:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature:org.apache.bookkeeper.stats</subpackages>-->
           <groups>
-            <group>
+            <!--<group>
               <title>Bookkeeper Client</title>
               <packages>org.apache.bookkeeper.client:org.apache.bookkeeper.common.annotation:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature</packages>
             </group>
             <group>
               <title>Bookkeeper Client (New Fluent API - Experimental)</title>
               <packages>org.apache.bookkeeper.client.api</packages>
-            </group>
+            </group>-->
             <group>
               <title>Bookkeeper Stats API</title>
               <!-- currently codahale is placed under `stats` package unfortunately.
