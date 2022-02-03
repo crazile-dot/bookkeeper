@@ -3,4 +3,4 @@ language: java
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=mirkobaffo_My_Bookkeeper && cd bookkeeper-server && mvn org.pitest:pitest-maven:mutationCoverage surefire:test -Dtest=WriteCacheTest
-  #- mvn clean verify
+  - mvn clean verify
