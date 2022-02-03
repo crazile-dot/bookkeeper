@@ -10,7 +10,6 @@
         <module name="stream-storage-service-impl" />
         <module name="bookkeeper-perf" />
         <module name="distributedlog-core-shaded" />
-        <module name="statelib" />
         <module name="stream-storage-proto" />
         <module name="bookkeeper-common-allocator" />
         <module name="bookkeeper-server-tests-shaded" />
@@ -53,6 +52,9 @@
         <module name="prometheus-metrics-provider" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="statelib" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
