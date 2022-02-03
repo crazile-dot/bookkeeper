@@ -32,7 +32,7 @@ public class TestWriteCacheClass {
     private long[] entryList;
     private ByteBuf[] bufList;
 
-    public TestWriteCacheClass(org.apache.bookkeeper.bookie.Params params) {
+    public TestWriteCacheClass(Params params) {
         this.allocator = params.getAllocator();
         this.maxCacheSize = params.getMaxCacheSize();
         this.maxSegmentSize = params.getMaxSegmentSize();

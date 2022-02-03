@@ -10,11 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.lang.Object;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collection;
-//import java.util.HexFormat;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertEquals;
@@ -48,12 +48,16 @@ public class TestFileInfoClass {
 
     @Parameterized.Parameters
     public static Collection<Object[]> configure() throws Exception {
-        ByteBuffer buf = ByteBuffer.allocate(1024);
-        fill(buf, 0, 1024, (byte)0L);
-        masterKey = HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d");
+        ByteBuffer[] buf = new ByteBuffer[5];
+        for(int i=0; i<5; i++) {
+            ByteBuffer b = ByteBuffer.allocate(1024);
+            fill(b, 0, 1024, (byte)0L);
+            buf[i] = b;
+        }
+        masterKey = "e04fd020ea3a6910a2d808002b30309d".getBytes("UTF-8");
         return Arrays.asList(new Object[][]{
                 new Params(buf, 0L, masterKey, FileInfo.V1, 1024, true, 2048),
-                new Params (buf, 0L, Unpooled.buffer(0), FileInfo.V1, 55, false, 1024),
+                new Params (buf, 0L, masterKey, FileInfo.V1, 55, false, 1024),
         });
     }
 
