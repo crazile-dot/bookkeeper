@@ -17,7 +17,7 @@
  */
 package org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint;
 
-import com.google.common.io.MoreFiles;
+/*import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +38,7 @@ import org.rocksdb.RocksDB;
 /**
  * Rocksdb Checkpointer that manages checkpoints.
  */
-@Slf4j
+/*@Slf4j
 public class RocksCheckpointer implements AutoCloseable {
 
     public static CheckpointMetadata restore(String dbName,
@@ -165,4 +165,4 @@ public class RocksCheckpointer implements AutoCloseable {
     public void close() {
         // no-op
     }
-}
+}*/
