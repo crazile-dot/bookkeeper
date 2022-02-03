@@ -13,6 +13,7 @@ import org.junit.runners.Parameterized;
 import java.lang.Object;
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -47,7 +48,8 @@ public class TestFileInfoClass {
     }
 
     @Parameterized.Parameters
-    public static Collection<Object[]> configure() throws Exception {
+    public static Collection<Params> configure() throws Exception {
+        Collection<Params> params = new ArrayList<>();
         ByteBuffer[] buf = new ByteBuffer[5];
         for(int i=0; i<5; i++) {
             ByteBuffer b = ByteBuffer.allocate(1024);
@@ -55,10 +57,9 @@ public class TestFileInfoClass {
             buf[i] = b;
         }
         masterKey = "e04fd020ea3a6910a2d808002b30309d".getBytes("UTF-8");
-        return Arrays.asList(new Object[][]{
-                new Params(buf, 0L, masterKey, FileInfo.V1, 1024, true, 2048),
-                new Params (buf, 0L, masterKey, FileInfo.V1, 55, false, 1024),
-        });
+        params.add(new Params(buf, 0L, masterKey, FileInfo.V1, 1024, true, 2048));
+        params.add(new Params (buf, 0L, masterKey, FileInfo.V1, 55, false, 1024));
+        return params;
     }
 
     public static void fill(ByteBuffer buffer, int off, int len, byte val) {
