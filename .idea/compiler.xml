@@ -39,7 +39,6 @@
         <module name="bkctl" />
         <module name="bookkeeper-server" />
         <module name="stream-storage-common" />
-        <module name="circe-checksum" />
         <module name="bookkeeper-server-shaded" />
         <module name="metadata-stores-etcd" />
         <module name="distributedlog-common" />
@@ -54,6 +53,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="circe-checksum" target="1.8" />
       <module name="stream-storage-parent" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -81,7 +81,7 @@
       <module name="buildtools" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\bookkeeper\circe-checksum\target/nar/javah-include" />
       <module name="codahale-metrics-provider" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="cpu-affinity" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\bookkeeper\cpu-affinity\target/nar/javah-include" />
+      <module name="cpu-affinity" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-common" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-core" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-core-shaded" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
