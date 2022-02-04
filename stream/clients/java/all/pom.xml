@@ -25,7 +25,7 @@
   <artifactId>stream-storage-java-client</artifactId>
   <name>Apache BookKeeper :: Stream Storage :: Clients :: Java Client </name>
 
-  <dependencies>
+<!--  <dependencies>
     <dependency>
       <groupId>org.apache.bookkeeper</groupId>
       <artifactId>stream-storage-java-kv-client</artifactId>
@@ -105,5 +105,5 @@
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </build>-->
 </project>
