@@ -27,7 +27,7 @@
   <groupId>org.apache.bookkeeper</groupId>
   <artifactId>stream-storage-parent</artifactId>
   <name>Apache BookKeeper :: Stream Storage :: Parent</name>
-
+<!--
   <modules>
     <module>distributedlog</module>
     <module>common</module>
@@ -55,7 +55,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <!-- only run tests when -DstreamTests is specified //-->
+          only run tests when -DstreamTests is specified //
           <skipTests>true</skipTests>
           <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
           <argLine>-Xmx3G -Djava.net.preferIPv4Stack=true -XX:MaxDirectMemorySize=2G -Dio.netty.leakDetection.level=PARANOID</argLine>
@@ -87,6 +87,5 @@
       </build>
     </profile>
   </profiles>
-
+-->
 </project>
-
