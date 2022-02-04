@@ -17,7 +17,7 @@
  */
 package org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint;
 
-/*import java.io.File;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,7 +30,7 @@ import org.apache.bookkeeper.stream.proto.kv.store.CheckpointMetadata;
 /**
  * A task that restore a rocksdb instance.
  */
-/*@Slf4j
+@Slf4j
 public class RocksdbRestoreTask {
 
     private final String dbName;
@@ -77,4 +77,4 @@ public class RocksdbRestoreTask {
             file.copyFromRemote(checkpointStore, dbPrefix, checkpointId);
         }
     }
-}*/
+}

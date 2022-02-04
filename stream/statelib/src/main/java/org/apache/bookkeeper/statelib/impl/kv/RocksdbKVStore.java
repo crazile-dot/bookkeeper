@@ -63,7 +63,7 @@ import org.apache.bookkeeper.statelib.api.kv.KVMulti;
 import org.apache.bookkeeper.statelib.api.kv.KVStore;
 import org.apache.bookkeeper.statelib.impl.Bytes;
 import org.apache.bookkeeper.statelib.impl.rocksdb.RocksUtils;
-//import org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint.CheckpointInfo;
+import org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint.CheckpointInfo;
 import org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint.RocksCheckpointer;
 import org.apache.commons.lang3.tuple.Pair;
 import org.rocksdb.BlockBasedTableConfig;
@@ -79,7 +79,7 @@ import org.rocksdb.RocksDBException;
 import org.rocksdb.RocksIterator;
 import org.rocksdb.WriteBatch;
 import org.rocksdb.WriteOptions;
-/*
+
 /**
  * A key/value store implemented using {@link http://rocksdb.org/}.
  *
@@ -165,7 +165,7 @@ public class RocksdbKVStore<K, V> implements KVStore<K, V> {
         String dbName = spec.getName();
         File localStorePath = spec.getLocalStateStoreDir();
 
-        /*List<CheckpointInfo> checkpoints = RocksCheckpointer.getCheckpoints(dbName, spec.getCheckpointStore());
+        List<CheckpointInfo> checkpoints = RocksCheckpointer.getCheckpoints(dbName, spec.getCheckpointStore());
         for (CheckpointInfo cpi : checkpoints) {
             try {
                 cpi.restore(dbName, localStorePath, spec.getCheckpointStore());
@@ -178,7 +178,7 @@ public class RocksdbKVStore<K, V> implements KVStore<K, V> {
                 // Got an exception. Log and try the next checkpoint
                 log.error("Failed to restore checkpoint: {}", cpi, e);
             }
-        }*/
+        }
     }
 
     @Override

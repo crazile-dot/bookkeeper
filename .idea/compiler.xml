@@ -7,15 +7,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="stream-storage-service-impl" />
         <module name="bookkeeper-perf" />
         <module name="distributedlog-core-shaded" />
+        <module name="stream-storage-proto" />
+        <module name="statelib" />
         <module name="bookkeeper-common-allocator" />
         <module name="bookkeeper-server-tests-shaded" />
+        <module name="stream-storage-java-client" />
         <module name="bookkeeper-stats-utils" />
+        <module name="stream-storage-tests-common" />
         <module name="codahale-metrics-provider" />
+        <module name="distributedlog-core" />
+        <module name="stream-storage-java-client-base" />
         <module name="bookkeeper-benchmark" />
         <module name="bookkeeper-common" />
+        <module name="stream-storage-server" />
+        <module name="bk-grpc-name-resolver" />
         <module name="bookkeeper-tools-framework" />
+        <module name="stream-storage-api" />
         <module name="http-server" />
         <module name="bookkeeper-stats-api" />
         <module name="cpu-affinity" />
@@ -23,44 +33,28 @@
         <module name="bookkeeper-dist-server" />
         <module name="bookkeeper-tools-ledger" />
         <module name="bookkeeper-tools" />
+        <module name="distributedlog-protocol" />
         <module name="bookkeeper-proto" />
         <module name="bookkeeper-dist-all" />
         <module name="bkctl" />
         <module name="bookkeeper-server" />
+        <module name="stream-storage-common" />
         <module name="circe-checksum" />
         <module name="bookkeeper-server-shaded" />
         <module name="metadata-stores-etcd" />
+        <module name="distributedlog-common" />
+        <module name="stream-storage-java-kv-client" />
+        <module name="stream-storage-service-api" />
         <module name="stream-storage-cli" />
         <module name="servlet-http-server" />
         <module name="buildtools" />
+        <module name="dlfs" />
         <module name="microbenchmarks" />
-        <module name="bookkeeper (1)" />
         <module name="prometheus-metrics-provider" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bk-grpc-name-resolver" target="1.8" />
-      <module name="distributedlog" target="1.8" />
-      <module name="distributedlog-common" target="1.8" />
-      <module name="distributedlog-core" target="1.8" />
-      <module name="distributedlog-io" target="1.8" />
-      <module name="distributedlog-protocol" target="1.8" />
-      <module name="dlfs" target="1.8" />
-      <module name="statelib" target="1.8" />
-      <module name="stream-storage-api" target="1.8" />
-      <module name="stream-storage-clients-parent" target="1.8" />
-      <module name="stream-storage-common" target="1.8" />
-      <module name="stream-storage-java-client" target="1.8" />
-      <module name="stream-storage-java-client-base" target="1.8" />
-      <module name="stream-storage-java-client-parent" target="1.8" />
-      <module name="stream-storage-java-kv-client" target="1.8" />
       <module name="stream-storage-parent" target="1.8" />
-      <module name="stream-storage-proto" target="1.8" />
-      <module name="stream-storage-server" target="1.8" />
-      <module name="stream-storage-service-api" target="1.8" />
-      <module name="stream-storage-service-impl" target="1.8" />
-      <module name="stream-storage-service-parent" target="1.8" />
-      <module name="stream-storage-tests-common" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -83,7 +77,7 @@
       <module name="bookkeeper-tools" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="bookkeeper-tools-framework" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="bookkeeper-tools-ledger" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="bookkeeper-tools-parent" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
+      <module name="bookkeeper-tools-parent" options="" />
       <module name="buildtools" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\bookkeeper\circe-checksum\target/nar/javah-include" />
       <module name="codahale-metrics-provider" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />

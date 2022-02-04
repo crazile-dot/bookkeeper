@@ -20,7 +20,7 @@
  */
 package org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint;
 
-/*import com.google.common.io.MoreFiles;
+import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,7 @@ import org.apache.bookkeeper.stream.proto.kv.store.CheckpointMetadata;
 /**
  * CheckpointInfo encapsulated information and operatation for a checkpoint.
  */
-/*@Slf4j
+@Slf4j
 public class CheckpointInfo implements Comparable<CheckpointInfo> {
 
     final String id;
@@ -145,4 +145,4 @@ public class CheckpointInfo implements Comparable<CheckpointInfo> {
             throw new StateStoreException("Failed to restore rocksdb " + dbName, ioe);
         }
     }
-}*/
+}
