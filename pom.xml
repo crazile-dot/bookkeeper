@@ -200,12 +200,7 @@
     <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
     <forkCount.variable>1</forkCount.variable>
     <servlet-api.version>4.0.0</servlet-api.version>
-	  <sonar.projectKey>mirkobaffo:${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.links.homepage>https://github.com/mirkobaffo/My_Bookkeeper</sonar.links.homepage>
-    <sonar.links.ci>https://travis-ci.com/mirkobaffo/My_Bookkeeper</sonar.links.ci>
-    <sonar.links.scm>https://github.com/mirkobaffo/My_Bookkeeper</sonar.links.scm>
-    <!--<sonar.links.issue>https://github.com/mirkobaffo/My_Bookkeeper/issues</sonar.links.issue> -->
-    <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
+	  
   </properties>
 
   <!-- dependency definitions -->
@@ -915,7 +910,7 @@
 	      </compilerArgs>
         </configuration>
       </plugin>
-      <!--<plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
@@ -959,7 +954,7 @@
             <phase>site</phase>
           </execution>
         </executions>
-      </plugin> -->
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
