@@ -19,14 +19,14 @@
   <modelVersion> .. </modelVersion>
   <artifactId> .. </artifactId>
 
-  <!--<parent>
+  <parent>
     <groupId>org.apache.bookkeeper</groupId>
     <version>4.14.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
+    <artifactId>stream-storage-service-impl</artifactId>
   </parent>
-  <artifactId>stream-storage-service-impl</artifactId>
   <name>Apache BookKeeper :: Stream Storage :: Storage :: Impl</name>
-
+<!--
   <dependencies>
     <dependency>
       <groupId>org.apache.bookkeeper</groupId>
