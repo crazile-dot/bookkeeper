@@ -64,7 +64,7 @@
     <module>bookkeeper-benchmark</module>
     <module>bookkeeper-stats-providers</module>
     <module>bookkeeper-http</module>
-    <!--<module>stream</module>-->
+    <module>stream</module>
     <module>tools</module>
     <module>cpu-affinity</module>
     <module>metadata-drivers</module>

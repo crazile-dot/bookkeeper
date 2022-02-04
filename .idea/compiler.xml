@@ -34,6 +34,7 @@
         <module name="servlet-http-server" />
         <module name="buildtools" />
         <module name="microbenchmarks" />
+        <module name="bookkeeper (1)" />
         <module name="prometheus-metrics-provider" />
       </profile>
     </annotationProcessing>
