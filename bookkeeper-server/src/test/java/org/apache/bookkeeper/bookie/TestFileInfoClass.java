@@ -36,6 +36,7 @@ public class TestFileInfoClass {
 
     private static String pathname = "C:\\Users\\Ilenia\\Desktop\\test.txt";
 
+    //prova
     public TestFileInfoClass(Params params) {
         this.testBuf = params.getTestBuf();
         this.position = params.getPosition();
