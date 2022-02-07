@@ -26,7 +26,6 @@
   <packaging>pom</packaging>
   <name>Apache BookKeeper :: Dist (Parent)</name>
   <modules>
-    <module>all</module>
     <module>server</module>
     <module>bkctl</module>
   </modules>
