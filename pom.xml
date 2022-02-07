@@ -960,12 +960,12 @@
         <artifactId>maven-source-plugin</artifactId>
         <version>${maven-source-plugin.version}</version>
         <executions>
-          <!--<execution>
+         <execution>
             <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
             </goals>
-          </execution>-->
+          </execution>
         </executions>
       </plugin>
       <plugin>
