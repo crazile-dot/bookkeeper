@@ -870,7 +870,7 @@
             <suppressionsLocation>buildtools/src/main/resources/bookkeeper/suppressions.xml</suppressionsLocation>
             <encoding>UTF-8</encoding>
             <consoleOutput>true</consoleOutput>
-            <failOnViolation>true</failOnViolation>
+            <failOnViolation>false</failOnViolation>
             <includeResources>false</includeResources>
             <includeTestSourceDirectory>true</includeTestSourceDirectory>
           </configuration>
