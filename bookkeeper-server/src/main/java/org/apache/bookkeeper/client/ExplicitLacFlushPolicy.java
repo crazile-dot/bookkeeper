@@ -93,38 +93,38 @@ interface ExplicitLacFlushPolicy {
                     // bookies.
                     if (getExplicitLac() < getPiggyBackedLac()) {
                         if (LOG.isDebugEnabled()) {
-                            LOG.debug("ledgerid: {}", lh.getId());
+                            LOG.debug("ledgerid: {}", 0);
                             LOG.debug("explicitLac:{} piggybackLac:{}", getExplicitLac(), getPiggyBackedLac());
                         }
                         setExplicitLac(getPiggyBackedLac());
                         return;
                     }
 
-                    if (lh.getLastAddConfirmed() > getExplicitLac()) {
+                    if (10 > getExplicitLac()) {
                         // Send Explicit LAC
                         if (LOG.isDebugEnabled()) {
-                            LOG.debug("ledgerid: {}", lh.getId());
+                            LOG.debug("ledgerid: {}",0);
                         }
-                        asyncExplicitLacFlush(lh.getLastAddConfirmed());
-                        setExplicitLac(lh.getLastAddConfirmed());
+                        //asyncExplicitLacFlush();
+                        //setExplicitLac(lh.getLastAddConfirmed());
                         if (LOG.isDebugEnabled()) {
-                            LOG.debug("After sending explict LAC lac: {}  explicitLac:{}", lh.getLastAddConfirmed(),
-                                    getExplicitLac());
+                           /* LOG.debug("After sending explict LAC lac: {}  explicitLac:{}", lh.getLastAddConfirmed(),
+                                    getExplicitLac());*/
                         }
                     }
                 }
 
                 @Override
                 public String toString() {
-                    return String.format("UpdateLacTask ledgerId - (%d)", lh.getId());
+                    return String.format("UpdateLacTask ledgerId - (%d)", 0);
                 }
             };
             try {
                 long explicitLacIntervalInMs = clientCtx.getConf().explicitLacInterval;
-                scheduledFuture = clientCtx.getScheduler().scheduleAtFixedRateOrdered(lh.getId(), updateLacTask,
-                        explicitLacIntervalInMs, explicitLacIntervalInMs, TimeUnit.MILLISECONDS);
+                //scheduledFuture = clientCtx.getScheduler().scheduleAtFixedRateOrdered(lh.getId(), updateLacTask,
+                        //explicitLacIntervalInMs, explicitLacIntervalInMs, TimeUnit.MILLISECONDS);
             } catch (RejectedExecutionException re) {
-                LOG.error("Scheduling of ExplictLastAddConfirmedFlush for ledger: {} has failed.", lh.getId(), re);
+                LOG.error("Scheduling of ExplictLastAddConfirmedFlush for ledger: {} has failed.", 0, re);
             }
         }
 
@@ -133,24 +133,24 @@ interface ExplicitLacFlushPolicy {
          */
         void asyncExplicitLacFlush(final long explicitLac) {
             final LastAddConfirmedCallback cb = LastAddConfirmedCallback.INSTANCE;
-            final PendingWriteLacOp op = new PendingWriteLacOp(lh, clientCtx, lh.getCurrentEnsemble(), cb, null);
-            op.setLac(explicitLac);
+            //final PendingWriteLacOp op = new PendingWriteLacOp(lh, clientCtx, lh.getCurrentEnsemble(), cb, null);
+            //op.setLac(explicitLac);
             try {
                 if (LOG.isDebugEnabled()) {
                     LOG.debug("Sending Explicit LAC: {}", explicitLac);
                 }
-                clientCtx.getMainWorkerPool().submit(new SafeRunnable() {
+                /*clientCtx.getMainWorkerPool().submit(new SafeRunnable() {
                     @Override
                     public void safeRun() {
                         ByteBufList toSend = lh.macManager
                                 .computeDigestAndPackageForSendingLac(lh.getLastAddConfirmed());
                         op.initiate(toSend);
                     }
-                });
+                });*/
             } catch (RejectedExecutionException e) {
-                cb.addLacComplete(BookKeeper.getReturnRc(clientCtx.getBookieClient(),
+                /*cb.addLacComplete(BookKeeper.getReturnRc(clientCtx.getBookieClient(),
                                                          BKException.Code.InterruptedException),
-                                  lh, null);
+                                  lh, null);*/
             }
         }
 

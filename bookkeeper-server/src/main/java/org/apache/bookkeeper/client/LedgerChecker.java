@@ -136,9 +136,9 @@ public class LedgerChecker {
         }
     }
 
-    public LedgerChecker(BookKeeper bkc) {
+    /*public LedgerChecker(BookKeeper bkc) {
         this(bkc.getBookieClient(), bkc.getBookieWatcher());
-    }
+    }*/
 
     public LedgerChecker(BookieClient client, BookieWatcher watcher) {
         bookieClient = client;
@@ -335,18 +335,16 @@ public class LedgerChecker {
 
         Long curEntryId = null;
         List<BookieId> curEnsemble = null;
-        for (Map.Entry<Long, ? extends List<BookieId>> e : lh
-                .getLedgerMetadata().getAllEnsembles().entrySet()) {
+        for (int j = 0; j < 100; j++) {
             if (curEntryId != null) {
                 Set<Integer> bookieIndexes = new HashSet<Integer>();
                 for (int i = 0; i < curEnsemble.size(); i++) {
                     bookieIndexes.add(i);
                 }
-                fragments.add(new LedgerFragment(lh, curEntryId,
-                        e.getKey() - 1, bookieIndexes));
+
             }
-            curEntryId = e.getKey();
-            curEnsemble = e.getValue();
+            //curEntryId = e.getKey();
+            //curEnsemble = e.getValue();
         }
 
         /* Checking the last segment of the ledger can be complicated in some cases.
@@ -364,9 +362,9 @@ public class LedgerChecker {
          * else, we must assume the entry has been written, so we run the check.
          */
         if (curEntryId != null) {
-            long lastEntry = lh.getLastAddConfirmed();
+            //long lastEntry = lh.getLastAddConfirmed();
 
-            if (!lh.isClosed() && lastEntry < curEntryId) {
+            /*if (!lh.isClosed() && lastEntry < curEntryId) {
                 lastEntry = curEntryId;
             }
 
@@ -406,31 +404,8 @@ public class LedgerChecker {
             }
         }
         checkFragments(fragments, cb, percentageOfLedgerFragmentToBeVerified);
-    }
+    }*/
 
-    private void checkFragments(Set<LedgerFragment> fragments,
-                                GenericCallback<Set<LedgerFragment>> cb,
-                                long percentageOfLedgerFragmentToBeVerified) {
-        if (fragments.size() == 0) { // no fragments to verify
-            cb.operationComplete(BKException.Code.OK, fragments);
-            return;
+
         }
-
-        // verify all the collected fragment replicas
-        FullLedgerCallback allFragmentsCb = new FullLedgerCallback(fragments
-                .size(), cb);
-        for (LedgerFragment r : fragments) {
-            LOG.debug("Checking fragment {}", r);
-            try {
-                verifyLedgerFragment(r, allFragmentsCb, percentageOfLedgerFragmentToBeVerified);
-            } catch (InvalidFragmentException ife) {
-                LOG.error("Invalid fragment found : {}", r);
-                allFragmentsCb.operationComplete(
-                        BKException.Code.IncorrectParameterException, r);
-            } catch (BKException e) {
-                LOG.error("BKException when checking fragment : {}", r, e);
-            }
-        }
-    }
-
-}
+    }}

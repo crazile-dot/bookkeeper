@@ -50,7 +50,7 @@ class WriteEntryProcessor extends PacketProcessorBase<ParsedAddRequest> implemen
     }
 
     public static WriteEntryProcessor create(ParsedAddRequest request, Channel channel,
-                                             BookieRequestProcessor requestProcessor) {
+                                             Object requestProcessor) {
         WriteEntryProcessor wep = RECYCLER.get();
         wep.init(request, channel, requestProcessor);
         return wep;
@@ -58,7 +58,7 @@ class WriteEntryProcessor extends PacketProcessorBase<ParsedAddRequest> implemen
 
     @Override
     protected void processPacket() {
-        if (requestProcessor.getBookie().isReadOnly()
+        /*if (requestProcessor.getBookie().isReadOnly()
             && !(request.isHighPriority() && requestProcessor.getBookie().isAvailableForHighPriorityWrites())) {
             LOG.warn("BookieServer is running in readonly mode,"
                     + " so rejecting the request from the client!");
@@ -111,13 +111,13 @@ class WriteEntryProcessor extends PacketProcessorBase<ParsedAddRequest> implemen
                          ResponseBuilder.buildErrorResponse(rc, request),
                          requestProcessor.getRequestStats().getAddRequestStats());
             request.recycle();
-        }
+        }*/
     }
 
     @Override
     public void writeComplete(int rc, long ledgerId, long entryId,
                               BookieId addr, Object ctx) {
-        if (BookieProtocol.EOK == rc) {
+        /*if (BookieProtocol.EOK == rc) {
             requestProcessor.getRequestStats().getAddEntryStats()
                 .registerSuccessfulEvent(MathUtils.elapsedNanos(startTimeNanos), TimeUnit.NANOSECONDS);
         } else {
@@ -128,7 +128,7 @@ class WriteEntryProcessor extends PacketProcessorBase<ParsedAddRequest> implemen
                      ResponseBuilder.buildAddResponse(request),
                      requestProcessor.getRequestStats().getAddRequestStats());
         request.recycle();
-        recycle();
+        recycle();*/
     }
 
     @Override

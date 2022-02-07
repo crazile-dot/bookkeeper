@@ -21,7 +21,7 @@
 
 package org.apache.bookkeeper.client;
 
-import static org.apache.bookkeeper.client.BookKeeper.DigestType.fromApiDigestType;
+/*import static org.apache.bookkeeper.client.BookKeeper.DigestType.fromApiDigestType;
 
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * Encapsulates the ledger open operation.
  *
  */
-class LedgerOpenOp {
+/*class LedgerOpenOp {
     static final Logger LOG = LoggerFactory.getLogger(LedgerOpenOp.class);
 
     final BookKeeper bk;
@@ -75,7 +75,7 @@ class LedgerOpenOp {
      * @param cb
      * @param ctx
      */
-    public LedgerOpenOp(BookKeeper bk, BookKeeperClientStats clientStats,
+   /* public LedgerOpenOp(BookKeeper bk, BookKeeperClientStats clientStats,
                         long ledgerId, DigestType digestType, byte[] passwd,
                         OpenCallback cb, Object ctx) {
         this.bk = bk;
@@ -105,13 +105,13 @@ class LedgerOpenOp {
     /**
      * Inititates the ledger open operation.
      */
-    public void initiate() {
+  /*  public void initiate() {
         startTime = MathUtils.nowInNano();
 
         /**
          * Asynchronously read the ledger metadata node.
          */
-        bk.getLedgerManager().readLedgerMetadata(ledgerId)
+    /*    bk.getLedgerManager().readLedgerMetadata(ledgerId)
             .whenComplete((metadata, exception) -> {
                     if (exception != null) {
                         openComplete(BKException.getExceptionCode(exception), null);
@@ -124,7 +124,7 @@ class LedgerOpenOp {
     /**
      * Inititates the ledger open operation without recovery.
      */
-    public void initiateWithoutRecovery() {
+  /*  public void initiateWithoutRecovery() {
         this.doRecovery = false;
         initiate();
     }
@@ -147,7 +147,7 @@ class LedgerOpenOp {
         /* For an administrative open, the default passwords
          * are read from the configuration, but if the metadata
          * already contains passwords, use these instead. */
-        if (administrativeOpen && metadata.hasPassword()) {
+      /*  if (administrativeOpen && metadata.hasPassword()) {
             passwd = metadata.getPassword();
             digestType = fromApiDigestType(metadata.getDigestType());
         } else {
@@ -276,4 +276,4 @@ class LedgerOpenOp {
         }
     }
 
-}
+}*/

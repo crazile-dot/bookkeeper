@@ -50,7 +50,7 @@ import org.apache.bookkeeper.auth.AuthProviderFactoryFactory;
 import org.apache.bookkeeper.auth.AuthToken;
 import org.apache.bookkeeper.bookie.Bookie;
 import org.apache.bookkeeper.common.util.MathUtils;
-import org.apache.bookkeeper.common.util.OrderedExecutor;
+//import org.apache.bookkeeper.common.util.OrderedExecutor;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.processor.RequestProcessor;
 import org.apache.bookkeeper.stats.StatsLogger;
@@ -64,7 +64,7 @@ import org.slf4j.MDC;
 /**
  * An implementation of the RequestProcessor interface.
  */
-@Getter(AccessLevel.PACKAGE)
+/*@Getter(AccessLevel.PACKAGE)
 public class BookieRequestProcessor implements RequestProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(BookieRequestProcessor.class);
@@ -73,45 +73,45 @@ public class BookieRequestProcessor implements RequestProcessor {
      * The server configuration. We use this for getting the number of add and read
      * worker threads.
      */
-    private final ServerConfiguration serverCfg;
+   /* private final ServerConfiguration serverCfg;
     private final long waitTimeoutOnBackpressureMillis;
     private final boolean preserveMdcForTaskExecution;
 
     /**
      * This is the Bookie instance that is used to handle all read and write requests.
      */
-    final Bookie bookie;
+   /* final Bookie bookie;
 
     /**
      * The threadpool used to execute all read entry requests issued to this server.
      */
-    private final OrderedExecutor readThreadPool;
+    //private final OrderedExecutor readThreadPool;
 
     /**
      * The threadpool used to execute all add entry requests issued to this server.
      */
-    private final OrderedExecutor writeThreadPool;
+    //private final OrderedExecutor writeThreadPool;
 
     /**
      * TLS management.
      */
-    private final SecurityHandlerFactory shFactory;
+   /* private final SecurityHandlerFactory shFactory;
 
     /**
      * The threadpool used to execute all long poll requests issued to this server
      * after they are done waiting.
      */
-    private final OrderedExecutor longPollThreadPool;
+    //private final OrderedExecutor longPollThreadPool;
 
     /**
      * The threadpool used to execute high priority requests.
      */
-    private final OrderedExecutor highPriorityThreadPool;
+    //private final OrderedExecutor highPriorityThreadPool;
 
     /**
      * The Timer used to time out requests for long polling.
      */
-    private final HashedWheelTimer requestTimer;
+   /* private final HashedWheelTimer requestTimer;
 
     // Expose Stats
     private final BKStats bkStats = BKStats.getInstance();
@@ -138,7 +138,7 @@ public class BookieRequestProcessor implements RequestProcessor {
         this.preserveMdcForTaskExecution = serverCfg.getPreserveMdcForTaskExecution();
         this.bookie = bookie;
         this.throttleReadResponses = serverCfg.isReadWorkerThreadsThrottlingEnabled();
-        this.readThreadPool = createExecutor(
+        /*this.readThreadPool = createExecutor(
                 this.serverCfg.getNumReadWorkerThreads(),
                 "BookieReadThreadPool",
                 serverCfg.getMaxPendingReadRequestPerThread(),
@@ -572,7 +572,7 @@ public class BookieRequestProcessor implements RequestProcessor {
                      * Success of the future doesn't guarantee success in authentication
                      * future.isSuccess() only checks if the result field is not null
                      */
-                    if (future.isSuccess() && authHandler.isAuthenticated()) {
+                    /*if (future.isSuccess() && authHandler.isAuthenticated()) {
                         LOG.info("Session is protected by: {}", sslHandler.engine().getSession().getCipherSuite());
                     } else {
                         if (future.isSuccess()) {
@@ -700,4 +700,4 @@ public class BookieRequestProcessor implements RequestProcessor {
     public void handleNonWritableChannel(Channel channel) {
         onResponseTimeout.accept(channel);
     }
-}
+}*/

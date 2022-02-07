@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.bookkeeper.client.BKException.BKNotEnoughBookiesException;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.WeightedRandomSelection.WeightedObject;
 import org.apache.bookkeeper.common.util.ReflectionUtils;
 import org.apache.bookkeeper.conf.ClientConfiguration;
@@ -77,11 +77,11 @@ import org.slf4j.LoggerFactory;
  *
  * <p>Make most of the class and methods as protected, so it could be extended to implement other algorithms.
  */
-@StatsDoc(
+/*@StatsDoc(
     name = CLIENT_SCOPE,
     help = "BookKeeper client stats"
 )
-public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsemblePlacementPolicy {
+/*public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsemblePlacementPolicy {
 
     static final Logger LOG = LoggerFactory.getLogger(RackawareEnsemblePlacementPolicyImpl.class);
     int maxWeightMultiple;
@@ -150,7 +150,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      * @param dnsResolver the object used to resolve addresses to their network address
      * @return initialized ensemble placement policy
      */
-    protected RackawareEnsemblePlacementPolicyImpl initialize(DNSToSwitchMapping dnsResolver,
+    /*protected RackawareEnsemblePlacementPolicyImpl initialize(DNSToSwitchMapping dnsResolver,
                                                               HashedWheelTimer timer,
                                                               boolean reorderReadsRandom,
                                                               int stabilizePeriodSeconds,
@@ -234,7 +234,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      * i.e. region-aware policy may want to have /region/rack while regular
      * rack-aware policy needs /rack only since we cannot mix both styles
      */
-    public RackawareEnsemblePlacementPolicyImpl withDefaultRack(String rack) {
+    /*public RackawareEnsemblePlacementPolicyImpl withDefaultRack(String rack) {
         checkNotNull(rack, "Default rack cannot be null");
 
         this.defaultRack = rack;
@@ -278,7 +278,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
                      * shouldn't continue in the case of failure to create
                      * dnsResolver.
                      */
-                    throw re;
+                    /*throw re;
                 }
             }
         }
@@ -316,7 +316,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
     /*
      * this method should be called in readlock scope of 'rwLock'
      */
-    protected Set<BookieId> addDefaultRackBookiesIfMinNumRacksIsEnforced(
+    /*protected Set<BookieId> addDefaultRackBookiesIfMinNumRacksIsEnforced(
             Set<BookieId> excludeBookies) {
         Set<BookieId> comprehensiveExclusionBookiesSet;
         if (enforceMinNumRacksPerWriteQuorum) {
@@ -490,7 +490,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
                  * in testing code there are test cases which would pass empty
                  * currentEnsemble
                  */
-                newEnsemble.add(candidateAddr);
+                /*newEnsemble.add(candidateAddr);
             } else {
                 newEnsemble.set(currentEnsemble.indexOf(bookieToReplace), candidateAddr);
             }
@@ -545,7 +545,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
              * the whole cluster and exclude the racks specified at
              * <tt>excludeRacks</tt>.
              */
-            return selectFromNetworkLocation(excludeRacks, excludeBookies, predicate, ensemble, fallbackToRandom);
+            /*return selectFromNetworkLocation(excludeRacks, excludeBookies, predicate, ensemble, fallbackToRandom);
         }
     }
 
@@ -555,7 +555,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      * <i>excludeBookies</i> set. If it fails to find one, it selects a random {@link BookieNode} from the whole
      * cluster.
      */
-    @Override
+   /* @Override
     public BookieNode selectFromNetworkLocation(Set<String> excludeRacks,
                                                    Set<Node> excludeBookies,
                                                    Predicate<BookieNode> predicate,
@@ -589,7 +589,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
         }
     }
 
-    private WeightedRandomSelection<BookieNode> prepareForWeightedSelection(List<Node> leaves) {
+    /*private WeightedRandomSelection<BookieNode> prepareForWeightedSelection(List<Node> leaves) {
         // create a map of bookieNode->freeDiskSpace for this rack. The assumption is that
         // the number of nodes in a rack is of the order of 40, so it shouldn't be too bad
         // to build it every time during a ledger creation
@@ -628,7 +628,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      *          ensemble structure
      * @return chosen bookie.
      */
-    protected BookieNode selectRandomFromRack(String netPath, Set<Node> excludeBookies, Predicate<BookieNode> predicate,
+    /*protected BookieNode selectRandomFromRack(String netPath, Set<Node> excludeBookies, Predicate<BookieNode> predicate,
             Ensemble<BookieNode> ensemble) throws BKNotEnoughBookiesException {
         WeightedRandomSelection<BookieNode> wRSelection = null;
         List<Node> leaves = new ArrayList<Node>(topology.getLeaves(netPath));
@@ -691,7 +691,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      * @return the bookie node chosen.
      * @throws BKNotEnoughBookiesException
      */
-    protected List<BookieNode> selectRandom(int numBookies,
+    /*protected List<BookieNode> selectRandom(int numBookies,
                                             Set<Node> excludeBookies,
                                             Predicate<BookieNode> predicate,
                                             Ensemble<BookieNode> ensemble)
@@ -832,7 +832,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
      *          number of local bookies to try before trying a remote bookie
      * @return ordering of bookies to send read to
      */
-    DistributionSchedule.WriteSet reorderReadSequenceWithRegion(
+    /*DistributionSchedule.WriteSet reorderReadSequenceWithRegion(
         List<BookieId> ensemble,
         DistributionSchedule.WriteSet writeSet,
         Map<Integer, String> writeSetWithRegion,
@@ -1034,7 +1034,7 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
                      * strictly adhering to placement policy should be
                      * swallowed.
                      */
-                    LOG.warn("Received exception while trying to get network location of bookie: {}", bookie, e);
+                   /* LOG.warn("Received exception while trying to get network location of bookie: {}", bookie, e);
                 }
             }
             if ((racksInQuorum.size() < minNumRacksPerWriteQuorumForThisEnsemble)
@@ -1072,4 +1072,4 @@ public class RackawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
         }
         return rackCounter.size() >= minWriteQuorumNumRacksPerWriteQuorum;
     }
-}
+}*/

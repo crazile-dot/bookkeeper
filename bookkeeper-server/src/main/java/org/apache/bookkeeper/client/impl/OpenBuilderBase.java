@@ -35,7 +35,7 @@ public abstract class OpenBuilderBase implements OpenBuilder {
     static final Logger LOG = LoggerFactory.getLogger(OpenBuilderBase.class);
 
     protected boolean recovery = false;
-    protected long ledgerId = LedgerHandle.INVALID_LEDGER_ID;
+    protected long ledgerId = 0;
     protected byte[] password;
     protected DigestType digestType = DigestType.CRC32;
 

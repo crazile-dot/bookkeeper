@@ -88,7 +88,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
         int numBookiesMissingEntry = 0;
 
         final List<BookieId> ensemble;
-        final DistributionSchedule.WriteSet writeSet;
+        final DistributionSchedule.WriteSet writeSet = null;
         final LedgerEntryImpl entryImpl;
         final long eId;
 
@@ -98,13 +98,13 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
             this.eId = eId;
 
             if (clientCtx.getConf().enableReorderReadSequence) {
-                writeSet = clientCtx.getPlacementPolicy()
+                /*writeSet = clientCtx.getPlacementPolicy()
                     .reorderReadSequence(
                             ensemble,
                             lh.getBookiesHealthInfo(),
-                            lh.getWriteSetForReadOperation(eId));
+                            lh.getWriteSetForReadOperation(eId));*/
             } else {
-                writeSet = lh.getWriteSetForReadOperation(eId);
+               // writeSet = lh.getWriteSetForReadOperation(eId);
             }
         }
 
@@ -136,8 +136,8 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
                 return false;
             }
             try {
-                content = lh.macManager.verifyDigestAndReturnData(eId, buffer);
-            } catch (BKDigestMatchException e) {
+                //content = lh.macManager.verifyDigestAndReturnData(eId, buffer);
+            } catch (Exception e) {
                 clientCtx.getClientStats().getReadOpDmCounter().inc();
                 logErrorAndReattemptRead(bookieIndex, host, "Mac mismatch", BKException.Code.DigestMatchException);
                 return false;
@@ -150,7 +150,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
                  * Consequently, we have to subtract 8 from METADATA_LENGTH to get the length.
                  */
                 entryImpl.setLength(buffer.getLong(DigestManager.METADATA_LENGTH - 8));
-                entryImpl.setEntryBuf(content);
+                //entryImpl.setEntryBuf(content);
                 writeSet.recycle();
                 return true;
             } else {
@@ -205,17 +205,17 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
                 || BKException.Code.NoSuchLedgerExistsException == rc) {
                 ++numBookiesMissingEntry;
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("No such entry found on bookie.  L{} E{} bookie: {}",
-                            lh.ledgerId, eId, host);
+                   /* LOG.debug("No such entry found on bookie.  L{} E{} bookie: {}",
+                            lh.ledgerId, eId, host);*/
                 }
             } else {
                 if (LOG.isInfoEnabled()) {
-                    LOG.info("{} while reading L{} E{} from bookie: {}",
-                            errMsg, lh.ledgerId, eId, host);
+                   /* LOG.info("{} while reading L{} E{} from bookie: {}",
+                            errMsg, lh.ledgerId, eId, host);*/
                 }
             }
 
-            lh.recordReadErrorOnBookie(bookieIndex);
+            //lh.recordReadErrorOnBookie(bookieIndex);
         }
 
         /**
@@ -248,7 +248,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
 
         @Override
         public String toString() {
-            return String.format("L%d-E%d", lh.getId(), eId);
+            return String.format("L%d-E%d", 1, eId);
         }
 
         /**
@@ -259,7 +259,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
          */
         @Override
         public ListenableFuture<Boolean> issueSpeculativeRequest() {
-            return clientCtx.getMainWorkerPool().submitOrdered(lh.getId(), new Callable<Boolean>() {
+            /*return clientCtx.getMainWorkerPool().submitOrdered(lh.getId(), new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
                     if (!isComplete() && null != maybeSendSpeculativeRead(heardFromHostsBitSet)) {
@@ -272,7 +272,8 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
                     }
                     return false;
                 }
-            });
+            });*/
+            return null;
         }
     }
 
@@ -327,14 +328,14 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
         static final int NOT_FOUND = -1;
         int nextReplicaIndexToReadFrom = 0;
 
-        final BitSet sentReplicas;
-        final BitSet erroredReplicas;
+        final BitSet sentReplicas = null;
+        final BitSet erroredReplicas = null;
 
         SequenceReadRequest(List<BookieId> ensemble, long lId, long eId) {
             super(ensemble, lId, eId);
 
-            this.sentReplicas = new BitSet(lh.getLedgerMetadata().getWriteQuorumSize());
-            this.erroredReplicas = new BitSet(lh.getLedgerMetadata().getWriteQuorumSize());
+            //this.sentReplicas = new BitSet(lh.getLedgerMetadata().getWriteQuorumSize());
+            //this.erroredReplicas = new BitSet(lh.getLedgerMetadata().getWriteQuorumSize());
         }
 
         private synchronized int getNextReplicaIndexToReadFrom() {
@@ -480,7 +481,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
     }
 
     protected LedgerMetadata getLedgerMetadata() {
-        return lh.getLedgerMetadata();
+        return null;
     }
 
     protected void cancelSpeculativeTask(boolean mayInterruptIfRunning) {
@@ -504,7 +505,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
     }
 
     public void submit() {
-        clientCtx.getMainWorkerPool().executeOrdered(lh.ledgerId, this);
+        //clientCtx.getMainWorkerPool().executeOrdered(lh.ledgerId, this);
     }
 
     void initiate() {
@@ -518,19 +519,19 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
             }
             LedgerEntryRequest entry;
             if (parallelRead) {
-                entry = new ParallelReadRequest(ensemble, lh.ledgerId, i);
+                //entry = new ParallelReadRequest(ensemble, lh.ledgerId, i);
             } else {
-                entry = new SequenceReadRequest(ensemble, lh.ledgerId, i);
+                //entry = new SequenceReadRequest(ensemble, lh.ledgerId, i);
             }
-            seq.add(entry);
+           // seq.add(entry);
             i++;
         } while (i <= endEntryId);
         // read the entries.
         for (LedgerEntryRequest entry : seq) {
             entry.read();
             if (!parallelRead && clientCtx.getConf().readSpeculativeRequestPolicy.isPresent()) {
-                speculativeTask = clientCtx.getConf().readSpeculativeRequestPolicy.get()
-                    .initiateSpeculativeRequest(clientCtx.getScheduler(), entry);
+                /*speculativeTask = clientCtx.getConf().readSpeculativeRequestPolicy.get()
+                    .initiateSpeculativeRequest(clientCtx.getScheduler(), entry);*/
             }
         }
     }
@@ -564,7 +565,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
     }
 
     void sendReadTo(int bookieIndex, BookieId to, LedgerEntryRequest entry) throws InterruptedException {
-        if (lh.throttler != null) {
+       /* if (lh.throttler != null) {
             lh.throttler.acquire();
         }
 
@@ -575,7 +576,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
         } else {
             clientCtx.getBookieClient().readEntry(to, lh.ledgerId, entry.eId,
                     this, new ReadContext(bookieIndex, to, entry), BookieProtocol.FLAG_NONE);
-        }
+        }*/
     }
 
     @Override
@@ -595,7 +596,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
         if (entry.complete(rctx.bookieIndex, rctx.to, buffer)) {
             if (!isRecoveryRead) {
                 // do not advance LastAddConfirmed for recovery reads
-                lh.updateLastConfirmed(rctx.getLastAddConfirmed(), 0L);
+                //lh.updateLastConfirmed(rctx.getLastAddConfirmed(), 0L);
             }
             submitCallback(BKException.Code.OK);
         } else {
@@ -637,7 +638,7 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
             LOG.error(
                     "Read of ledger entry failed: L{} E{}-E{}, Sent to {}, "
                             + "Heard from {} : bitset = {}, Error = '{}'. First unread entry is ({}, rc = {})",
-                    lh.getId(), startEntryId, endEntryId, sentToHosts, heardFromHosts, heardFromHostsBitSet,
+                    //lh.getId(), startEntryId, endEntryId, sentToHosts, heardFromHosts, heardFromHostsBitSet,
                     BKException.getMessage(code), firstUnread, firstRc);
             clientCtx.getClientStats().getReadOpLogger().registerFailedEvent(latencyNanos, TimeUnit.NANOSECONDS);
             // release the entries

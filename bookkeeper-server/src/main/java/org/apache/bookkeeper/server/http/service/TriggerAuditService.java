@@ -20,7 +20,7 @@ package org.apache.bookkeeper.server.http.service;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.http.HttpServer;
 import org.apache.bookkeeper.http.service.HttpEndpointService;
@@ -38,12 +38,12 @@ public class TriggerAuditService implements HttpEndpointService {
     static final Logger LOG = LoggerFactory.getLogger(TriggerAuditService.class);
 
     protected ServerConfiguration conf;
-    protected BookKeeperAdmin bka;
+   // protected BookKeeperAdmin bka;
 
-    public TriggerAuditService(ServerConfiguration conf, BookKeeperAdmin bka) {
+    public TriggerAuditService(ServerConfiguration conf, Object bka) {
         checkNotNull(conf);
         this.conf = conf;
-        this.bka = bka;
+        //this.bka = bka;
     }
 
     /*
@@ -55,7 +55,7 @@ public class TriggerAuditService implements HttpEndpointService {
 
         if (HttpServer.Method.PUT == request.getMethod()) {
             try {
-                bka.triggerAudit();
+                //bka.triggerAudit();
             } catch (Exception e) {
                 LOG.error("Meet Exception: ", e);
                 response.setCode(HttpServer.StatusCode.NOT_FOUND);

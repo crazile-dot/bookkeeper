@@ -19,7 +19,7 @@
  *
  */
 package org.apache.bookkeeper.client;
-
+/*
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.bookkeeper.bookie.BookKeeperServerStats.WATCHER_SCOPE;
 
@@ -47,11 +47,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.bookkeeper.bookie.BookKeeperServerStats;
-import org.apache.bookkeeper.client.AsyncCallback.CreateCallback;
-import org.apache.bookkeeper.client.AsyncCallback.DeleteCallback;
+//import org.apache.bookkeeper.client.AsyncCallback.CreateCallback;
+//import org.apache.bookkeeper.client.AsyncCallback.DeleteCallback;
 import org.apache.bookkeeper.client.AsyncCallback.IsClosedCallback;
 import org.apache.bookkeeper.client.AsyncCallback.OpenCallback;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.SyncCallbackUtils.SyncCreateAdvCallback;
 import org.apache.bookkeeper.client.SyncCallbackUtils.SyncCreateCallback;
 import org.apache.bookkeeper.client.SyncCallbackUtils.SyncDeleteCallback;
@@ -66,8 +66,8 @@ import org.apache.bookkeeper.client.api.ListLedgersResultBuilder;
 import org.apache.bookkeeper.client.api.OpenBuilder;
 import org.apache.bookkeeper.client.api.WriteFlag;
 import org.apache.bookkeeper.common.allocator.ByteBufAllocatorBuilder;
-import org.apache.bookkeeper.common.util.OrderedExecutor;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedExecutor;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.common.util.ReflectionUtils;
 import org.apache.bookkeeper.conf.AbstractConfiguration;
 import org.apache.bookkeeper.conf.ClientConfiguration;
@@ -87,7 +87,7 @@ import org.apache.bookkeeper.net.DNSToSwitchMapping;
 import org.apache.bookkeeper.proto.BookieAddressResolver;
 import org.apache.bookkeeper.proto.BookieClient;
 import org.apache.bookkeeper.proto.BookieClientImpl;
-import org.apache.bookkeeper.proto.DataFormats;
+//import org.apache.bookkeeper.proto.DataFormats;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.bookkeeper.stats.StatsLogger;
 import org.apache.bookkeeper.util.EventLoopUtil;
@@ -110,7 +110,7 @@ import org.slf4j.LoggerFactory;
  * <p>The exceptions resulting from synchronous calls and error code resulting from
  * asynchronous calls can be found in the class {@link BKException}.
  */
-public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
+/*public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
 
     private static final Logger LOG = LoggerFactory.getLogger(BookKeeper.class);
 
@@ -130,8 +130,8 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
     final BookieClient bookieClient;
     final BookieWatcherImpl bookieWatcher;
 
-    final OrderedExecutor mainWorkerPool;
-    final OrderedScheduler scheduler;
+    //final OrderedExecutor mainWorkerPool;
+    //final OrderedScheduler scheduler;
     final HashedWheelTimer requestTimer;
     final boolean ownTimer;
     final FeatureProvider featureProvider;
@@ -159,7 +159,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      *
      * @see BookKeeperBuilder
      */
-    public static class Builder {
+    /*public static class Builder {
         final ClientConfiguration conf;
 
         ZooKeeper zk = null;
@@ -182,7 +182,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @deprecated since 4.5, use {@link #eventLoopGroup(EventLoopGroup)}
          * @see #eventLoopGroup(EventLoopGroup)
          */
-        @Deprecated
+        /*@Deprecated
         public Builder setEventLoopGroup(EventLoopGroup f) {
             eventLoopGroup = f;
             return this;
@@ -196,7 +196,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @deprecated since 4.5, use {@link #zk(ZooKeeper)}
          * @see #zk(ZooKeeper)
          */
-        @Deprecated
+        /*@Deprecated
         public Builder setZookeeper(ZooKeeper zk) {
             this.zk = zk;
             return this;
@@ -211,7 +211,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @deprecated since 4.5, use {@link #statsLogger(StatsLogger)}
          * @see #statsLogger(StatsLogger)
          */
-        @Deprecated
+        /*@Deprecated
         public Builder setStatsLogger(StatsLogger statsLogger) {
             this.statsLogger = statsLogger;
             return this;
@@ -224,7 +224,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder.
          * @since 4.5
          */
-        public Builder eventLoopGroup(EventLoopGroup f) {
+        /*public Builder eventLoopGroup(EventLoopGroup f) {
             eventLoopGroup = f;
             return this;
         }
@@ -236,7 +236,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder.
          * @since 4.9
          */
-        public Builder allocator(ByteBufAllocator allocator) {
+        /*public Builder allocator(ByteBufAllocator allocator) {
             this.allocator = allocator;
             return this;
         }
@@ -248,7 +248,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder.
          * @since 4.5
          */
-        @Deprecated
+        /*@Deprecated
         public Builder zk(ZooKeeper zk) {
             this.zk = zk;
             return this;
@@ -262,7 +262,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder.
          * @since 4.5
          */
-        public Builder statsLogger(StatsLogger statsLogger) {
+        /*public Builder statsLogger(StatsLogger statsLogger) {
             this.statsLogger = statsLogger;
             return this;
         }
@@ -274,7 +274,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder
          * @since 4.5
          */
-        public Builder dnsResolver(DNSToSwitchMapping dnsResolver) {
+        /*public Builder dnsResolver(DNSToSwitchMapping dnsResolver) {
             this.dnsResolver = dnsResolver;
             return this;
         }
@@ -286,7 +286,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @return client builder
          * @since 4.5
          */
-        public Builder requestTimer(HashedWheelTimer requestTimer) {
+        /*public Builder requestTimer(HashedWheelTimer requestTimer) {
             this.requestTimer = requestTimer;
             return this;
         }
@@ -297,7 +297,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
          * @param featureProvider
          * @return
          */
-        public Builder featureProvider(FeatureProvider featureProvider) {
+        /*public Builder featureProvider(FeatureProvider featureProvider) {
             this.featureProvider = featureProvider;
             return this;
         }
@@ -325,7 +325,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws IOException
      * @throws InterruptedException
      */
-    public BookKeeper(String servers) throws IOException, InterruptedException,
+    /*public BookKeeper(String servers) throws IOException, InterruptedException,
         BKException {
         this(new ClientConfiguration().setMetadataServiceUri("zk+null://" + servers + "/ledgers"));
     }
@@ -340,7 +340,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws IOException
      * @throws InterruptedException
      */
-    public BookKeeper(final ClientConfiguration conf)
+    /*public BookKeeper(final ClientConfiguration conf)
             throws IOException, InterruptedException, BKException {
         this(conf, null, null, null, NullStatsLogger.INSTANCE,
                 null, null, null);
@@ -374,7 +374,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws IOException
      * @throws InterruptedException
      */
-    public BookKeeper(ClientConfiguration conf, ZooKeeper zk)
+    /*public BookKeeper(ClientConfiguration conf, ZooKeeper zk)
             throws IOException, InterruptedException, BKException {
         this(conf, validateZooKeeper(zk), null, null, NullStatsLogger.INSTANCE, null, null, null);
     }
@@ -396,7 +396,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException in the event of a bookkeeper connection error
      */
-    public BookKeeper(ClientConfiguration conf, ZooKeeper zk, EventLoopGroup eventLoopGroup)
+    /*public BookKeeper(ClientConfiguration conf, ZooKeeper zk, EventLoopGroup eventLoopGroup)
             throws IOException, InterruptedException, BKException {
         this(conf, validateZooKeeper(zk), validateEventLoopGroup(eventLoopGroup), null, NullStatsLogger.INSTANCE,
                 null, null, null);
@@ -405,8 +405,8 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
     /**
      * Constructor for use with the builder. Other constructors also use it.
      */
-    @SuppressWarnings("deprecation")
-    @VisibleForTesting
+    //@SuppressWarnings("deprecation")
+    /*@VisibleForTesting
     BookKeeper(ClientConfiguration conf,
                        ZooKeeper zkc,
                        EventLoopGroup eventLoopGroup,
@@ -541,12 +541,12 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
 
         this.bookieQuarantineRatio = conf.getBookieQuarantineRatio();
         scheduleBookieHealthCheckIfEnabled(conf);
-    }
+    }*/
 
     /**
      * Allow to extend BookKeeper for mocking in unit tests.
      */
-    @VisibleForTesting
+    /*@VisibleForTesting
     BookKeeper() {
         conf = new ClientConfiguration();
         internalConf = ClientInternalConf.fromConfig(conf);
@@ -630,7 +630,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
     /**
      * Returns ref to speculative read counter, needed in PendingReadOp.
      */
-    @VisibleForTesting
+    /*@VisibleForTesting
     public LedgerManager getLedgerManager() {
         return ledgerManager;
     }
@@ -696,7 +696,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * This DUMMY digest is mostly for test purposes or in situations/use-cases
      * where digest is considered a overhead.
      */
-    public enum DigestType {
+   /* public enum DigestType {
         MAC, CRC32, CRC32C, DUMMY;
 
         public static DigestType fromApiDigestType(org.apache.bookkeeper.client.api.DigestType digestType) {
@@ -760,7 +760,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      *
      * @return BookieClient for the BookKeeper instance.
      */
-    BookieClient getBookieClient() {
+    /*BookieClient getBookieClient() {
         return bookieClient;
     }
 
@@ -774,7 +774,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws BKException
      * @throws InterruptedException
      */
-    public Map<BookieId, BookieInfo> getBookieInfo() throws BKException, InterruptedException {
+    /*public Map<BookieId, BookieInfo> getBookieInfo() throws BKException, InterruptedException {
         return bookieInfoReader.getBookieInfo();
     }
 
@@ -802,7 +802,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param ctx
      *          optional control object
      */
-    public void asyncCreateLedger(final int ensSize,
+    /*public void asyncCreateLedger(final int ensSize,
                                   final int writeQuorumSize,
                                   final DigestType digestType,
                                   final byte[] passwd, final CreateCallback cb, final Object ctx) {
@@ -842,7 +842,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      *          optional customMetadata that holds user specified metadata
      */
 
-    public void asyncCreateLedger(final int ensSize, final int writeQuorumSize, final int ackQuorumSize,
+    /*public void asyncCreateLedger(final int ensSize, final int writeQuorumSize, final int ackQuorumSize,
                                   final DigestType digestType, final byte[] passwd,
                                   final CreateCallback cb, final Object ctx, final Map<String, byte[]> customMetadata) {
         if (writeQuorumSize < ackQuorumSize) {
@@ -875,7 +875,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedger(DigestType digestType, byte[] passwd)
+    /*public LedgerHandle createLedger(DigestType digestType, byte[] passwd)
             throws BKException, InterruptedException {
         return createLedger(3, 2, digestType, passwd);
     }
@@ -893,7 +893,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedger(int ensSize, int qSize,
+    /*public LedgerHandle createLedger(int ensSize, int qSize,
                                      DigestType digestType, byte[] passwd)
             throws InterruptedException, BKException {
         return createLedger(ensSize, qSize, qSize, digestType, passwd, Collections.emptyMap());
@@ -913,7 +913,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedger(int ensSize, int writeQuorumSize, int ackQuorumSize,
+    /*public LedgerHandle createLedger(int ensSize, int writeQuorumSize, int ackQuorumSize,
             DigestType digestType, byte[] passwd)
             throws InterruptedException, BKException {
         return createLedger(ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd, Collections.emptyMap());
@@ -932,7 +932,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedger(int ensSize, int writeQuorumSize, int ackQuorumSize,
+    /*public LedgerHandle createLedger(int ensSize, int writeQuorumSize, int ackQuorumSize,
                                      DigestType digestType, byte[] passwd, final Map<String, byte[]> customMetadata)
             throws InterruptedException, BKException {
         CompletableFuture<LedgerHandle> future = new CompletableFuture<>();
@@ -941,7 +941,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Calls asynchronous version
          */
-        asyncCreateLedger(ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
+        /*asyncCreateLedger(ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
                           result, null, customMetadata);
 
         LedgerHandle lh = SyncCallbackUtils.waitForResult(future);
@@ -967,7 +967,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedgerAdv(int ensSize, int writeQuorumSize, int ackQuorumSize,
+    /*public LedgerHandle createLedgerAdv(int ensSize, int writeQuorumSize, int ackQuorumSize,
                                         DigestType digestType, byte[] passwd)
             throws InterruptedException, BKException {
         return createLedgerAdv(ensSize, writeQuorumSize, ackQuorumSize,
@@ -989,7 +989,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedgerAdv(int ensSize, int writeQuorumSize, int ackQuorumSize,
+    /*public LedgerHandle createLedgerAdv(int ensSize, int writeQuorumSize, int ackQuorumSize,
                                         DigestType digestType, byte[] passwd, final Map<String, byte[]> customMetadata)
             throws InterruptedException, BKException {
         CompletableFuture<LedgerHandleAdv> future = new CompletableFuture<>();
@@ -998,7 +998,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Calls asynchronous version
          */
-        asyncCreateLedgerAdv(ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
+        /*asyncCreateLedgerAdv(ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
                              result, null, customMetadata);
 
         LedgerHandle lh = SyncCallbackUtils.waitForResult(future);
@@ -1041,7 +1041,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param customMetadata
      *          optional customMetadata that holds user specified metadata
      */
-    public void asyncCreateLedgerAdv(final int ensSize, final int writeQuorumSize, final int ackQuorumSize,
+    /*public void asyncCreateLedgerAdv(final int ensSize, final int writeQuorumSize, final int ackQuorumSize,
             final DigestType digestType, final byte[] passwd, final CreateCallback cb, final Object ctx,
             final Map<String, byte[]> customMetadata) {
         if (writeQuorumSize < ackQuorumSize) {
@@ -1077,7 +1077,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle createLedgerAdv(final long ledgerId,
+    /*public LedgerHandle createLedgerAdv(final long ledgerId,
                                         int ensSize,
                                         int writeQuorumSize,
                                         int ackQuorumSize,
@@ -1091,7 +1091,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Calls asynchronous version
          */
-        asyncCreateLedgerAdv(ledgerId, ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
+        /*asyncCreateLedgerAdv(ledgerId, ensSize, writeQuorumSize, ackQuorumSize, digestType, passwd,
                              result, null, customMetadata);
 
         LedgerHandle lh = SyncCallbackUtils.waitForResult(future);
@@ -1142,7 +1142,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param customMetadata
      *          optional customMetadata that holds user specified metadata
      */
-    public void asyncCreateLedgerAdv(final long ledgerId,
+    /*public void asyncCreateLedgerAdv(final long ledgerId,
                                      final int ensSize,
                                      final int writeQuorumSize,
                                      final int ackQuorumSize,
@@ -1195,7 +1195,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param ctx
      *          optional control object
      */
-    public void asyncOpenLedger(final long lId, final DigestType digestType, final byte[] passwd,
+    /*public void asyncOpenLedger(final long lId, final DigestType digestType, final byte[] passwd,
                                 final OpenCallback cb, final Object ctx) {
         closeLock.readLock().lock();
         try {
@@ -1240,7 +1240,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param ctx
      *          optional control object
      */
-    public void asyncOpenLedgerNoRecovery(final long lId, final DigestType digestType, final byte[] passwd,
+   /* public void asyncOpenLedgerNoRecovery(final long lId, final DigestType digestType, final byte[] passwd,
                                           final OpenCallback cb, final Object ctx) {
         closeLock.readLock().lock();
         try {
@@ -1270,7 +1270,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle openLedger(long lId, DigestType digestType, byte[] passwd)
+    /*public LedgerHandle openLedger(long lId, DigestType digestType, byte[] passwd)
             throws BKException, InterruptedException {
         CompletableFuture<LedgerHandle> future = new CompletableFuture<>();
         SyncOpenCallback result = new SyncOpenCallback(future);
@@ -1278,7 +1278,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Calls async open ledger
          */
-        asyncOpenLedger(lId, digestType, passwd, result, null);
+        /*asyncOpenLedger(lId, digestType, passwd, result, null);
 
         return SyncCallbackUtils.waitForResult(future);
     }
@@ -1297,7 +1297,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public LedgerHandle openLedgerNoRecovery(long lId, DigestType digestType, byte[] passwd)
+    /*public LedgerHandle openLedgerNoRecovery(long lId, DigestType digestType, byte[] passwd)
             throws BKException, InterruptedException {
         CompletableFuture<LedgerHandle> future = new CompletableFuture<>();
         SyncOpenCallback result = new SyncOpenCallback(future);
@@ -1305,7 +1305,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Calls async open ledger
          */
-        asyncOpenLedgerNoRecovery(lId, digestType, passwd,
+        /*asyncOpenLedgerNoRecovery(lId, digestType, passwd,
                                   result, null);
 
         return SyncCallbackUtils.waitForResult(future);
@@ -1321,7 +1321,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param ctx
      *            optional control object
      */
-    public void asyncDeleteLedger(final long lId, final DeleteCallback cb, final Object ctx) {
+    /*public void asyncDeleteLedger(final long lId, final DeleteCallback cb, final Object ctx) {
         closeLock.readLock().lock();
         try {
             if (closed) {
@@ -1344,7 +1344,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @throws InterruptedException
      * @throws BKException
      */
-    public void deleteLedger(long lId) throws InterruptedException, BKException {
+    /*public void deleteLedger(long lId) throws InterruptedException, BKException {
         CompletableFuture<Void> future = new CompletableFuture<>();
         SyncDeleteCallback result = new SyncDeleteCallback(future);
         // Call asynchronous version
@@ -1360,7 +1360,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @param lId   ledger identifier
      * @param cb    callback method
      */
-    public void asyncIsClosed(long lId, final IsClosedCallback cb, final Object ctx){
+    /*public void asyncIsClosed(long lId, final IsClosedCallback cb, final Object ctx){
         ledgerManager.readLedgerMetadata(lId).whenComplete((metadata, exception) -> {
                 if (exception == null) {
                     cb.isClosedComplete(BKException.Code.OK, metadata.getValue().isClosed(), ctx);
@@ -1378,7 +1378,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * @return boolean true if ledger has been closed
      * @throws BKException
      */
-    public boolean isClosed(long lId)
+    /*public boolean isClosed(long lId)
     throws BKException, InterruptedException {
         final class Result {
             int rc;
@@ -1400,12 +1400,12 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
         /*
          * Call asynchronous version of isClosed
          */
-        asyncIsClosed(lId, cb, null);
+        /*asyncIsClosed(lId, cb, null);
 
         /*
          * Wait for callback
          */
-        result.notifier.await();
+        /*result.notifier.await();
 
         if (result.rc != BKException.Code.OK) {
             throw BKException.create(result.rc);
@@ -1418,7 +1418,7 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
      * Shuts down client.
      *
      */
-    @Override
+    /*@Override
     public void close() throws BKException, InterruptedException {
         closeLock.writeLock().lock();
         try {
@@ -1649,4 +1649,4 @@ public class BookKeeper implements org.apache.bookkeeper.client.api.BookKeeper {
     ClientContext getClientCtx() {
         return clientCtx;
     }
-}
+}*/

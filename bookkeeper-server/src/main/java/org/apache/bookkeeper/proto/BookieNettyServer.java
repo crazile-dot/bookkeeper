@@ -146,7 +146,7 @@ class BookieNettyServer {
                 for (int i = 0; i < conf.getServerNumIOThreads(); i++) {
                     jvmEventLoopGroup.next().submit(() -> {
                         try {
-                            CpuAffinity.acquireCore();
+                            //CpuAffinity.acquireCore();
                         } catch (Throwable t) {
                             LOG.warn("Failed to acquire CPU core for thread {} {}",
                                     Thread.currentThread().getName(), t.getMessage(), t);
@@ -337,8 +337,7 @@ class BookieNettyServer {
 
                     pipeline.addLast("bookieProtoDecoder", new BookieProtoEncoding.RequestDecoder(registry));
                     pipeline.addLast("bookieProtoEncoder", new BookieProtoEncoding.ResponseEncoder(registry));
-                    pipeline.addLast("bookieAuthHandler", new AuthHandler.ServerSideHandler(
-                                contextHandler.getConnectionPeer(), authProviderFactory));
+                    pipeline.addLast("bookieAuthHandler", null);
 
                     ChannelInboundHandler requestHandler = isRunning.get()
                             ? new BookieRequestHandler(conf, requestProcessor, allChannels)
@@ -398,8 +397,7 @@ class BookieNettyServer {
 
                     pipeline.addLast("bookieProtoDecoder", new BookieProtoEncoding.RequestDecoder(registry));
                     pipeline.addLast("bookieProtoEncoder", new BookieProtoEncoding.ResponseEncoder(registry));
-                    pipeline.addLast("bookieAuthHandler", new AuthHandler.ServerSideHandler(
-                                contextHandler.getConnectionPeer(), authProviderFactory));
+                    pipeline.addLast("bookieAuthHandler", null);
 
                     ChannelInboundHandler requestHandler = isRunning.get()
                             ? new BookieRequestHandler(conf, requestProcessor, allChannels)

@@ -239,14 +239,14 @@ abstract class BKAbstractLogWriter implements Closeable, AsyncCloseable, Abortab
             closeFuture = closePromise = new CompletableFuture<Void>();
         }
         cancelTruncation();
-        FutureUtils.proxyTo(
+        /*FutureUtils.proxyTo(
             Utils.closeSequence(bkDistributedLogManager.getScheduler(),
                     true, /** ignore close errors **/
-                    getCachedLogWriter(),
+                   /* getCachedLogWriter(),
                     getAllocatedLogWriter(),
                     getCachedWriteHandler()
             ),
-            closeFuture);
+            closeFuture);*/
         return closeFuture;
     }
 
@@ -265,12 +265,12 @@ abstract class BKAbstractLogWriter implements Closeable, AsyncCloseable, Abortab
             closeFuture = closePromise = new CompletableFuture<Void>();
         }
         cancelTruncation();
-        FutureUtils.proxyTo(
+        /*FutureUtils.proxyTo(
             Abortables.abortSequence(bkDistributedLogManager.getScheduler(),
                     getCachedLogWriter(),
                     getAllocatedLogWriter(),
                     getCachedWriteHandler()),
-            closeFuture);
+            closeFuture);*/
         return closeFuture;
     }
 

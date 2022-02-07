@@ -35,7 +35,7 @@ import org.apache.bookkeeper.stats.StatsLogger;
  *
  * @see EnsemblePlacementPolicy
  */
-public class RackawareEnsemblePlacementPolicy extends RackawareEnsemblePlacementPolicyImpl
+/*public class RackawareEnsemblePlacementPolicy extends RackawareEnsemblePlacementPolicyImpl
         implements ITopologyAwareEnsemblePlacementPolicy<BookieNode> {
     RackawareEnsemblePlacementPolicyImpl slave = null;
 
@@ -251,4 +251,4 @@ public class RackawareEnsemblePlacementPolicy extends RackawareEnsemblePlacement
             slave.handleBookiesThatJoined(joinedBookies);
         }
     }
-}
+}*/

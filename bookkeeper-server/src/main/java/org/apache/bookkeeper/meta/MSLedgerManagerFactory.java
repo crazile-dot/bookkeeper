@@ -672,7 +672,7 @@ public class MSLedgerManagerFactory extends AbstractZkLedgerManagerFactory {
     public LedgerUnderreplicationManager newLedgerUnderreplicationManager() throws KeeperException,
             InterruptedException, ReplicationException.CompatibilityException {
         // TODO: currently just use zk ledger underreplication manager
-        return new ZkLedgerUnderreplicationManager(conf, zk);
+        return null;
     }
 
     /**

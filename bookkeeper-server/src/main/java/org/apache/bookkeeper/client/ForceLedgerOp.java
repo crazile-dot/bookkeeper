@@ -57,7 +57,7 @@ class ForceLedgerOp extends SafeRunnable implements ForceLedgerCallback {
     }
 
     void sendForceLedgerRequest(int bookieIndex) {
-        bookieClient.forceLedger(currentEnsemble.get(bookieIndex), lh.ledgerId, this, bookieIndex);
+        bookieClient.forceLedger(currentEnsemble.get(bookieIndex), 1, this, bookieIndex);
     }
 
     @Override
@@ -70,15 +70,14 @@ class ForceLedgerOp extends SafeRunnable implements ForceLedgerCallback {
         // capture currentNonDurableLastAddConfirmed
         // remember that we are inside OrderedExecutor, this induces a strict ordering
         // on the sequence of events
-        this.currentNonDurableLastAddConfirmed = lh.pendingAddsSequenceHead;
+        //this.currentNonDurableLastAddConfirmed = lh.pendingAddsSequenceHead;
         if (LOG.isDebugEnabled()) {
-            LOG.debug("force {} clientNonDurableLac {}", lh.ledgerId, currentNonDurableLastAddConfirmed);
+            LOG.debug("force {} clientNonDurableLac {}", 1, currentNonDurableLastAddConfirmed);
         }
         // we need to send the request to every bookie in the ensamble
-        this.ackSet = lh.distributionSchedule.getEnsembleAckSet();
+        //this.ackSet = lh.distributionSchedule.getEnsembleAckSet();
 
-        DistributionSchedule.WriteSet writeSet = lh.getDistributionSchedule()
-                                                   .getEnsembleSet(currentNonDurableLastAddConfirmed);
+        DistributionSchedule.WriteSet writeSet = null;
         try {
             for (int i = 0; i < writeSet.size(); i++) {
                 sendForceLedgerRequest(writeSet.get(i));
@@ -112,7 +111,7 @@ class ForceLedgerOp extends SafeRunnable implements ForceLedgerCallback {
                     LOG.debug("After force on ledger {} updating LastAddConfirmed to {} ",
                               ledgerId, currentNonDurableLastAddConfirmed);
                 }
-                lh.updateLastConfirmed(currentNonDurableLastAddConfirmed, lh.getLength());
+               // lh.updateLastConfirmed(currentNonDurableLastAddConfirmed, lh.getLength());
                 FutureUtils.complete(cb, null);
             }
         } else {

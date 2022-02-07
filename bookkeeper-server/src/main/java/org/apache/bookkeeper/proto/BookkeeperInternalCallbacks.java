@@ -31,9 +31,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.LedgerEntry;
-import org.apache.bookkeeper.client.LedgerHandle;
+//import org.apache.bookkeeper.client.LedgerHandle;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.stats.OpStatsLogger;
@@ -239,13 +239,13 @@ public class BookkeeperInternalCallbacks {
          * @param ctx
          *          callback context.
          */
-        void onEntryComplete(int rc, LedgerHandle lh, LedgerEntry entry, Object ctx);
+        //void onEntryComplete(int rc, LedgerHandle lh, LedgerEntry entry, Object ctx);
     }
 
     /**
      * This is a callback interface for fetching metadata about a bookie.
      */
-    public interface GetBookieInfoCallback {
+    /*public interface GetBookieInfoCallback {
         void getBookieInfoComplete(int rc, BookieInfo bInfo, Object ctx);
     }
 

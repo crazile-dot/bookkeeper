@@ -52,10 +52,10 @@ import org.apache.bookkeeper.meta.AbstractZkLedgerManagerFactory;
 import org.apache.bookkeeper.meta.LayoutManager;
 import org.apache.bookkeeper.meta.LedgerManagerFactory;
 import org.apache.bookkeeper.meta.ZkLayoutManager;
-import org.apache.bookkeeper.meta.ZkLedgerUnderreplicationManager;
+//import org.apache.bookkeeper.meta.ZkLedgerUnderreplicationManager;
 import org.apache.bookkeeper.meta.zk.ZKMetadataDriverBase;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.DataFormats.BookieServiceInfoFormat;
+//import org.apache.bookkeeper.proto.DataFormats.BookieServiceInfoFormat;
 import org.apache.bookkeeper.util.BookKeeperConstants;
 import org.apache.bookkeeper.util.ZkUtils;
 import org.apache.bookkeeper.versioning.LongVersion;
@@ -232,7 +232,7 @@ public class ZKRegistrationManager implements RegistrationManager {
         if (log.isDebugEnabled()) {
             log.debug("serialize BookieServiceInfo {}", bookieServiceInfo);
         }
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+        /*try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             BookieServiceInfoFormat.Builder builder = BookieServiceInfoFormat.newBuilder();
             List<BookieServiceInfoFormat.Endpoint> bsiEndpoints = bookieServiceInfo.getEndpoints().stream()
                     .map(e -> {
@@ -255,7 +255,8 @@ public class ZKRegistrationManager implements RegistrationManager {
         } catch (IOException err) {
             log.error("Cannot serialize bookieServiceInfo from " + bookieServiceInfo);
             throw new RuntimeException(err);
-        }
+        }*/
+        return null;
     }
 
     private void doRegisterBookie(String regPath, BookieServiceInfo bookieServiceInfo) throws BookieException {
@@ -549,9 +550,9 @@ public class ZKRegistrationManager implements RegistrationManager {
     public boolean format() throws Exception {
         // Clear underreplicated ledgers
         try {
-            ZKUtil.deleteRecursive(zk, ZkLedgerUnderreplicationManager.getBasePath(ledgersRootPath)
-                    + BookKeeperConstants.DEFAULT_ZK_LEDGERS_ROOT_PATH);
-        } catch (KeeperException.NoNodeException e) {
+            /*ZKUtil.deleteRecursive(zk, ZkLedgerUnderreplicationManager.getBasePath(ledgersRootPath)
+                    + BookKeeperConstants.DEFAULT_ZK_LEDGERS_ROOT_PATH);*/
+        } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug("underreplicated ledgers root path node not exists in zookeeper to delete");
             }
@@ -559,9 +560,9 @@ public class ZKRegistrationManager implements RegistrationManager {
 
         // Clear underreplicatedledger locks
         try {
-            ZKUtil.deleteRecursive(zk, ZkLedgerUnderreplicationManager.getBasePath(ledgersRootPath) + '/'
-                    + BookKeeperConstants.UNDER_REPLICATION_LOCK);
-        } catch (KeeperException.NoNodeException e) {
+            /*ZKUtil.deleteRecursive(zk, ZkLedgerUnderreplicationManager.getBasePath(ledgersRootPath) + '/'
+                    + BookKeeperConstants.UNDER_REPLICATION_LOCK);*/
+        } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug("underreplicatedledger locks node not exists in zookeeper to delete");
             }

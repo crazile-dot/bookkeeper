@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.bookkeeper.client.BKException.BKNotEnoughBookiesException;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.WeightedRandomSelection.WeightedObject;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.feature.FeatureProvider;
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see EnsemblePlacementPolicy
  */
-public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
+/*public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
     static final Logger LOG = LoggerFactory.getLogger(DefaultEnsemblePlacementPolicy.class);
     static final Set<BookieId> EMPTY_SET = new HashSet<BookieId>();
 
@@ -135,7 +135,7 @@ public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
                 isEnsembleAdheringToPlacementPolicy(newEnsemble, writeQuorumSize, ackQuorumSize));
     }
 
-    @Override
+   /* @Override
     public Set<BookieId> onClusterChanged(Set<BookieId> writableBookies,
             Set<BookieId> readOnlyBookies) {
         rwLock.writeLock().lock();
@@ -163,9 +163,9 @@ public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
         } finally {
             rwLock.writeLock().unlock();
         }
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void registerSlowBookie(BookieId bookieSocketAddress, long entryId) {
         return;
     }
@@ -225,4 +225,4 @@ public class DefaultEnsemblePlacementPolicy implements EnsemblePlacementPolicy {
             int writeQuorumSize, int ackQuorumSize) {
         return PlacementPolicyAdherence.MEETS_STRICT;
     }
-}
+}*/

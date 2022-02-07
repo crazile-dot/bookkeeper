@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import org.apache.bookkeeper.common.concurrent.FutureEventListener;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.feature.FeatureProvider;
 import org.apache.bookkeeper.stats.AlertStatsLogger;
 import org.apache.bookkeeper.stats.OpStatsLogger;
@@ -142,12 +142,7 @@ class BKLogWriteHandler extends BKLogHandler {
                         }
                     }
 
-                    return FutureUtils.processList(
-                        segmentList,
-                        recoverLogSegmentFunction,
-                        scheduler
-                    ).thenApply(removeEmptySegments)
-                     .thenApply(GetLastTxIdFunction.INSTANCE);
+                    return null;
                 }
             };
     private final Function<List<LogSegmentMetadata>, List<LogSegmentMetadata>> removeEmptySegments =
@@ -180,7 +175,7 @@ class BKLogWriteHandler extends BKLogHandler {
                       LogStreamMetadataStore streamMetadataStore,
                       LogSegmentMetadataCache metadataCache,
                       LogSegmentEntryStore entryStore,
-                      OrderedScheduler scheduler,
+                      Object scheduler,
                       Allocator<LogSegmentEntryWriter, Object> segmentAllocator,
                       StatsLogger statsLogger,
                       StatsLogger perLogStatsLogger,
@@ -196,7 +191,7 @@ class BKLogWriteHandler extends BKLogHandler {
                 streamMetadataStore,
                 metadataCache,
                 entryStore,
-                scheduler,
+                null,
                 statsLogger,
                 alertStatsLogger,
                 clientId);
@@ -669,7 +664,7 @@ class BKLogWriteHandler extends BKLogHandler {
                             lock,
                             txId,
                             logSegmentSeqNo,
-                            scheduler,
+                            null,
                             statsLogger,
                             perLogStatsLogger,
                             alertStatsLogger,
@@ -685,7 +680,7 @@ class BKLogWriteHandler extends BKLogHandler {
             public void onFailure(Throwable cause) {
                 failStartLogSegment(promise, false, cause);
             }
-        }, scheduler);
+        }, null);
     }
 
     boolean shouldStartNewSegment(BKLogSegmentWriter writer) {
@@ -998,7 +993,7 @@ class BKLogWriteHandler extends BKLogHandler {
             public void onFailure(Throwable cause) {
                 FutureUtils.completeExceptionally(promise, cause);
             }
-        }, scheduler);
+        }, null);
     }
 
     public CompletableFuture<Long> recoverIncompleteLogSegments() {
@@ -1237,8 +1232,7 @@ class BKLogWriteHandler extends BKLogHandler {
         if (LOG.isTraceEnabled()) {
             LOG.trace("Purging logs for {} : {}", getFullyQualifiedName(), logs);
         }
-        return FutureUtils.processList(logs,
-            segment -> deleteLogSegment(segment), scheduler);
+        return null;
     }
 
     private CompletableFuture<LogSegmentMetadata> deleteLogSegment(
@@ -1306,9 +1300,7 @@ class BKLogWriteHandler extends BKLogHandler {
 
     @Override
     public CompletableFuture<Void> asyncClose() {
-        return Utils.closeSequence(scheduler,
-                lock,
-                logSegmentAllocator);
+        return null;
     }
 
     @Override

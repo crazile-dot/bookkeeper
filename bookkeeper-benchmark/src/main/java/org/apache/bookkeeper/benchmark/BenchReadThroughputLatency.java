@@ -31,7 +31,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.bookkeeper.client.BookKeeper;
+//import org.apache.bookkeeper.client.BookKeeper;
 import org.apache.bookkeeper.client.LedgerEntry;
 import org.apache.bookkeeper.client.LedgerHandle;
 import org.apache.bookkeeper.conf.ClientConfiguration;
@@ -74,7 +74,7 @@ public class BenchReadThroughputLatency {
 
     private static void readLedger(ClientConfiguration conf, long ledgerId, byte[] passwd) {
         LOG.info("Reading ledger {}", ledgerId);
-        BookKeeper bk = null;
+        //BookKeeper bk = null;
         long time = 0;
         long entriesRead = 0;
         long lastRead = 0;
@@ -83,9 +83,9 @@ public class BenchReadThroughputLatency {
         long absoluteLimit = 5000000;
         LedgerHandle lh = null;
         try {
-            bk = new BookKeeper(conf);
+            //bk = new BookKeeper(conf);
             while (true) {
-                lh = bk.openLedgerNoRecovery(ledgerId, BookKeeper.DigestType.CRC32,
+                /*lh = bk.openLedgerNoRecovery(ledgerId, BookKeeper.DigestType.CRC32,
                                              passwd);
                 long lastConfirmed = Math.min(lh.getLastAddConfirmed(), absoluteLimit);
                 if (lastConfirmed == lastRead) {
@@ -98,10 +98,10 @@ public class BenchReadThroughputLatency {
                     }
                 } else {
                     nochange = 0;
-                }
+                }*/
                 long starttime = System.nanoTime();
 
-                while (lastRead < lastConfirmed) {
+                /*while (lastRead < lastConfirmed) {
                     long nextLimit = lastRead + 100000;
                     long readTo = Math.min(nextLimit, lastConfirmed);
                     Enumeration<LedgerEntry> entries = lh.readEntries(lastRead + 1, readTo);
@@ -113,11 +113,11 @@ public class BenchReadThroughputLatency {
                             LOG.info("{} entries read", entriesRead);
                         }
                     }
-                }
+                }*/
                 long endtime = System.nanoTime();
                 time += endtime - starttime;
 
-                lh.close();
+                //lh.close();
                 lh = null;
                 Thread.sleep(1000);
             }
@@ -130,11 +130,11 @@ public class BenchReadThroughputLatency {
 
             try {
                 if (lh != null) {
-                    lh.close();
+                    //lh.close();
                 }
-                if (bk != null) {
+                /*if (bk != null) {
                     bk.close();
-                }
+                }*/
             } catch (Exception e) {
                 LOG.error("Exception closing stuff", e);
             }

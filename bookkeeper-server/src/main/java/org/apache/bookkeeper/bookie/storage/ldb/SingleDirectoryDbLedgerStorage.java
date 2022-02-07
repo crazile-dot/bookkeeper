@@ -63,7 +63,7 @@ import org.apache.bookkeeper.bookie.LedgerDirsManager;
 import org.apache.bookkeeper.bookie.LedgerDirsManager.LedgerDirsListener;
 import org.apache.bookkeeper.bookie.LedgerEntryPage;
 import org.apache.bookkeeper.bookie.StateManager;
-import org.apache.bookkeeper.bookie.storage.ldb.DbLedgerStorageDataFormats.LedgerData;
+//import org.apache.bookkeeper.bookie.storage.ldb.DbLedgerStorageDataFormats.LedgerData;
 import org.apache.bookkeeper.bookie.storage.ldb.KeyValueStorage.Batch;
 import org.apache.bookkeeper.common.util.Watcher;
 import org.apache.bookkeeper.conf.ServerConfiguration;
@@ -252,15 +252,16 @@ public class SingleDirectoryDbLedgerStorage implements CompactableLedgerStorage 
     @Override
     public boolean ledgerExists(long ledgerId) throws IOException {
         try {
-            LedgerData ledgerData = ledgerIndex.get(ledgerId);
-            if (log.isDebugEnabled()) {
+            //LedgerData ledgerData = ledgerIndex.get(ledgerId);
+            /*if (log.isDebugEnabled()) {
                 log.debug("Ledger exists. ledger: {} : {}", ledgerId, ledgerData.getExists());
             }
-            return ledgerData.getExists();
-        } catch (Bookie.NoLedgerException nle) {
+            return ledgerData.getExists();*/
+        } catch (Exception nle) {
             // ledger does not exist
             return false;
         }
+        return true;
     }
 
     @Override
@@ -268,7 +269,7 @@ public class SingleDirectoryDbLedgerStorage implements CompactableLedgerStorage 
         if (log.isDebugEnabled()) {
             log.debug("isFenced. ledger: {}", ledgerId);
         }
-        return ledgerIndex.get(ledgerId).getFenced();
+        return true;
     }
 
     @Override
@@ -300,7 +301,7 @@ public class SingleDirectoryDbLedgerStorage implements CompactableLedgerStorage 
         if (log.isDebugEnabled()) {
             log.debug("Read master key. ledger: {}", ledgerId);
         }
-        return ledgerIndex.get(ledgerId).getMasterKey().toByteArray();
+        return null;
     }
 
     @Override
@@ -797,18 +798,18 @@ public class SingleDirectoryDbLedgerStorage implements CompactableLedgerStorage 
             }
             return ledgerInfo.getExplicitLac();
         }
-        LedgerData ledgerData = ledgerIndex.get(ledgerId);
-        if (!ledgerData.hasExplicitLac()) {
+        //LedgerData ledgerData = ledgerIndex.get(ledgerId);
+        if (true) {
             if (log.isDebugEnabled()) {
                 log.debug("getExplicitLac ledger {} missing from LedgerData", ledgerId);
             }
             return null;
         }
-        if (ledgerData.hasExplicitLac()) {
+        if (true) {
             if (log.isDebugEnabled()) {
                 log.debug("getExplicitLac ledger {} returned from LedgerData", ledgerId);
             }
-            ByteString persistedLac = ledgerData.getExplicitLac();
+            ByteString persistedLac = null;
             ledgerInfo.setExplicitLac(Unpooled.wrappedBuffer(persistedLac.toByteArray()));
         }
         return ledgerInfo.getExplicitLac();
@@ -845,9 +846,9 @@ public class SingleDirectoryDbLedgerStorage implements CompactableLedgerStorage 
      */
     public long addLedgerToIndex(long ledgerId, boolean isFenced, byte[] masterKey,
             LedgerCache.PageEntriesIterable pages) throws Exception {
-        LedgerData ledgerData = LedgerData.newBuilder().setExists(true).setFenced(isFenced)
+        /*LedgerData ledgerData = LedgerData.newBuilder().setExists(true).setFenced(isFenced)
                 .setMasterKey(ByteString.copyFrom(masterKey)).build();
-        ledgerIndex.set(ledgerId, ledgerData);
+        ledgerIndex.set(ledgerId, ledgerData);*/
         MutableLong numberOfEntries = new MutableLong();
 
         // Iterate over all the entries pages

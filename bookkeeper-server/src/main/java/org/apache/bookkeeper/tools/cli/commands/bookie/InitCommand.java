@@ -18,7 +18,7 @@
 package org.apache.bookkeeper.tools.cli.commands.bookie;
 
 import com.google.common.util.concurrent.UncheckedExecutionException;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.tools.cli.helpers.BookieCommand;
 import org.apache.bookkeeper.tools.framework.CliFlags;
@@ -45,7 +45,7 @@ public class InitCommand extends BookieCommand<CliFlags> {
 
         boolean result = false;
         try {
-            result = BookKeeperAdmin.initBookie(conf);
+           // result = BookKeeperAdmin.initBookie(conf);
         } catch (Exception e) {
             throw new UncheckedExecutionException(e.getMessage(), e);
         }

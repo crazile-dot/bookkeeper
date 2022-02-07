@@ -45,7 +45,7 @@ import org.apache.bookkeeper.client.BKException.ZKException;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.SafeRunnable;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.DataFormats.BookieServiceInfoFormat;
+//import org.apache.bookkeeper.proto.DataFormats.BookieServiceInfoFormat;
 import org.apache.bookkeeper.versioning.LongVersion;
 import org.apache.bookkeeper.versioning.Version;
 import org.apache.bookkeeper.versioning.Version.Occurred;
@@ -314,9 +314,9 @@ public class ZKRegistrationClient implements RegistrationClient {
             return BookieServiceInfoUtils.buildLegacyBookieServiceInfo(bookieId.toString());
         }
 
-        BookieServiceInfoFormat builder = BookieServiceInfoFormat.parseFrom(bookieServiceInfo);
+        //BookieServiceInfoFormat builder = BookieServiceInfoFormat.parseFrom(bookieServiceInfo);
         BookieServiceInfo bsi = new BookieServiceInfo();
-        List<BookieServiceInfo.Endpoint> endpoints = builder.getEndpointsList().stream()
+        /*List<BookieServiceInfo.Endpoint> endpoints = builder.getEndpointsList().stream()
                 .map(e -> {
                     BookieServiceInfo.Endpoint endpoint = new BookieServiceInfo.Endpoint();
                     endpoint.setId(e.getId());
@@ -330,7 +330,7 @@ public class ZKRegistrationClient implements RegistrationClient {
                 .collect(Collectors.toList());
 
         bsi.setEndpoints(endpoints);
-        bsi.setProperties(builder.getPropertiesMap());
+        bsi.setProperties(builder.getPropertiesMap());*/
 
         return bsi;
     }

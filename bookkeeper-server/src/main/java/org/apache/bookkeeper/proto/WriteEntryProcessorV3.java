@@ -32,11 +32,11 @@ import org.apache.bookkeeper.bookie.BookieException;
 import org.apache.bookkeeper.bookie.BookieException.OperationRejectedException;
 import org.apache.bookkeeper.client.api.WriteFlag;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.AddRequest;
+/*import org.apache.bookkeeper.proto.BookkeeperProtocol.AddRequest;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.AddResponse;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Response;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;*/
 import org.apache.bookkeeper.stats.OpStatsLogger;
 import org.apache.bookkeeper.util.MathUtils;
 import org.slf4j.Logger;
@@ -45,15 +45,15 @@ import org.slf4j.LoggerFactory;
 class WriteEntryProcessorV3 extends PacketProcessorBaseV3 {
     private static final Logger logger = LoggerFactory.getLogger(WriteEntryProcessorV3.class);
 
-    public WriteEntryProcessorV3(Request request, Channel channel,
-                                 BookieRequestProcessor requestProcessor) {
+    public WriteEntryProcessorV3(Object request, Channel channel,
+                                 Object requestProcessor) {
         super(request, channel, requestProcessor);
-        requestProcessor.onAddRequestStart(channel);
+       // requestProcessor.onAddRequestStart(channel);
     }
 
     // Returns null if there is no exception thrown
-    private AddResponse getAddResponse() {
-        final long startTimeNanos = MathUtils.nowInNano();
+    private void getAddResponse() {
+       /* final long startTimeNanos = MathUtils.nowInNano();
         AddRequest addRequest = request.getAddRequest();
         long ledgerId = addRequest.getLedgerId();
         long entryId = addRequest.getEntryId();
@@ -157,12 +157,12 @@ class WriteEntryProcessorV3 extends PacketProcessorBaseV3 {
             addResponse.setStatus(status);
             return addResponse.build();
         }
-        return null;
+        return null;*/
     }
 
     @Override
     public void safeRun() {
-        AddResponse addResponse = getAddResponse();
+        /*AddResponse addResponse = getAddResponse();
         if (null != addResponse) {
             // This means there was an error and we should send this back.
             Response.Builder response = Response.newBuilder()
@@ -172,13 +172,13 @@ class WriteEntryProcessorV3 extends PacketProcessorBaseV3 {
             Response resp = response.build();
             sendResponse(addResponse.getStatus(), resp,
                          requestProcessor.getRequestStats().getAddRequestStats());
-        }
+        }*/
     }
 
     @Override
-    protected void sendResponse(StatusCode code, Object response, OpStatsLogger statsLogger) {
+    protected void sendResponse(Object code, Object response, OpStatsLogger statsLogger) {
         super.sendResponse(code, response, statsLogger);
-        requestProcessor.onAddRequestFinish();
+        //requestProcessor.onAddRequestFinish();
     }
 
     /**
@@ -188,6 +188,6 @@ class WriteEntryProcessorV3 extends PacketProcessorBaseV3 {
      */
     @Override
     public String toString() {
-        return RequestUtils.toSafeString(request);
+        return "";
     }
 }

@@ -18,8 +18,8 @@ package org.apache.bookkeeper.proto.checksum;
 * limitations under the License.
 */
 
-import com.scurrilous.circe.checksum.Crc32cIntChecksum;
-import com.scurrilous.circe.crc.Sse42Crc32C;
+//import com.scurrilous.circe.checksum.Crc32cIntChecksum;
+//import com.scurrilous.circe.crc.Sse42Crc32C;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -44,10 +44,10 @@ class CRC32CDigestManager extends DigestManager {
     public CRC32CDigestManager(long ledgerId, boolean useV2Protocol, ByteBufAllocator allocator) {
         super(ledgerId, useV2Protocol, allocator);
 
-        if (!Sse42Crc32C.isSupported() && !nonSupportedMessagePrinted) {
+        /*if (!Sse42Crc32C.isSupported() && !nonSupportedMessagePrinted) {
             log.warn("Sse42Crc32C is not supported, will use a slower CRC32C implementation.");
             nonSupportedMessagePrinted = true;
-        }
+        }*/
     }
 
     @Override
@@ -66,6 +66,6 @@ class CRC32CDigestManager extends DigestManager {
     void update(ByteBuf data) {
         MutableInt current = currentCrc.get();
         final int lastCrc = current.intValue();
-        current.setValue(Crc32cIntChecksum.resumeChecksum(lastCrc, data));
+        //current.setValue(Crc32cIntChecksum.resumeChecksum(lastCrc, data));
     }
 }

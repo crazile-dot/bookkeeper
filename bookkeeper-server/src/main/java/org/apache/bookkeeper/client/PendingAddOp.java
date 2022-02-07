@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
-class PendingAddOp extends SafeRunnable implements WriteCallback {
+/*class PendingAddOp extends SafeRunnable implements WriteCallback {
     private static final Logger LOG = LoggerFactory.getLogger(PendingAddOp.class);
 
     ByteBuf payload;
@@ -84,7 +84,7 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
     boolean allowFailFast = false;
     List<BookieId> ensemble;
 
-    static PendingAddOp create(LedgerHandle lh, ClientContext clientCtx,
+    /*static PendingAddOp create(LedgerHandle lh, ClientContext clientCtx,
                                List<BookieId> ensemble,
                                ByteBuf payload, EnumSet<WriteFlag> writeFlags,
                                AddCallbackWithLatency cb, Object ctx) {
@@ -101,7 +101,7 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
 
         op.completed = false;
         op.ensemble = ensemble;
-        op.ackSet = lh.getDistributionSchedule().getAckSet();
+       // op.ackSet = lh.getDistributionSchedule();
         op.pendingWriteRequests = 0;
         op.callbackTriggered = false;
         op.hasRun = false;
@@ -122,9 +122,9 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
 
     /**
      * Enable the recovery add flag for this operation.
-     * @see LedgerHandle#asyncRecoveryAddEntry
+     * @see LedgerHandle
      */
-    PendingAddOp enableRecoveryAdd() {
+   /* PendingAddOp enableRecoveryAdd() {
         isRecoveryAdd = true;
         return this;
     }
@@ -144,9 +144,9 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
 
     long getEntryId() {
         return this.entryId;
-    }
+    }}
 
-    void sendWriteRequest(List<BookieId> ensemble, int bookieIndex) {
+    /*void sendWriteRequest(List<BookieId> ensemble, int bookieIndex) {
         int flags = isRecoveryAdd ? FLAG_RECOVERY_ADD | FLAG_HIGH_PRIORITY : FLAG_NONE;
 
         clientCtx.getBookieClient().addEntry(ensemble.get(bookieIndex),
@@ -245,7 +245,7 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
     /**
      * Initiate the add operation.
      */
-    @Override
+    /*@Override
     public void safeRun() {
         hasRun = true;
         if (callbackTriggered) {
@@ -489,7 +489,7 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
          * otherwise we could end up recycling twice and all
          * joy that goes along with that.
          */
-        if (hasRun && callbackTriggered) {
+        /*if (hasRun && callbackTriggered) {
             ReferenceCountUtil.release(toSend);
             toSend = null;
         }
@@ -525,4 +525,4 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
 
         recyclerHandle.recycle(this);
     }
-}
+}*/

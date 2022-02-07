@@ -22,11 +22,11 @@ package org.apache.bookkeeper.clients.impl.kv;
 import static org.apache.bookkeeper.clients.impl.kv.KvUtils.toProtoCompare;
 import static org.apache.bookkeeper.clients.impl.kv.KvUtils.toProtoRequest;
 import static org.apache.bookkeeper.common.util.ListenableFutures.fromListenableFuture;
-import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getDeleteMethod;
+/*import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getDeleteMethod;
 import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getIncrementMethod;
 import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getPutMethod;
 import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getRangeMethod;
-import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getTxnMethod;
+import static org.apache.bookkeeper.stream.proto.kv.rpc.TableServiceGrpc.getTxnMethod;*/
 import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.RK_METADATA_KEY;
 import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.SID_METADATA_KEY;
 
@@ -65,9 +65,9 @@ import org.apache.bookkeeper.api.kv.result.PutResult;
 import org.apache.bookkeeper.api.kv.result.RangeResult;
 import org.apache.bookkeeper.api.kv.result.TxnResult;
 import org.apache.bookkeeper.clients.utils.RetryUtils;
-import org.apache.bookkeeper.stream.proto.StreamProperties;
+/*import org.apache.bookkeeper.stream.proto.StreamProperties;
 import org.apache.bookkeeper.stream.proto.kv.rpc.RoutingHeader;
-import org.apache.bookkeeper.stream.proto.kv.rpc.TxnRequest;
+import org.apache.bookkeeper.stream.proto.kv.rpc.TxnRequest;*/
 
 /**
  * A {@link PTable} implementation using simple grpc calls.
@@ -105,27 +105,28 @@ public class PByteBufSimpleTableImpl
     private final OpFactory<ByteBuf, ByteBuf> opFactory;
     private final ResultFactory<ByteBuf, ByteBuf> resultFactory;
     private final KeyValueFactory<ByteBuf, ByteBuf> kvFactory;
-    private final StreamProperties streamProps;
-    private final long streamId;
+    //private final StreamProperties streamProps;
+    private final long streamId = 0;
     private final RetryUtils retryUtils;
 
-    public PByteBufSimpleTableImpl(StreamProperties streamProps,
+    public PByteBufSimpleTableImpl(Object streamProps,
                                    Channel channel,
                                    CallOptions callOptions,
                                    RetryUtils retryUtils) {
         super(channel, callOptions);
-        this.streamProps = streamProps;
-        this.streamId = streamProps.getStreamId();
+        //this.streamProps = streamProps;
+        //this.streamId = streamProps.getStreamId();
         this.opFactory = new OpFactoryImpl<>();
         this.resultFactory = new ResultFactory<>();
         this.kvFactory = new KeyValueFactory<>();
         this.retryUtils = retryUtils;
     }
 
-    private RoutingHeader.Builder newRoutingHeader(ByteBuf pKey) {
-        return RoutingHeader.newBuilder()
+    private Object newRoutingHeader(ByteBuf pKey) {
+        /*return RoutingHeader.newBuilder()
             .setStreamId(streamId)
-            .setRKey(UnsafeByteOperations.unsafeWrap(pKey.nioBuffer()));
+            .setRKey(UnsafeByteOperations.unsafeWrap(pKey.nioBuffer()));*/
+        return 1;
     }
 
     private Channel getChannel(ByteBuf pKey) {
@@ -142,7 +143,7 @@ public class PByteBufSimpleTableImpl
         if (null != option.endKey()) {
             option.endKey().retain();
         }
-        return retryUtils.execute(() -> fromListenableFuture(
+        /*return retryUtils.execute(() -> fromListenableFuture(
             ClientCalls.futureUnaryCall(
                 getChannel(pKey).newCall(getRangeMethod(), getCallOptions()),
                 KvUtils.newRangeRequest(lKey, option)
@@ -156,7 +157,8 @@ public class PByteBufSimpleTableImpl
             if (null != option.endKey()) {
                 option.endKey().release();
             }
-        });
+        });*/
+        return null;
     }
 
     @Override
@@ -166,7 +168,7 @@ public class PByteBufSimpleTableImpl
         pKey.retain();
         lKey.retain();
         value.retain();
-        return retryUtils.execute(() -> fromListenableFuture(
+        /*return retryUtils.execute(() -> fromListenableFuture(
             ClientCalls.futureUnaryCall(
                 getChannel(pKey).newCall(getPutMethod(), getCallOptions()),
                 KvUtils.newPutRequest(lKey, value, option)
@@ -178,7 +180,8 @@ public class PByteBufSimpleTableImpl
                 pKey.release();
                 lKey.release();
                 value.release();
-            });
+            });*/
+        return null;
     }
 
     @Override
@@ -190,7 +193,7 @@ public class PByteBufSimpleTableImpl
         if (null != option.endKey()) {
             option.endKey().retain();
         }
-        return retryUtils.execute(() -> fromListenableFuture(
+        /*return retryUtils.execute(() -> fromListenableFuture(
             ClientCalls.futureUnaryCall(
                 getChannel(pKey).newCall(getDeleteMethod(), getCallOptions()),
                 KvUtils.newDeleteRequest(lKey, option)
@@ -204,7 +207,8 @@ public class PByteBufSimpleTableImpl
             if (null != option.endKey()) {
                 option.endKey().release();
             }
-        });
+        });*/
+        return null;
     }
 
     @Override
@@ -213,7 +217,7 @@ public class PByteBufSimpleTableImpl
     ) {
         pKey.retain();
         lKey.retain();
-        return retryUtils.execute(() -> fromListenableFuture(
+        /*return retryUtils.execute(() -> fromListenableFuture(
             ClientCalls.futureUnaryCall(
                 getChannel(pKey).newCall(getIncrementMethod(), getCallOptions()),
                 KvUtils.newIncrementRequest(lKey, amount, option)
@@ -224,7 +228,8 @@ public class PByteBufSimpleTableImpl
         .whenComplete((ignored, cause) -> {
             pKey.release();
             lKey.release();
-        });
+        });*/
+        return null;
     }
 
     @Override
@@ -249,12 +254,12 @@ public class PByteBufSimpleTableImpl
     class TxnImpl implements Txn<ByteBuf, ByteBuf> {
 
         private final ByteBuf pKey;
-        private final TxnRequest.Builder txnBuilder;
+        private final Object txnBuilder = null;
         private final List<AutoCloseable> resourcesToRelease;
 
         TxnImpl(ByteBuf pKey) {
             this.pKey = pKey.retain();
-            this.txnBuilder = TxnRequest.newBuilder();
+            //this.txnBuilder = TxnRequest.newBuilder();
             this.resourcesToRelease = Lists.newArrayList();
         }
 
@@ -262,7 +267,7 @@ public class PByteBufSimpleTableImpl
         @Override
         public Txn<ByteBuf, ByteBuf> If(CompareOp... cmps) {
             for (CompareOp<ByteBuf, ByteBuf> cmp : cmps) {
-                txnBuilder.addCompare(toProtoCompare(cmp));
+                //txnBuilder.addCompare(toProtoCompare(cmp));
                 resourcesToRelease.add(cmp);
             }
             return this;
@@ -272,7 +277,7 @@ public class PByteBufSimpleTableImpl
         @Override
         public Txn<ByteBuf, ByteBuf> Then(Op... ops) {
             for (Op<ByteBuf, ByteBuf> op : ops) {
-                txnBuilder.addSuccess(toProtoRequest(op));
+                //txnBuilder.addSuccess(toProtoRequest(op));
                 resourcesToRelease.add(op);
             }
             return this;
@@ -282,7 +287,7 @@ public class PByteBufSimpleTableImpl
         @Override
         public Txn<ByteBuf, ByteBuf> Else(Op... ops) {
             for (Op<ByteBuf, ByteBuf> op : ops) {
-                txnBuilder.addFailure(toProtoRequest(op));
+                //txnBuilder.addFailure(toProtoRequest(op));
                 resourcesToRelease.add(op);
             }
             return this;
@@ -290,7 +295,7 @@ public class PByteBufSimpleTableImpl
 
         @Override
         public CompletableFuture<TxnResult<ByteBuf, ByteBuf>> commit() {
-            return retryUtils.execute(() -> fromListenableFuture(
+            /*return retryUtils.execute(() -> fromListenableFuture(
             ClientCalls.futureUnaryCall(
                 getChannel(pKey).newCall(getTxnMethod(), getCallOptions()),
                 txnBuilder.setHeader(newRoutingHeader(pKey)).build())
@@ -301,7 +306,8 @@ public class PByteBufSimpleTableImpl
                 for (AutoCloseable resource : resourcesToRelease) {
                     closeResource(resource);
                 }
-            });
+            });*/
+            return null;
         }
 
         private void closeResource(AutoCloseable resource) {
@@ -315,6 +321,7 @@ public class PByteBufSimpleTableImpl
 
     @Override
     protected PByteBufSimpleTableImpl build(Channel channel, CallOptions callOptions) {
-        return new PByteBufSimpleTableImpl(streamProps, channel, callOptions, retryUtils);
+        //return new PByteBufSimpleTableImpl(streamProps, channel, callOptions, retryUtils);
+        return null;
     }
 }

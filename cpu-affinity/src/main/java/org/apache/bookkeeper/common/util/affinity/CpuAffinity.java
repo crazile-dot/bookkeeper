@@ -45,7 +45,7 @@ public class CpuAffinity {
      * as the JVM process is alive.
      * </ol>
      */
-    public static void acquireCore() {
+    /*public static void acquireCore() {
         CpuAffinityImpl.acquireCore();
-    }
+    }*/
 }

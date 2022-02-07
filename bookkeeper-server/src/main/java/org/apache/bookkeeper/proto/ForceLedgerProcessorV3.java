@@ -26,11 +26,11 @@ import io.netty.channel.Channel;
 import java.util.concurrent.TimeUnit;
 import org.apache.bookkeeper.bookie.BookieImpl;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.ForceLedgerRequest;
+/*import org.apache.bookkeeper.proto.BookkeeperProtocol.ForceLedgerRequest;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.ForceLedgerResponse;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Response;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;*/
 import org.apache.bookkeeper.util.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,22 +39,22 @@ import org.slf4j.LoggerFactory;
 class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(ForceLedgerProcessorV3.class);
 
-    public ForceLedgerProcessorV3(Request request, Channel channel,
-                             BookieRequestProcessor requestProcessor) {
-        super(request, channel, requestProcessor);
+    public ForceLedgerProcessorV3(Object request, Channel channel,
+                             Object requestProcessor) {
+        super(null, channel, null);
     }
 
     // Returns null if there is no exception thrown
-    private ForceLedgerResponse getForceLedgerResponse() {
+    private Object getForceLedgerResponse() {
         final long startTimeNanos = MathUtils.nowInNano();
-        ForceLedgerRequest forceLedgerRequest = request.getForceLedgerRequest();
-        long ledgerId = forceLedgerRequest.getLedgerId();
+        //ForceLedgerRequest forceLedgerRequest = request.getForceLedgerRequest();
+        //long ledgerId = forceLedgerRequest.getLedgerId();
 
-        final ForceLedgerResponse.Builder forceLedgerResponse = ForceLedgerResponse.newBuilder().setLedgerId(ledgerId);
+        //final ForceLedgerResponse.Builder forceLedgerResponse = ForceLedgerResponse.newBuilder().setLedgerId(ledgerId);
 
         if (!isVersionCompatible()) {
-            forceLedgerResponse.setStatus(StatusCode.EBADVERSION);
-            return forceLedgerResponse.build();
+            /*forceLedgerResponse.setStatus(StatusCode.EBADVERSION);
+            return forceLedgerResponse.build();*/
         }
 
         BookkeeperInternalCallbacks.WriteCallback wcb =
@@ -63,20 +63,20 @@ class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
             checkArgument(entryId == BookieImpl.METAENTRY_ID_FORCE_LEDGER,
                     "entryId must be METAENTRY_ID_FORCE_LEDGER but was {}", entryId);
 
-            checkArgument(ledgerId1 == ledgerId,
-                    "ledgerId must be {} but was {}", ledgerId, ledgerId1);
+            //checkArgument(ledgerId1 == ledgerId,
+                 //   "ledgerId must be {} but was {}", ledgerId, ledgerId1);
 
             if (BookieProtocol.EOK == rc) {
-                requestProcessor.getRequestStats().getForceLedgerStats()
-                        .registerSuccessfulEvent(MathUtils.elapsedNanos(startTimeNanos),
-                                TimeUnit.NANOSECONDS);
+                //requestProcessor.getRequestStats().getForceLedgerStats()
+                       // .registerSuccessfulEvent(MathUtils.elapsedNanos(startTimeNanos),
+                               // TimeUnit.NANOSECONDS);
             } else {
-                requestProcessor.getRequestStats().getForceLedgerStats()
+                /*requestProcessor.getRequestStats().getForceLedgerStats()
                         .registerFailedEvent(MathUtils.elapsedNanos(startTimeNanos),
-                                TimeUnit.NANOSECONDS);
+                                TimeUnit.NANOSECONDS);*/
             }
 
-            StatusCode status;
+            /*StatusCode status;
             switch (rc) {
                 case BookieProtocol.EOK:
                     status = StatusCode.EOK;
@@ -95,8 +95,8 @@ class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
                     .setForceLedgerResponse(forceLedgerResponse);
             Response resp = response.build();
             sendResponse(status, resp, requestProcessor.getRequestStats().getForceLedgerRequestStats());
-        };
-        StatusCode status = null;
+        };*/
+        /*StatusCode status = null;
         try {
             requestProcessor.getBookie().forceLedger(ledgerId, wcb, channel);
             status = StatusCode.EOK;
@@ -111,13 +111,13 @@ class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
         if (!status.equals(StatusCode.EOK)) {
             forceLedgerResponse.setStatus(status);
             return forceLedgerResponse.build();
-        }
-        return null;
-    }
+        }*/
+    };
+    return null;}
 
     @Override
     public void safeRun() {
-        ForceLedgerResponse forceLedgerResponse = getForceLedgerResponse();
+        /*ForceLedgerResponse forceLedgerResponse = getForceLedgerResponse();
         if (null != forceLedgerResponse) {
             Response.Builder response = Response.newBuilder()
                     .setHeader(getHeader())
@@ -128,7 +128,7 @@ class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
                 forceLedgerResponse.getStatus(),
                 resp,
                 requestProcessor.getRequestStats().getForceLedgerRequestStats());
-        }
+        }*/
     }
 
     /**
@@ -138,7 +138,7 @@ class ForceLedgerProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
      */
     @Override
     public String toString() {
-        return RequestUtils.toSafeString(request);
+        return "";
     }
 }
 

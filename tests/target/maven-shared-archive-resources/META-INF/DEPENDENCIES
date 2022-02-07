@@ -249,9 +249,9 @@ From: 'The Apache Software Foundation' (https://www.apache.org/)
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - Apache BookKeeper :: Tools :: Framework (http://bookkeeeper.apache.org/bookkeeper-tools-parent/bookkeeper-tools-framework) org.apache.bookkeeper:bookkeeper-tools-framework:jar:4.14.0-SNAPSHOT
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Apache BookKeeper :: Circe Checksum Library (http://bookkeeeper.apache.org/circe-checksum) org.apache.bookkeeper:circe-checksum:nar:4.14.0-SNAPSHOT
+  - Apache BookKeeper :: Circe Checksum Library (http://bookkeeeper.apache.org/circe-checksum) org.apache.bookkeeper:circe-checksum:jar:4.14.0-SNAPSHOT
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Apache BookKeeper :: CPU Affinity Library (http://bookkeeeper.apache.org/cpu-affinity) org.apache.bookkeeper:cpu-affinity:nar:4.14.0-SNAPSHOT
+  - Apache BookKeeper :: CPU Affinity Library (http://bookkeeeper.apache.org/cpu-affinity) org.apache.bookkeeper:cpu-affinity:jar:4.14.0-SNAPSHOT
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - Apache BookKeeper :: Http :: Http Server (http://maven.apache.org) org.apache.bookkeeper.http:http-server:jar:4.14.0-SNAPSHOT
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)

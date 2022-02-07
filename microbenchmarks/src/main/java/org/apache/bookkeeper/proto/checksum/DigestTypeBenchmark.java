@@ -30,7 +30,7 @@ import io.netty.buffer.Unpooled;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
+//import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -108,7 +108,7 @@ public class DigestTypeBenchmark {
         @Setup(Level.Trial)
         public void doSetup() throws Exception {
             final byte[] password = "password".getBytes(StandardCharsets.UTF_8);
-            crc32 = DigestManager.instantiate(ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE),
+            /*crc32 = DigestManager.instantiate(ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE),
                     password, DigestType.CRC32, PooledByteBufAllocator.DEFAULT, true);
 
             crc32c = DigestManager.instantiate(ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE),
@@ -116,7 +116,7 @@ public class DigestTypeBenchmark {
 
             mac = DigestManager.instantiate(ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE),
                     password, DigestType.HMAC, PooledByteBufAllocator.DEFAULT, true);
-
+*/
             digestBuf = Unpooled.buffer(getDigestManager(digest).getMacCodeLength());
 
             arrayBackedBuffer = Unpooled.wrappedBuffer(randomBytes(entrySize));

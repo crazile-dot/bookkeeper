@@ -68,7 +68,7 @@ import org.slf4j.MDC;
  * achieved by hashing the key objects to threads by their {@link #hashCode()}
  * method.
  */
-@Slf4j
+/*@Slf4j
 public class OrderedExecutor implements ExecutorService {
     public static final int NO_TASK_LIMIT = -1;
     private static final int DEFAULT_MAX_ARRAY_QUEUE_SIZE = 10_000;
@@ -93,7 +93,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * A builder class for an OrderedExecutor.
      */
-    public static class Builder extends AbstractBuilder<OrderedExecutor> {
+    /*public static class Builder extends AbstractBuilder<OrderedExecutor> {
 
         @Override
         public OrderedExecutor build() {
@@ -109,7 +109,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * Abstract builder class to build {@link OrderedScheduler}.
      */
-    public abstract static class AbstractBuilder<T extends OrderedExecutor> {
+    /*public abstract static class AbstractBuilder<T extends OrderedExecutor> {
         protected String name = getClass().getSimpleName();
         protected int numThreads = Runtime.getRuntime().availableProcessors();
         protected ThreadFactory threadFactory = null;
@@ -166,7 +166,7 @@ public class OrderedExecutor implements ExecutorService {
         }
 
         @SuppressWarnings("unchecked")
-        public T build() {
+        /*public T build() {
             if (null == threadFactory) {
                 threadFactory = new DefaultThreadFactory(name);
             }
@@ -181,12 +181,12 @@ public class OrderedExecutor implements ExecutorService {
                 maxTasksInQueue,
                 enableBusyWait);
         }
-    }
+    }*/
 
     /**
      * Decorator class for a runnable that measure the execution time.
      */
-    protected class TimedRunnable implements Runnable {
+    /*protected class TimedRunnable implements Runnable {
         final Runnable runnable;
         final long initNanos;
 
@@ -215,7 +215,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * Decorator class for a callable that measure the execution time.
      */
-    protected class TimedCallable<T> implements Callable<T> {
+    /*protected class TimedCallable<T> implements Callable<T> {
         final Callable<T> callable;
         final long initNanos;
 
@@ -244,7 +244,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * Decorator class for a runnable that preserves MDC context.
      */
-    static class ContextPreservingRunnable implements Runnable {
+    /*static class ContextPreservingRunnable implements Runnable {
         private final Runnable runnable;
         private final Map<String, String> mdcContextMap;
 
@@ -267,7 +267,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * Decorator class for a callable that preserves MDC context.
      */
-    static class ContextPreservingCallable<T> implements Callable<T> {
+    /*static class ContextPreservingCallable<T> implements Callable<T> {
         private final Callable<T> callable;
         private final Map<String, String> mdcContextMap;
 
@@ -378,7 +378,7 @@ public class OrderedExecutor implements ExecutorService {
      * @param maxTasksInQueue
      *            - maximum items allowed in a thread queue. -1 for no limit
      */
-    protected OrderedExecutor(String baseName, int numThreads, ThreadFactory threadFactory,
+    /*protected OrderedExecutor(String baseName, int numThreads, ThreadFactory threadFactory,
                                 StatsLogger statsLogger, boolean traceTaskExecution,
                                 boolean preserveMdcForTaskExecution, long warnTimeMicroSec, int maxTasksInQueue,
                                 boolean enableBusyWait) {
@@ -463,7 +463,7 @@ public class OrderedExecutor implements ExecutorService {
         this.taskPendingStats = statsLogger.scope(name).getOpStatsLogger("task_queued");
         this.traceTaskExecution = traceTaskExecution;
         this.preserveMdcForTaskExecution = preserveMdcForTaskExecution;
-    }
+    }*/
 
     /**
      * Flag describing executor's expectation in regards of MDC.
@@ -471,7 +471,7 @@ public class OrderedExecutor implements ExecutorService {
      *
      * @return true if runnable/callable is expected to preserve MDC, false otherwise.
      */
-    public boolean preserveMdc() {
+    /*public boolean preserveMdc() {
         return preserveMdcForTaskExecution;
     }
 
@@ -480,7 +480,7 @@ public class OrderedExecutor implements ExecutorService {
      * @param orderingKey
      * @param r
      */
-    public void executeOrdered(Object orderingKey, SafeRunnable r) {
+    /*public void executeOrdered(Object orderingKey, SafeRunnable r) {
         chooseThread(orderingKey).execute(r);
     }
 
@@ -489,7 +489,7 @@ public class OrderedExecutor implements ExecutorService {
      * @param orderingKey
      * @param r
      */
-    public void executeOrdered(long orderingKey, SafeRunnable r) {
+    /*public void executeOrdered(long orderingKey, SafeRunnable r) {
         chooseThread(orderingKey).execute(r);
     }
 
@@ -498,7 +498,7 @@ public class OrderedExecutor implements ExecutorService {
      * @param orderingKey
      * @param r
      */
-    public void executeOrdered(int orderingKey, SafeRunnable r) {
+    /*public void executeOrdered(int orderingKey, SafeRunnable r) {
         chooseThread(orderingKey).execute(r);
     }
 
@@ -554,7 +554,7 @@ public class OrderedExecutor implements ExecutorService {
      * @param orderingKey long ordering key
      * @return the thread for executing this order key
      */
-    public ExecutorService chooseThread(long orderingKey) {
+    /*public ExecutorService chooseThread(long orderingKey) {
         if (threads.length == 1) {
             return threads[0];
         }
@@ -584,7 +584,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> Future<T> submit(Callable<T> task) {
         return chooseThread().submit(timedCallable(task));
     }
@@ -592,7 +592,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> Future<T> submit(Runnable task, T result) {
         return chooseThread().submit(task, result);
     }
@@ -600,7 +600,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public Future<?> submit(Runnable task) {
         return chooseThread().submit(task);
     }
@@ -608,7 +608,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
         throws InterruptedException {
         return chooseThread().invokeAll(timedCallables(tasks));
@@ -617,7 +617,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks,
                                          long timeout,
                                          TimeUnit unit)
@@ -628,7 +628,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> T invokeAny(Collection<? extends Callable<T>> tasks)
         throws InterruptedException, ExecutionException {
         return chooseThread().invokeAny(timedCallables(tasks));
@@ -637,7 +637,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
         throws InterruptedException, ExecutionException, TimeoutException {
         return chooseThread().invokeAny(timedCallables(tasks), timeout, unit);
@@ -646,7 +646,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public void execute(Runnable command) {
         chooseThread().execute(timedRunnable(command));
     }
@@ -655,7 +655,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public void shutdown() {
         for (int i = 0; i < threads.length; i++) {
             threads[i].shutdown();
@@ -665,7 +665,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public List<Runnable> shutdownNow() {
         List<Runnable> runnables = new ArrayList<Runnable>();
         for (ExecutorService executor : threads) {
@@ -677,7 +677,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public boolean isShutdown() {
         for (ExecutorService executor : threads) {
             if (!executor.isShutdown()) {
@@ -690,7 +690,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
         boolean ret = true;
         for (int i = 0; i < threads.length; i++) {
@@ -702,7 +702,7 @@ public class OrderedExecutor implements ExecutorService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    /*@Override
     public boolean isTerminated() {
         for (ExecutorService executor : threads) {
             if (!executor.isTerminated()) {
@@ -716,7 +716,7 @@ public class OrderedExecutor implements ExecutorService {
      * Force threads shutdown (cancel active requests) after specified delay,
      * to be used after shutdown() rejects new requests.
      */
-    public void forceShutdown(long timeout, TimeUnit unit) {
+    /*public void forceShutdown(long timeout, TimeUnit unit) {
         for (int i = 0; i < threads.length; i++) {
             try {
                 if (!threads[i].awaitTermination(timeout, unit)) {
@@ -729,4 +729,4 @@ public class OrderedExecutor implements ExecutorService {
         }
     }
 
-}
+}*/

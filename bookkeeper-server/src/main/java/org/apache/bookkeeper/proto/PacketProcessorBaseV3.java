@@ -25,10 +25,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.bookkeeper.proto.BookkeeperProtocol.BKPacketHeader;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.ProtocolVersion;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;
+
 import org.apache.bookkeeper.stats.OpStatsLogger;
 import org.apache.bookkeeper.util.MathUtils;
 import org.apache.bookkeeper.util.SafeRunnable;
@@ -39,23 +36,23 @@ import org.apache.bookkeeper.util.StringUtils;
  */
 public abstract class PacketProcessorBaseV3 extends SafeRunnable {
 
-    final Request request;
+    //final Request request;
     final Channel channel;
-    final BookieRequestProcessor requestProcessor;
+    //final BookieRequestProcessor requestProcessor;
     final long enqueueNanos;
 
-    public PacketProcessorBaseV3(Request request, Channel channel,
-                                 BookieRequestProcessor requestProcessor) {
-        this.request = request;
+    public PacketProcessorBaseV3(Object request, Channel channel,
+                                 Object requestProcessor) {
+        //this.request = request;
         this.channel = channel;
-        this.requestProcessor = requestProcessor;
+        //this.requestProcessor = requestProcessor;
         this.enqueueNanos = MathUtils.nowInNano();
     }
 
-    protected void sendResponse(StatusCode code, Object response, OpStatsLogger statsLogger) {
+    protected void sendResponse(Object code, Object response, OpStatsLogger statsLogger) {
         final long writeNanos = MathUtils.nowInNano();
 
-        final long timeOut = requestProcessor.getWaitTimeoutOnBackpressureMillis();
+        /*final long timeOut = requestProcessor.getWaitTimeoutOnBackpressureMillis();
         if (timeOut >= 0 && !channel.isWritable()) {
             if (!requestProcessor.isBlacklisted(channel)) {
                 synchronized (channel) {
@@ -105,11 +102,11 @@ public abstract class PacketProcessorBaseV3 extends SafeRunnable {
                     statsLogger.registerFailedEvent(MathUtils.elapsedNanos(enqueueNanos), TimeUnit.NANOSECONDS);
                 }
             }
-        });
+        });*/
     }
 
     protected boolean isVersionCompatible() {
-        return this.request.getHeader().getVersion().equals(ProtocolVersion.VERSION_THREE);
+        return true;
     }
 
     /**
@@ -117,16 +114,12 @@ public abstract class PacketProcessorBaseV3 extends SafeRunnable {
      * request.
      * @return
      */
-    protected BKPacketHeader getHeader() {
-        BKPacketHeader.Builder header = BKPacketHeader.newBuilder();
-        header.setVersion(ProtocolVersion.VERSION_THREE);
-        header.setOperation(request.getHeader().getOperation());
-        header.setTxnId(request.getHeader().getTxnId());
-        return header.build();
+    protected void getHeader() {
+
     }
 
     @Override
     public String toString() {
-        return request.toString();
+        return "";
     }
 }

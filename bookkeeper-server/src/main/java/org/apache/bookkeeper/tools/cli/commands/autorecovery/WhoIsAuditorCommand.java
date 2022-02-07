@@ -25,7 +25,7 @@ import java.net.URI;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.meta.zk.ZKMetadataDriverBase;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.replication.AuditorElector;
+//import org.apache.bookkeeper.replication.AuditorElector;
 import org.apache.bookkeeper.tools.cli.helpers.BookieCommand;
 import org.apache.bookkeeper.tools.framework.CliFlags;
 import org.apache.bookkeeper.tools.framework.CliSpec;
@@ -73,7 +73,7 @@ public class WhoIsAuditorCommand extends BookieCommand<CliFlags> {
                                 .connectString(zkServers)
                                 .sessionTimeoutMs(conf.getZkTimeout())
                                 .build();
-            BookieId bookieId = AuditorElector.getCurrentAuditor(conf, zk);
+            BookieId bookieId = null;
             if (bookieId == null) {
                 LOG.info("No auditor elected");
                 return false;

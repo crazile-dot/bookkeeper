@@ -24,15 +24,15 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.concurrent.TimeUnit;
 
-import org.apache.bookkeeper.client.BookKeeper.DigestType;
+//import org.apache.bookkeeper.client.BookKeeper.DigestType;
 import org.apache.bookkeeper.client.EnsemblePlacementPolicy;
-import org.apache.bookkeeper.client.LedgerHandle;
-import org.apache.bookkeeper.client.RackawareEnsemblePlacementPolicy;
+//import org.apache.bookkeeper.client.LedgerHandle;
+//import org.apache.bookkeeper.client.RackawareEnsemblePlacementPolicy;
 import org.apache.bookkeeper.client.api.BookKeeperBuilder;
 import org.apache.bookkeeper.common.util.ReflectionUtils;
 import org.apache.bookkeeper.discover.RegistrationClient;
 import org.apache.bookkeeper.discover.ZKRegistrationClient;
-import org.apache.bookkeeper.replication.Auditor;
+//import org.apache.bookkeeper.replication.Auditor;
 import org.apache.commons.configuration.ConfigurationException;
 
 
@@ -271,13 +271,13 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
         return this;
     }
 
-    /**
+    /*/**
      * Get digest type used in bookkeeper admin.
      *
      * @return digest type
-     * @see #setBookieRecoveryDigestType
+     * @see
      */
-    public DigestType getBookieRecoveryDigestType() {
+    /*public DigestType getBookieRecoveryDigestType() {
         return DigestType.valueOf(this.getString(DIGEST_TYPE, DigestType.CRC32.toString()));
     }
 
@@ -295,7 +295,7 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
      *          Digest Type
      * @return client configuration
      */
-    public ClientConfiguration setBookieRecoveryDigestType(DigestType digestType) {
+    /*public ClientConfiguration setBookieRecoveryDigestType(DigestType digestType) {
         this.setProperty(DIGEST_TYPE, digestType.toString());
         return this;
     }
@@ -905,7 +905,7 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
      * in the case that a bookie has failed. It induces higher load on the network and on
      * bookies. This should be taken into account before changing this configuration value.
      *
-     * @see org.apache.bookkeeper.client.LedgerHandle#asyncReadEntries
+     * @see
      * @return the speculative read timeout in milliseconds. Default 2000.
      */
     public int getSpeculativeReadTimeout() {
@@ -1129,10 +1129,10 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
      * Enable/disable reordering read sequence on reading entries.
      *
      * <p>If this flag is enabled, the client will use
-     * {@link EnsemblePlacementPolicy#reorderReadSequence(java.util.ArrayList,
+     * {@link (java.util.ArrayList,
      * org.apache.bookkeeper.client.BookiesHealthInfo, org.apache.bookkeeper.client.DistributionSchedule.WriteSet)}
      * to figure out a better read sequence to attempt reads from replicas and use
-     * {@link EnsemblePlacementPolicy#reorderReadLACSequence(java.util.ArrayList,
+     * {@link (java.util.ArrayList,
      * org.apache.bookkeeper.client.BookiesHealthInfo, org.apache.bookkeeper.client.DistributionSchedule.WriteSet)}
      * to figure out a better read sequence to attempt long poll reads from replicas.
      *
@@ -1179,7 +1179,7 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
      *
      * @return ensemble placement policy class.
      */
-    public Class<? extends EnsemblePlacementPolicy> getEnsemblePlacementPolicy()
+    /*public Class<? extends EnsemblePlacementPolicy> getEnsemblePlacementPolicy()
             throws ConfigurationException {
         return ReflectionUtils.getClass(this, ENSEMBLE_PLACEMENT_POLICY,
                 RackawareEnsemblePlacementPolicy.class,
@@ -1926,7 +1926,7 @@ public class ClientConfiguration extends AbstractConfiguration<ClientConfigurati
      *
      * @see #setUseV2WireProtocol(boolean)
      * @see ByteBuf#release()
-     * @see LedgerHandle#readEntries(long, long)
+     * @see
      */
     public ClientConfiguration setNettyUsePooledBuffers(boolean enabled) {
         setProperty(NETTY_USE_POOLED_BUFFERS, enabled);

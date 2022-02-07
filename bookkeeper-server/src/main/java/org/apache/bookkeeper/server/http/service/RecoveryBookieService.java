@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.bookkeeper.bookie.Cookie;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.common.util.JsonUtil;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.http.HttpServer;
@@ -55,10 +55,10 @@ public class RecoveryBookieService implements HttpEndpointService {
     static final Logger LOG = LoggerFactory.getLogger(RecoveryBookieService.class);
 
     protected ServerConfiguration conf;
-    protected BookKeeperAdmin bka;
+    //protected BookKeeperAdmin bka;
     protected ExecutorService executor;
 
-    public RecoveryBookieService(ServerConfiguration conf, BookKeeperAdmin bka, ExecutorService executor) {
+   /* public RecoveryBookieService(ServerConfiguration conf, BookKeeperAdmin bka, ExecutorService executor) {
         checkNotNull(conf);
         this.conf = conf;
         this.bka = bka;
@@ -111,7 +111,7 @@ public class RecoveryBookieService implements HttpEndpointService {
                         BookieId bookieSrc = BookieId.parse(bookieSrcSerialized);
                         boolean deleteCookie = requestJsonBody.deleteCookie;
                         LOG.info("Start recovering bookie.");
-                        bka.recoverBookieData(bookieSrc);
+                        //bka.recoverBookieData(bookieSrc);
                         if (deleteCookie) {
                             Versioned<Cookie> cookie = Cookie.readFromRegistrationManager(rm, bookieSrc);
                             cookie.getValue().deleteFromRegistrationManager(rm, bookieSrc, cookie.getVersion());

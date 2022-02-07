@@ -20,7 +20,7 @@
  */
 
 package org.apache.bookkeeper.verifier;
-
+/*
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -33,7 +33,7 @@ import org.apache.bookkeeper.client.LedgerHandle;
 /**
  * Driver for a normal Bookkeeper cluster.
  */
-class DirectBookkeeperDriver implements BookkeeperVerifier.BookkeeperDriver {
+/*class DirectBookkeeperDriver implements BookkeeperVerifier.BookkeeperDriver {
     private final ConcurrentHashMap<Long, LedgerHandle> openHandles = new ConcurrentHashMap<>();
     private BookKeeper client;
 
@@ -113,4 +113,4 @@ class DirectBookkeeperDriver implements BookkeeperVerifier.BookkeeperDriver {
             }, null);
         }, null);
     }
-}
+}*/

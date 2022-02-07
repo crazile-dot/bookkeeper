@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.function.Function;
 import org.apache.bookkeeper.common.concurrent.FutureEventListener;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.stats.Counter;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.bookkeeper.stats.OpStatsLogger;
@@ -277,7 +277,7 @@ class ZKSessionLock implements SessionLock {
     private static final AtomicIntegerFieldUpdater<ZKSessionLock> epochUpdater =
         AtomicIntegerFieldUpdater.newUpdater(ZKSessionLock.class, "epoch");
     private volatile int epoch = 0;
-    private final OrderedScheduler lockStateExecutor;
+    private final Object lockStateExecutor;
     private LockListener lockListener = null;
     private final long lockOpTimeout;
 
@@ -288,12 +288,12 @@ class ZKSessionLock implements SessionLock {
     ZKSessionLock(ZooKeeperClient zkClient,
                   String lockPath,
                   String clientId,
-                  OrderedScheduler lockStateExecutor)
+                  Object lockStateExecutor)
             throws IOException {
         this(zkClient,
                 lockPath,
                 clientId,
-                lockStateExecutor,
+                null,
                 DistributedLogConstants.LOCK_OP_TIMEOUT_DEFAULT * 1000, NullStatsLogger.INSTANCE,
                 new DistributedLockContext());
     }
@@ -311,7 +311,7 @@ class ZKSessionLock implements SessionLock {
     public ZKSessionLock(ZooKeeperClient zkClient,
                          String lockPath,
                          String clientId,
-                         OrderedScheduler lockStateExecutor,
+                         Object lockStateExecutor,
                          long lockOpTimeout,
                          StatsLogger statsLogger,
                          DistributedLockContext lockContext)
@@ -393,7 +393,7 @@ class ZKSessionLock implements SessionLock {
      *          function to execute a lock action
      */
     protected void executeLockAction(final int lockEpoch, final LockAction func) {
-        lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+        /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
             @Override
             public void safeRun() {
                 if (getEpoch() == lockEpoch) {
@@ -414,7 +414,7 @@ class ZKSessionLock implements SessionLock {
                     }
                 }
             }
-        });
+        });*/
     }
 
     /**
@@ -431,7 +431,7 @@ class ZKSessionLock implements SessionLock {
      */
     protected <T> void executeLockAction(final int lockEpoch,
                                          final LockAction func, final CompletableFuture<T> promise) {
-        lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+        /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
             @Override
             public void safeRun() {
                 int currentEpoch = getEpoch();
@@ -454,7 +454,7 @@ class ZKSessionLock implements SessionLock {
                     promise.completeExceptionally(new EpochChangedException(lockPath, lockEpoch, currentEpoch));
                 }
             }
-        });
+        });*/
     }
 
     /**
@@ -554,7 +554,7 @@ class ZKSessionLock implements SessionLock {
                 @Override
                 public void processResult(final int rc, String path, Object ctx,
                                           final List<String> children, Stat stat) {
-                    lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+                    /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
                         @Override
                         public void safeRun() {
                             if (!lockState.inState(State.INIT)) {
@@ -589,7 +589,7 @@ class ZKSessionLock implements SessionLock {
                                 asyncTryLock(wait, result);
                             }
                         }
-                    });
+                    });*/
                 }
             }, null);
         }
@@ -600,7 +600,7 @@ class ZKSessionLock implements SessionLock {
             @Override
             public LockWaiter apply(final String currentOwner) {
                 final Exception acquireException = new OwnershipAcquireFailedException(lockPath, currentOwner);
-                FutureUtils.within(
+                /*FutureUtils.within(
                         acquireFuture,
                         timeout,
                         unit,
@@ -636,7 +636,7 @@ class ZKSessionLock implements SessionLock {
                             });
                         }
                     }
-                });
+                });*/
                 return new LockWaiter(
                         lockId.getLeft(),
                         currentOwner,
@@ -648,12 +648,12 @@ class ZKSessionLock implements SessionLock {
     private boolean checkOrClaimLockOwner(final Pair<String, Long> currentOwner,
                                           final CompletableFuture<String> result) {
         if (lockId.compareTo(currentOwner) != 0 && !lockContext.hasLockId(currentOwner)) {
-            lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+            /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
                 @Override
                 public void safeRun() {
                     result.complete(currentOwner.getLeft());
                 }
-            });
+            });*/
             return false;
         }
         // current owner is itself
@@ -878,14 +878,14 @@ class ZKSessionLock implements SessionLock {
         // Use lock executor here rather than lock action, because we want this opertaion to be applied
         // whether the epoch has changed or not. The member node is EPHEMERAL_SEQUENTIAL so there's no
         // risk of an ABA problem where we delete and recreate a node and then delete it again here.
-        lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+        /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
             @Override
             public void safeRun() {
                 acquireFuture.completeExceptionally(cause);
                 unlockInternal(promise);
                 promise.whenComplete(new OpStatsListener<Void>(unlockStats));
             }
-        });
+        });*/
 
         return promise;
     }
@@ -966,7 +966,7 @@ class ZKSessionLock implements SessionLock {
                 LOG.error("lock node delete failed {} {}", lockId, lockPath);
                 promise.complete(null);
             }
-        }, lockStateExecutor.chooseThread(lockPath));
+        }, null);
     }
 
     private void deleteLockNode(final CompletableFuture<Void> promise) {
@@ -978,7 +978,7 @@ class ZKSessionLock implements SessionLock {
         zk.delete(currentNode, -1, new AsyncCallback.VoidCallback() {
             @Override
             public void processResult(final int rc, final String path, Object ctx) {
-                lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
+                /*lockStateExecutor.executeOrdered(lockPath, new SafeRunnable() {
                     @Override
                     public void safeRun() {
                         if (KeeperException.Code.OK.intValue() == rc) {
@@ -995,7 +995,7 @@ class ZKSessionLock implements SessionLock {
                         FailpointUtils.checkFailPointNoThrow(FailpointUtils.FailPointName.FP_LockUnlockCleanup);
                         promise.complete(null);
                     }
-                });
+                });*/
             }
         }, null);
     }

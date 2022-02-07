@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * user supplied entryIds. Through this interface Ledger Length may not be accurate while the
  * ledger being written.
  */
-public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
+/*public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
     static final Logger LOG = LoggerFactory.getLogger(LedgerHandleAdv.class);
 
     static class PendingOpsComparator implements Comparator<PendingAddOp>, Serializable {
@@ -78,7 +78,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      * @return
      *            entryId that is just created.
      */
-    @Override
+    /*@Override
     public long addEntry(final long entryId, byte[] data) throws InterruptedException, BKException {
 
         return addEntry(entryId, data, 0, data.length);
@@ -99,7 +99,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      *            number of bytes to take from data
      * @return The entryId of newly inserted entry.
      */
-    @Override
+   /* @Override
     public long addEntry(final long entryId, byte[] data, int offset, int length) throws InterruptedException,
             BKException {
         if (LOG.isDebugEnabled()) {
@@ -129,7 +129,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      * @param ctx
      *            some control object
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(long entryId, byte[] data, AddCallback cb, Object ctx) {
         asyncAddEntry(entryId, data, 0, data.length, cb, ctx);
     }
@@ -154,7 +154,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      *             if offset or length is negative or offset and length sum to a
      *             value higher than the length of data.
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(final long entryId, final byte[] data, final int offset, final int length,
             final AddCallback cb, final Object ctx) {
         asyncAddEntry(entryId, Unpooled.wrappedBuffer(data, offset, length), cb, ctx);
@@ -180,7 +180,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      *             if offset or length is negative or offset and length sum to a
      *             value higher than the length of data.
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(final long entryId, final byte[] data, final int offset, final int length,
                               final AddCallbackWithLatency cb, final Object ctx) {
         asyncAddEntry(entryId, Unpooled.wrappedBuffer(data, offset, length), cb, ctx);
@@ -201,7 +201,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      * @param ctx
      *            some control object
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(final long entryId, ByteBuf data,
                               final AddCallbackWithLatency cb, final Object ctx) {
         PendingAddOp op = PendingAddOp.create(this, clientCtx, getCurrentEnsemble(), data, writeFlags, cb, ctx);
@@ -220,7 +220,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
      * Though there may be some code duplication, Choose to have the override routine so the control flow is
      * unaltered in the base class.
      */
-    @Override
+   /* @Override
     protected void doAsyncAddEntry(final PendingAddOp op) {
         if (throttler != null) {
             throttler.acquire();
@@ -287,7 +287,7 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
     /**
      * LedgerHandleAdv will not allow addEntry without providing an entryId.
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(ByteBuf data, AddCallback cb, Object ctx) {
         cb.addCompleteWithLatency(BKException.Code.IllegalOpException, this, LedgerHandle.INVALID_ENTRY_ID, 0, ctx);
     }
@@ -295,10 +295,10 @@ public class LedgerHandleAdv extends LedgerHandle implements WriteAdvHandle {
     /**
      * LedgerHandleAdv will not allow addEntry without providing an entryId.
      */
-    @Override
+   /* @Override
     public void asyncAddEntry(final byte[] data, final int offset, final int length,
                               final AddCallback cb, final Object ctx) {
         cb.addComplete(BKException.Code.IllegalOpException, this, LedgerHandle.INVALID_ENTRY_ID, ctx);
     }
 
-}
+}*/

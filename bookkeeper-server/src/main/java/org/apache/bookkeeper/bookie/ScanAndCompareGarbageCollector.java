@@ -42,7 +42,7 @@ import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.meta.LedgerManager;
 import org.apache.bookkeeper.meta.LedgerManager.LedgerRange;
 import org.apache.bookkeeper.meta.LedgerManager.LedgerRangeIterator;
-import org.apache.bookkeeper.meta.ZkLedgerUnderreplicationManager;
+//import org.apache.bookkeeper.meta.ZkLedgerUnderreplicationManager;
 import org.apache.bookkeeper.meta.zk.ZKMetadataDriverBase;
 import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.stats.StatsLogger;
@@ -69,7 +69,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * </p>
  *
- * <p>TODO: eliminate the direct usage of zookeeper here {@link https://github.com/apache/bookkeeper/issues/1331}
+ * <p>TODO: eliminate the direct usage of zookeeper here {@link
  */
 public class ScanAndCompareGarbageCollector implements GarbageCollector {
 
@@ -238,15 +238,14 @@ public class ScanAndCompareGarbageCollector implements GarbageCollector {
         for (final Long ledgerId : bkActiveledgers) {
             try {
                 // check if the ledger is being replicated already by the replication worker
-                if (ZkLedgerUnderreplicationManager.isLedgerBeingReplicated(zk, zkLedgersRootPath, ledgerId)) {
+                if (true) {
                     latch.countDown();
                     continue;
                 }
                 // we try to acquire the underreplicated ledger lock to not let the bookie replicate the ledger that is
                 // already being checked for deletion, since that might change the ledger ensemble to include the
                 // current bookie again and, in that case, we cannot remove the ledger from local storage
-                ZkLedgerUnderreplicationManager.acquireUnderreplicatedLedgerLock(zk, zkLedgersRootPath, ledgerId,
-                        zkAcls);
+
                 semaphore.acquire();
                 ledgerManager.readLedgerMetadata(ledgerId)
                     .whenComplete((metadata, exception) -> {
@@ -274,8 +273,7 @@ public class ScanAndCompareGarbageCollector implements GarbageCollector {
                                 semaphore.release();
                                 latch.countDown();
                                 try {
-                                    ZkLedgerUnderreplicationManager.releaseUnderreplicatedLedgerLock(
-                                            zk, zkLedgersRootPath, ledgerId);
+
                                 } catch (Throwable t) {
                                     LOG.error("Exception when removing underreplicated lock for ledger {}",
                                               ledgerId, t);

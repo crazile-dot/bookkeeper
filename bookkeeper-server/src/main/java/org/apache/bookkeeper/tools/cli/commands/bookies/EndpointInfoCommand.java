@@ -25,7 +25,7 @@ import java.util.Collection;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.discover.BookieServiceInfo;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Get endpoint information about a Bookie.
  */
-public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.EndpointInfoFlags> {
+/*public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.EndpointInfoFlags> {
 
     static final Logger LOG = LoggerFactory.getLogger(EndpointInfoCommand.class);
 
@@ -57,7 +57,7 @@ public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.Endpo
     /**
      * Flags for this command.
      */
-    @Accessors(fluent = true)
+   /* @Accessors(fluent = true)
     @Setter
     public static class EndpointInfoFlags extends CliFlags {
 
@@ -66,7 +66,7 @@ public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.Endpo
 
     }
 
-    @Override
+   /* @Override
     public boolean apply(ServerConfiguration conf, EndpointInfoFlags cmdFlags) {
         try {
             return getEndpointInfo(conf, cmdFlags);
@@ -75,7 +75,7 @@ public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.Endpo
         }
     }
 
-    private boolean getEndpointInfo(ServerConfiguration conf, EndpointInfoFlags flags)
+    /*private boolean getEndpointInfo(ServerConfiguration conf, EndpointInfoFlags flags)
             throws BKException, InterruptedException, IOException {
         ClientConfiguration adminConf = new ClientConfiguration(conf);
         BookKeeperAdmin admin = new BookKeeperAdmin(adminConf);
@@ -122,4 +122,4 @@ public class EndpointInfoCommand extends BookieCommand<EndpointInfoCommand.Endpo
             }
         }
     }
-}
+}*/

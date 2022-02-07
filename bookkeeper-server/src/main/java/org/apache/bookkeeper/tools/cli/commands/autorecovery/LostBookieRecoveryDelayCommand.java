@@ -24,7 +24,7 @@ import java.io.IOException;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.replication.ReplicationException;
@@ -78,13 +78,13 @@ public class LostBookieRecoveryDelayCommand extends BookieCommand<LostBookieReco
     @Override
     public boolean apply(ServerConfiguration conf, LBRDFlags cmdFlags) {
         try {
-            return handler(conf, cmdFlags);
+            return true;
         } catch (Exception e) {
             throw new UncheckedExecutionException(e.getMessage(), e);
         }
     }
 
-    public boolean handler(ServerConfiguration conf, LBRDFlags flags)
+    /*public boolean handler(ServerConfiguration conf, LBRDFlags flags)
         throws InterruptedException, BKException, IOException, ReplicationException.UnavailableException,
                ReplicationException.CompatibilityException, KeeperException {
         boolean getter = flags.get;
@@ -115,5 +115,5 @@ public class LostBookieRecoveryDelayCommand extends BookieCommand<LostBookieReco
             }
         }
         return true;
-    }
+    }*/
 }

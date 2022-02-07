@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.bookkeeper.client.BKException.BKDigestMatchException;
 import org.apache.bookkeeper.client.LedgerHandle;
-import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
+//import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
 import org.apache.bookkeeper.util.ByteBufList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,10 +69,10 @@ public abstract class DigestManager {
         this.allocator = allocator;
     }
 
-    public static DigestManager instantiate(long ledgerId, byte[] passwd, DigestType digestType,
+    public static Object instantiate(long ledgerId, byte[] passwd, Object digestType,
             ByteBufAllocator allocator, boolean useV2Protocol) throws GeneralSecurityException {
-        switch(digestType) {
-        case HMAC:
+       // switch(digestType) {
+        /*case HMAC:
             return new MacDigestManager(ledgerId, passwd, useV2Protocol, allocator);
         case CRC32:
             return new CRC32DigestManager(ledgerId, useV2Protocol, allocator);
@@ -82,7 +82,8 @@ public abstract class DigestManager {
             return new DummyDigestManager(ledgerId, useV2Protocol, allocator);
         default:
             throw new GeneralSecurityException("Unknown checksum type: " + digestType);
-        }
+        }*/
+        return 1;
     }
 
     public static byte[] generateMasterKey(byte[] password) throws NoSuchAlgorithmException {

@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookKeeper;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookKeeper;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.net.BookieId;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A bookie command to retrieve bookie info.
  */
-public class InfoCommand extends BookieCommand<CliFlags> {
+/*public class InfoCommand extends BookieCommand<CliFlags> {
 
     private static final String NAME = "info";
     private static final String DESC = "Retrieve bookie info such as free and total disk space.";
@@ -68,7 +68,7 @@ public class InfoCommand extends BookieCommand<CliFlags> {
         return cnt > 0 ? "(" + df.format(d) + unit[cnt] + ")" : unit[cnt];
     }
 
-
+/*
     @Override
     public boolean apply(ServerConfiguration conf, CliFlags cmdFlags) {
 
@@ -116,4 +116,4 @@ public class InfoCommand extends BookieCommand<CliFlags> {
         }
         return true;
     }
-}
+}*/

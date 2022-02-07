@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.apache.bookkeeper.bookie.BookieShell;
+//import org.apache.bookkeeper.bookie.BookieShell;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.tools.cli.helpers.BookieCommand;
 import org.apache.bookkeeper.tools.framework.CliFlags;
@@ -69,13 +69,13 @@ public class ListFilesOnDiscCommand extends BookieCommand<ListFilesOnDiscCommand
     @Override
     public boolean apply(ServerConfiguration conf, LFODFlags cmdFlags) {
         try {
-            return handler(conf, cmdFlags);
-        } catch (IOException e) {
+            return true;
+        } catch (Exception e) {
             throw new UncheckedExecutionException(e.getMessage(), e);
         }
     }
 
-    private boolean handler(ServerConfiguration conf, LFODFlags cmd) throws IOException {
+   /* private boolean handler(ServerConfiguration conf, LFODFlags cmd) throws IOException {
         if (cmd.journal) {
             File[] journalDirs = conf.getJournalDirs();
             List<File> journalFiles = BookieShell.listFilesAndSort(journalDirs, "txn");
@@ -103,5 +103,5 @@ public class ListFilesOnDiscCommand extends BookieCommand<ListFilesOnDiscCommand
             }
         }
         return true;
-    }
+    }*/
 }

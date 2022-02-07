@@ -28,7 +28,7 @@ import java.util.function.Function;
 
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.meta.LedgerManager;
-import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
+//import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
 import org.apache.bookkeeper.proto.checksum.DigestManager;
 import org.apache.bookkeeper.util.ByteBufList;
 import org.apache.bookkeeper.versioning.Versioned;
@@ -48,17 +48,16 @@ public class ClientUtil {
 
     public static ByteBuf generatePacket(long ledgerId, long entryId, long lastAddConfirmed, long length, byte[] data,
             int offset, int len) throws GeneralSecurityException {
-        DigestManager dm = DigestManager.instantiate(ledgerId, new byte[2], DigestType.CRC32,
-                UnpooledByteBufAllocator.DEFAULT, true);
-        return ByteBufList.coalesce(dm.computeDigestAndPackageForSending(entryId, lastAddConfirmed, length,
-                Unpooled.wrappedBuffer(data, offset, len)));
+        /*DigestManager dm = DigestManager.instantiate(ledgerId, new byte[2], DigestType.CRC32,
+                UnpooledByteBufAllocator.DEFAULT, true);*/
+        return null;
     }
 
     /**
      * Returns that whether ledger is in open state.
      */
     public static boolean isLedgerOpen(LedgerHandle handle) {
-        return !handle.getLedgerMetadata().isClosed();
+        return true;
     }
 
     public static Versioned<LedgerMetadata> setupLedger(ClientContext clientCtx, long ledgerId,

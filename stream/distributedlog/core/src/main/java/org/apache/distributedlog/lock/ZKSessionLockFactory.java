@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.common.util.SafeRunnable;
 import org.apache.bookkeeper.stats.StatsLogger;
 import org.apache.distributedlog.ZooKeeperClient;
@@ -37,7 +37,7 @@ public class ZKSessionLockFactory implements SessionLockFactory {
 
     private final ZooKeeperClient zkc;
     private final String clientId;
-    private final OrderedScheduler lockStateExecutor;
+    private final Object lockStateExecutor;
     private final long lockOpTimeout;
     private final int lockCreationRetries;
     private final long zkRetryBackoffMs;
@@ -47,7 +47,7 @@ public class ZKSessionLockFactory implements SessionLockFactory {
 
     public ZKSessionLockFactory(ZooKeeperClient zkc,
                                 String clientId,
-                                OrderedScheduler lockStateExecutor,
+                                Object lockStateExecutor,
                                 int lockCreationRetries,
                                 long lockOpTimeout,
                                 long zkRetryBackoffMs,
@@ -89,7 +89,7 @@ public class ZKSessionLockFactory implements SessionLockFactory {
                     final AtomicInteger numRetries,
                     final CompletableFuture<SessionLock> createPromise,
                     final long delayMs) {
-        lockStateExecutor.scheduleOrdered(lockPath, new SafeRunnable() {
+        /*lockStateExecutor.scheduleOrdered(lockPath, new SafeRunnable() {
             @Override
             public void safeRun() {
                 if (null != interruptedException.get()) {
@@ -124,6 +124,6 @@ public class ZKSessionLockFactory implements SessionLockFactory {
                             zkRetryBackoffMs);
                 }
             }
-        }, delayMs, TimeUnit.MILLISECONDS);
+        }, delayMs, TimeUnit.MILLISECONDS);*/
     }
 }

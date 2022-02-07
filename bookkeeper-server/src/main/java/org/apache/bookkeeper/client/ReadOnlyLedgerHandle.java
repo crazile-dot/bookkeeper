@@ -19,7 +19,7 @@
  *
  */
 package org.apache.bookkeeper.client;
-
+/*
 import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * the public write operations from LedgerHandle.
  * It should be returned for BookKeeper#openLedger operations.
  */
-class ReadOnlyLedgerHandle extends LedgerHandle implements LedgerMetadataListener {
+/*class ReadOnlyLedgerHandle extends LedgerHandle implements LedgerMetadataListener {
     private static final Logger LOG = LoggerFactory.getLogger(ReadOnlyLedgerHandle.class);
 
     private Object metadataLock = new Object();
@@ -211,7 +211,7 @@ class ReadOnlyLedgerHandle extends LedgerHandle implements LedgerMetadataListene
      * but rather, we want to defer the persistence until recovery has completed, and do it all
      * on the close.
      */
-    @Override
+   /* @Override
     void handleBookieFailure(final Map<Integer, BookieId> failedBookies) {
         // handleBookieFailure should always run in the ordered executor thread for this
         // ledger, so this synchronized should be unnecessary, but putting it here now
@@ -258,7 +258,7 @@ class ReadOnlyLedgerHandle extends LedgerHandle implements LedgerMetadataListene
      * @param forceRecovery
      *          force the recovery procedure even the ledger metadata shows the ledger is closed.
      */
-    void recover(GenericCallback<Void> finalCb,
+ /*   void recover(GenericCallback<Void> finalCb,
                  final @VisibleForTesting ReadEntryListener listener,
                  final boolean forceRecovery) {
         final GenericCallback<Void> cb = new TimedGenericCallback<Void>(
@@ -349,4 +349,4 @@ class ReadOnlyLedgerHandle extends LedgerHandle implements LedgerMetadataListene
         }
     }
 
-}
+}*/

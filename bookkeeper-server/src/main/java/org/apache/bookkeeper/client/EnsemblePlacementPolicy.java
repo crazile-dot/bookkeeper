@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.bookkeeper.client.BKException.BKNotEnoughBookiesException;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.DistributionSchedule.WriteSet;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.common.annotation.InterfaceAudience;
@@ -37,7 +37,7 @@ import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.net.DNSToSwitchMapping;
 import org.apache.bookkeeper.proto.BookieAddressResolver;
 import org.apache.bookkeeper.stats.StatsLogger;
-
+/*
 /**
  * {@link EnsemblePlacementPolicy} encapsulates the algorithm that bookkeeper client uses to select a number of bookies
  * from the cluster as an ensemble for storing entries.
@@ -224,7 +224,7 @@ public interface EnsemblePlacementPolicy {
      * Uninitialize the policy.
      */
     void uninitalize();
-
+/*
     /**
      * A consistent view of the cluster (what bookies are available as writable, what bookies are available as
      * readonly) is updated when any changes happen in the cluster.
@@ -243,7 +243,7 @@ public interface EnsemblePlacementPolicy {
      */
     Set<BookieId> onClusterChanged(Set<BookieId> writableBookies,
                                               Set<BookieId> readOnlyBookies);
-
+/*
     /**
      * Choose <i>numBookies</i> bookies for ensemble. If the count is more than the number of available
      * nodes, {@link BKNotEnoughBookiesException} is thrown.
@@ -276,7 +276,7 @@ public interface EnsemblePlacementPolicy {
                                                            Set<BookieId> excludeBookies)
             throws BKNotEnoughBookiesException;
 
-    /**
+  /*  /**
      * Choose a new bookie to replace <i>bookieToReplace</i>. If no bookie available in the cluster,
      * {@link BKNotEnoughBookiesException} is thrown.
      *
@@ -353,7 +353,7 @@ public interface EnsemblePlacementPolicy {
             List<BookieId> ensemble,
             BookiesHealthInfo bookiesHealthInfo,
             DistributionSchedule.WriteSet writeSet);
-
+/*
     /**
      * Send the bookie info details.
      *
@@ -361,8 +361,8 @@ public interface EnsemblePlacementPolicy {
      *          A map that has the bookie to BookieInfo
      * @since 4.5
      */
-    default void updateBookieInfo(Map<BookieId, BookieInfo> bookieInfoMap) {
-    }
+    /*default void updateBookieInfo(Map<BookieId, BookieInfo> bookieInfoMap) {
+    }*/
 
     /**
      * Select one bookie to the "sticky" bookie where all reads for a particular

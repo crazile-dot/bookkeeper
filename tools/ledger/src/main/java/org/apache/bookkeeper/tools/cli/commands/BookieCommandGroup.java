@@ -23,7 +23,7 @@ import static org.apache.bookkeeper.tools.common.BKCommandCategories.CATEGORY_IN
 import org.apache.bookkeeper.tools.cli.BKCtl;
 import org.apache.bookkeeper.tools.cli.commands.bookie.ConvertToDBStorageCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.ConvertToInterleavedStorageCommand;
-import org.apache.bookkeeper.tools.cli.commands.bookie.FlipBookieIdCommand;
+//import org.apache.bookkeeper.tools.cli.commands.bookie.FlipBookieIdCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.FormatCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.InitCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.LastMarkCommand;
@@ -38,7 +38,7 @@ import org.apache.bookkeeper.tools.cli.commands.bookie.ReadLogMetadataCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.RebuildDBLedgerLocationsIndexCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.RegenerateInterleavedStorageIndexFileCommand;
 import org.apache.bookkeeper.tools.cli.commands.bookie.SanityTestCommand;
-import org.apache.bookkeeper.tools.cli.commands.bookies.EndpointInfoCommand;
+//import org.apache.bookkeeper.tools.cli.commands.bookies.EndpointInfoCommand;
 import org.apache.bookkeeper.tools.common.BKFlags;
 import org.apache.bookkeeper.tools.framework.CliCommandGroup;
 import org.apache.bookkeeper.tools.framework.CliSpec;
@@ -59,7 +59,6 @@ public class BookieCommandGroup extends CliCommandGroup<BKFlags> {
         .addCommand(new LastMarkCommand())
         .addCommand(new InitCommand())
         .addCommand(new FormatCommand())
-        .addCommand(new EndpointInfoCommand())
         .addCommand(new SanityTestCommand())
         .addCommand(new LedgerCommand())
         .addCommand(new ListFilesOnDiscCommand())
@@ -72,7 +71,6 @@ public class BookieCommandGroup extends CliCommandGroup<BKFlags> {
         .addCommand(new ReadLogCommand())
         .addCommand(new ReadLogMetadataCommand())
         .addCommand(new LocalConsistencyCheckCommand())
-        .addCommand(new FlipBookieIdCommand())
         .addCommand(new RegenerateInterleavedStorageIndexFileCommand())
         .build();
 

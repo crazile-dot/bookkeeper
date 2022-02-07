@@ -86,6 +86,6 @@ public class LegacyHierarchicalLedgerManagerFactory extends AbstractZkLedgerMana
     @Override
     public LedgerUnderreplicationManager newLedgerUnderreplicationManager()
             throws KeeperException, InterruptedException, ReplicationException.CompatibilityException{
-        return new ZkLedgerUnderreplicationManager(conf, zk);
+        return null;
     }
 }

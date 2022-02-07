@@ -18,7 +18,7 @@ package org.apache.bookkeeper.client.api;
 import java.lang.reflect.Field;
 import java.util.function.Function;
 
-import org.apache.bookkeeper.client.LedgerHandleAdv;
+//import org.apache.bookkeeper.client.LedgerHandleAdv;
 import org.apache.bookkeeper.common.annotation.InterfaceAudience.Public;
 import org.apache.bookkeeper.common.annotation.InterfaceStability.Unstable;
 
@@ -231,7 +231,7 @@ public class BKException extends Exception {
          */
         int AddEntryQuorumTimeoutException = -21;
         /**
-         * Duplicated entry id is found when {@link LedgerHandleAdv#addEntry(long, byte[])}.
+         * Duplicated entry id is found when {@link (long, byte[])}.
          *
          * @since 4.5
          */

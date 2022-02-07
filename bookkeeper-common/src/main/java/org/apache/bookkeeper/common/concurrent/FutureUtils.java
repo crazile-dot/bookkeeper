@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.common.stats.OpStatsListener;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.stats.OpStatsLogger;
 
 /**
@@ -134,7 +134,7 @@ public final class FutureUtils {
         result.completeExceptionally(cause);
     }
 
-    /**
+    /*/**
      * Completing the {@code future} in the thread in the scheduler identified by
      * the {@code scheduleKey}.
      *
@@ -145,13 +145,13 @@ public final class FutureUtils {
      * @param <T>
      * @return
      */
-    public static <T> CompletableFuture<T> whenCompleteAsync(
+    /*public static <T> CompletableFuture<T> whenCompleteAsync(
         CompletableFuture<T> future,
         BiConsumer<? super T, ? super Throwable> action,
         OrderedScheduler scheduler,
         Object scheduleKey) {
         return future.whenCompleteAsync(action, scheduler.chooseThread(scheduleKey));
-    }
+    }*/
 
     public static <T> CompletableFuture<List<T>> collect(List<CompletableFuture<T>> futureList) {
         CompletableFuture<Void> finalFuture =
@@ -255,7 +255,7 @@ public final class FutureUtils {
         }
         return processor.promise;
     }
-
+/*
     /**
      * Raise an exception to the <i>promise</i> within a given <i>timeout</i> period.
      * If the promise has been satisfied before raising, it won't change the state of the promise.
@@ -268,7 +268,7 @@ public final class FutureUtils {
      * @param key       the submit key used by the scheduler
      * @return the promise applied with the raise logic
      */
-    public static <T> CompletableFuture<T> within(final CompletableFuture<T> promise,
+    /*public static <T> CompletableFuture<T> within(final CompletableFuture<T> promise,
                                                   final long timeout,
                                                   final TimeUnit unit,
                                                   final Throwable cause,

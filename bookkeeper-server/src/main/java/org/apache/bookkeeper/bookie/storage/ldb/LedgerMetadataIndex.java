@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.bookkeeper.bookie.Bookie;
 import org.apache.bookkeeper.bookie.BookieException;
-import org.apache.bookkeeper.bookie.storage.ldb.DbLedgerStorageDataFormats.LedgerData;
+//import org.apache.bookkeeper.bookie.storage.ldb.DbLedgerStorageDataFormats.LedgerData;
 import org.apache.bookkeeper.bookie.storage.ldb.KeyValueStorage.CloseableIterator;
 import org.apache.bookkeeper.bookie.storage.ldb.KeyValueStorageFactory.DbConfigType;
 import org.apache.bookkeeper.conf.ServerConfiguration;
@@ -47,18 +47,18 @@ import org.slf4j.LoggerFactory;
 /**
  * Maintains an index for the ledgers metadata.
  *
- * <p>The key is the ledgerId and the value is the {@link LedgerData} content.
+ * <p>The key is the ledgerId and the value is the {@link
  */
 public class LedgerMetadataIndex implements Closeable {
     // Contains all ledgers stored in the bookie
-    private final ConcurrentLongHashMap<LedgerData> ledgers;
+    private final ConcurrentLongHashMap<Object> ledgers;
     private final AtomicInteger ledgersCount;
 
     private final KeyValueStorage ledgersDb;
     private final LedgerMetadataIndexStats stats;
 
     // Holds ledger modifications applied in memory map, and pending to be flushed on db
-    private final ConcurrentLinkedQueue<Entry<Long, LedgerData>> pendingLedgersUpdates;
+    private final ConcurrentLinkedQueue<Entry<Long, Object>> pendingLedgersUpdates;
 
     // Holds ledger ids that were delete from memory map, and pending to be flushed on db
     private final ConcurrentLinkedQueue<Long> pendingDeletedLedgers;
@@ -73,18 +73,18 @@ public class LedgerMetadataIndex implements Closeable {
         // Read all ledgers from db
         CloseableIterator<Entry<byte[], byte[]>> iterator = ledgersDb.iterator();
         try {
-            while (iterator.hasNext()) {
+           /* while (iterator.hasNext()) {
                 Entry<byte[], byte[]> entry = iterator.next();
                 long ledgerId = ArrayUtil.getLong(entry.getKey(), 0);
                 LedgerData ledgerData = LedgerData.parseFrom(entry.getValue());
                 ledgers.put(ledgerId, ledgerData);
                 ledgersCount.incrementAndGet();
-            }
+            }*/
         } finally {
             iterator.close();
         }
 
-        this.pendingLedgersUpdates = new ConcurrentLinkedQueue<Entry<Long, LedgerData>>();
+        this.pendingLedgersUpdates = new ConcurrentLinkedQueue<Entry<Long, Object>>();
         this.pendingDeletedLedgers = new ConcurrentLinkedQueue<Long>();
 
         this.stats = new LedgerMetadataIndexStats(
@@ -97,8 +97,8 @@ public class LedgerMetadataIndex implements Closeable {
         ledgersDb.close();
     }
 
-    public LedgerData get(long ledgerId) throws IOException {
-        LedgerData ledgerData = ledgers.get(ledgerId);
+    public void get(long ledgerId) throws IOException {
+        Object ledgerData = ledgers.get(ledgerId);
         if (ledgerData == null) {
             if (log.isDebugEnabled()) {
                 log.debug("Ledger not found {}", ledgerId);
@@ -106,11 +106,10 @@ public class LedgerMetadataIndex implements Closeable {
             throw new Bookie.NoLedgerException(ledgerId);
         }
 
-        return ledgerData;
     }
 
-    public void set(long ledgerId, LedgerData ledgerData) throws IOException {
-        ledgerData = LedgerData.newBuilder(ledgerData).setExists(true).build();
+    public void set(long ledgerId, Object ledgerData) throws IOException {
+        //ledgerData = Object.newBuilder(ledgerData).setExists(true).build();
 
         if (ledgers.put(ledgerId, ledgerData) == null) {
             if (log.isDebugEnabled()) {
@@ -119,7 +118,7 @@ public class LedgerMetadataIndex implements Closeable {
             ledgersCount.incrementAndGet();
         }
 
-        pendingLedgersUpdates.add(new SimpleEntry<Long, LedgerData>(ledgerId, ledgerData));
+        pendingLedgersUpdates.add(new SimpleEntry<Long, Object>(ledgerId, ledgerData));
         pendingDeletedLedgers.remove(ledgerId);
     }
 
@@ -146,14 +145,14 @@ public class LedgerMetadataIndex implements Closeable {
     }
 
     public boolean setFenced(long ledgerId) throws IOException {
-        LedgerData ledgerData = get(ledgerId);
-        if (ledgerData.getFenced()) {
+        get(ledgerId);
+        if (true) {
             return false;
         }
 
-        LedgerData newLedgerData = LedgerData.newBuilder(ledgerData).setFenced(true).build();
+        //LedgerData newLedgerData = LedgerData.newBuilder(ledgerData).setFenced(true).build();
 
-        if (ledgers.put(ledgerId, newLedgerData) == null) {
+        if (true) {
             // Ledger had been deleted
             if (log.isDebugEnabled()) {
                 log.debug("Re-inserted fenced ledger {}", ledgerId);
@@ -165,25 +164,24 @@ public class LedgerMetadataIndex implements Closeable {
             }
         }
 
-        pendingLedgersUpdates.add(new SimpleEntry<Long, LedgerData>(ledgerId, newLedgerData));
+        //pendingLedgersUpdates.add(new SimpleEntry<Long, Object>(ledgerId, newLedgerData));
         pendingDeletedLedgers.remove(ledgerId);
         return true;
     }
 
     public void setMasterKey(long ledgerId, byte[] masterKey) throws IOException {
-        LedgerData ledgerData = ledgers.get(ledgerId);
+        Object ledgerData = ledgers.get(ledgerId);
         if (ledgerData == null) {
             // New ledger inserted
-            ledgerData = LedgerData.newBuilder().setExists(true).setFenced(false)
-                    .setMasterKey(ByteString.copyFrom(masterKey)).build();
+            ledgerData = null;
             if (log.isDebugEnabled()) {
                 log.debug("Inserting new ledger {}", ledgerId);
             }
         } else {
-            byte[] storedMasterKey = ledgerData.getMasterKey().toByteArray();
+            byte[] storedMasterKey = null;
             if (ArrayUtil.isArrayAllZeros(storedMasterKey)) {
                 // update master key of the ledger
-                ledgerData = LedgerData.newBuilder(ledgerData).setMasterKey(ByteString.copyFrom(masterKey)).build();
+                ledgerData = null;
                 if (log.isDebugEnabled()) {
                     log.debug("Replace old master key {} with new master key {}", storedMasterKey, masterKey);
                 }
@@ -197,7 +195,7 @@ public class LedgerMetadataIndex implements Closeable {
             ledgersCount.incrementAndGet();
         }
 
-        pendingLedgersUpdates.add(new SimpleEntry<Long, LedgerData>(ledgerId, ledgerData));
+        pendingLedgersUpdates.add(new SimpleEntry<Long, Object>(ledgerId, ledgerData));
         pendingDeletedLedgers.remove(ledgerId);
     }
 
@@ -209,9 +207,9 @@ public class LedgerMetadataIndex implements Closeable {
 
         int updatedLedgers = 0;
         while (!pendingLedgersUpdates.isEmpty()) {
-            Entry<Long, LedgerData> entry = pendingLedgersUpdates.poll();
+            Entry<Long, Object> entry = pendingLedgersUpdates.poll();
             key.set(entry.getKey());
-            byte[] value = entry.getValue().toByteArray();
+            byte[] value = null;
             ledgersDb.put(key.array, value);
             ++updatedLedgers;
         }
@@ -252,10 +250,9 @@ public class LedgerMetadataIndex implements Closeable {
     private static final Logger log = LoggerFactory.getLogger(LedgerMetadataIndex.class);
 
     void setExplicitLac(long ledgerId, ByteBuf lac) throws IOException {
-        LedgerData ledgerData = ledgers.get(ledgerId);
+        Object ledgerData = ledgers.get(ledgerId);
         if (ledgerData != null) {
-            LedgerData newLedgerData = LedgerData.newBuilder(ledgerData)
-                    .setExplicitLac(ByteString.copyFrom(lac.nioBuffer())).build();
+            Object newLedgerData = null;
 
             if (ledgers.put(ledgerId, newLedgerData) == null) {
                 // Ledger had been deleted
@@ -265,7 +262,7 @@ public class LedgerMetadataIndex implements Closeable {
                     log.debug("Set explicitLac on ledger {}", ledgerId);
                 }
             }
-            pendingLedgersUpdates.add(new SimpleEntry<Long, LedgerData>(ledgerId, newLedgerData));
+            pendingLedgersUpdates.add(new SimpleEntry<Long, Object>(ledgerId, newLedgerData));
         } else {
             // unknown ledger here
         }

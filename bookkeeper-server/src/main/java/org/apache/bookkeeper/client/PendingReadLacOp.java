@@ -52,7 +52,7 @@ class PendingReadLacOp implements ReadLacCallback {
     int numResponsesPending;
     volatile boolean completed = false;
     int lastSeenError = BKException.Code.ReadException;
-    final DistributionSchedule.QuorumCoverageSet coverageSet;
+    final DistributionSchedule.QuorumCoverageSet coverageSet = null;
     long maxLac = LedgerHandle.INVALID_ENTRY_ID;
     final List<BookieId> currentEnsemble;
 
@@ -68,13 +68,13 @@ class PendingReadLacOp implements ReadLacCallback {
         this.bookieClient = bookieClient;
         this.cb = cb;
         this.numResponsesPending = ensemble.size();
-        this.coverageSet = lh.distributionSchedule.getCoverageSet();
+        //this.coverageSet = lh.distributionSchedule.getCoverageSet();
         this.currentEnsemble = ensemble;
     }
 
     public void initiate() {
         for (int i = 0; i < currentEnsemble.size(); i++) {
-            bookieClient.readLac(currentEnsemble.get(i), lh.ledgerId, this, i);
+            //bookieClient.readLac(currentEnsemble.get(i), lh.ledgerId, this, i);
         }
     }
 
@@ -106,21 +106,21 @@ class PendingReadLacOp implements ReadLacCallback {
 
                 // Extract lac from FileInfo on the ledger.
                 if (lacBuffer != null && lacBuffer.readableBytes() > 0) {
-                    long lac = lh.macManager.verifyDigestAndReturnLac(lacBuffer);
+                    /*long lac = lh.macManager.verifyDigestAndReturnLac(lacBuffer);
                     if (lac > maxLac) {
                         maxLac = lac;
-                    }
+                    }*/
                 }
                 // Extract lac from last entry on the disk
                 if (lastEntryBuffer != null && lastEntryBuffer.readableBytes() > 0) {
-                    RecoveryData recoveryData = lh.macManager.verifyDigestAndReturnLastConfirmed(lastEntryBuffer);
-                    long recoveredLac = recoveryData.getLastAddConfirmed();
-                    if (recoveredLac > maxLac) {
+                    //RecoveryData recoveryData = lh.macManager.verifyDigestAndReturnLastConfirmed(lastEntryBuffer);
+                    //long recoveredLac = recoveryData.getLastAddConfirmed();
+                    /*if (recoveredLac > maxLac) {
                         maxLac = recoveredLac;
-                    }
+                    }*/
                 }
                 heardValidResponse = true;
-            } catch (BKDigestMatchException e) {
+            } catch (Exception e) {
                 // Too bad, this bookie did not give us a valid answer, we
                 // still might be able to recover. So, continue
                 LOG.error("Mac mismatch while reading  ledger: " + ledgerId + " LAC from bookie: "

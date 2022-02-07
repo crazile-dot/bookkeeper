@@ -47,7 +47,7 @@ import org.apache.bookkeeper.client.api.DigestType;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.client.api.LedgerMetadata.State;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat;
+//import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +128,7 @@ public class LedgerMetadataSerDe {
     }
 
     public byte[] serialize(LedgerMetadata metadata) throws IOException {
-        int formatVersion = metadata.getMetadataFormatVersion();
+        /*int formatVersion = metadata.getMetadataFormatVersion();
         final byte[] serialized;
         switch (formatVersion) {
         case METADATA_FORMAT_VERSION_3:
@@ -151,11 +151,11 @@ public class LedgerMetadataSerDe {
                 serializedStr = new String(serialized, UTF_8);
             }
             log.debug("Serialized with format {}: {}", formatVersion, serializedStr);
-        }
-        return serialized;
+        }*/
+        return null;
     }
 
-    private static byte[] serializeVersion3(LedgerMetadata metadata) throws IOException {
+    /*éprivate static byte[] serializeVersion3(LedgerMetadata metadata) throws IOException {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             writeHeader(os, METADATA_FORMAT_VERSION_3);
             LedgerMetadataFormat.Builder builder = LedgerMetadataFormat.newBuilder();
@@ -182,7 +182,7 @@ public class LedgerMetadataSerDe {
             }
 
             /** Hack to get around fact that ctime was never versioned correctly */
-            if (LedgerMetadataUtils.shouldStoreCtime(metadata)) {
+           /* if (LedgerMetadataUtils.shouldStoreCtime(metadata)) {
                 builder.setCtime(metadata.getCtime());
             }
 
@@ -227,7 +227,7 @@ public class LedgerMetadataSerDe {
                  * fields, and if this code was shared with version 3, it would be easy to
                  * accidently add new fields and create BC issues.
                  **********************************************************************/
-                LedgerMetadataFormat.Builder builder = LedgerMetadataFormat.newBuilder();
+                /*LedgerMetadataFormat.Builder builder = LedgerMetadataFormat.newBuilder();
                 builder.setQuorumSize(metadata.getWriteQuorumSize())
                     .setAckQuorumSize(metadata.getAckQuorumSize())
                     .setEnsembleSize(metadata.getEnsembleSize())
@@ -251,7 +251,7 @@ public class LedgerMetadataSerDe {
                 }
 
                 /** Hack to get around fact that ctime was never versioned correctly */
-                if (LedgerMetadataUtils.shouldStoreCtime(metadata)) {
+                /*if (LedgerMetadataUtils.shouldStoreCtime(metadata)) {
                     builder.setCtime(metadata.getCtime());
                 }
 
@@ -355,7 +355,7 @@ public class LedgerMetadataSerDe {
                 log.debug("Format version {} detected{}", metadataFormatVersion, contentStr);
             }
 
-            switch (metadataFormatVersion) {
+           /* switch (metadataFormatVersion) {
             case METADATA_FORMAT_VERSION_3:
                 return parseVersion3Config(ledgerId, is, metadataStoreCtime);
             case METADATA_FORMAT_VERSION_2:
@@ -368,15 +368,19 @@ public class LedgerMetadataSerDe {
                                       LOWEST_COMPAT_METADATA_FORMAT_VERSION, CURRENT_METADATA_FORMAT_VERSION,
                                       metadataFormatVersion));
             }
-        }
+        }*/
     }
 
-    private static LedgerMetadata parseVersion3Config(long ledgerId, InputStream is, Optional<Long> metadataStoreCtime)
+        return null;
+    }
+
+
+    /*private static LedgerMetadata parseVersion3Config(long ledgerId, InputStream is, Optional<Long> metadataStoreCtime)
             throws IOException {
         LedgerMetadataBuilder builder = LedgerMetadataBuilder.create()
                 .withId(ledgerId)
                 .withMetadataFormatVersion(METADATA_FORMAT_VERSION_3);
-        LedgerMetadataFormat.Builder formatBuilder = LedgerMetadataFormat.newBuilder();
+       /* LedgerMetadataFormat.Builder formatBuilder = LedgerMetadataFormat.newBuilder();
         formatBuilder.mergeDelimitedFrom(is);
         LedgerMetadataFormat data = formatBuilder.build();
         decodeFormat(data, builder);
@@ -519,5 +523,5 @@ public class LedgerMetadataSerDe {
         default:
             throw new IllegalArgumentException("Unable to convert digest type " + digestType);
         }
-    }
+    }*/
 }

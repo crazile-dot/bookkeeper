@@ -479,7 +479,7 @@ public class Journal extends BookieCriticalThread implements CheckpointSource {
 
             if (conf.isBusyWaitEnabled()) {
                 try {
-                    CpuAffinity.acquireCore();
+                    //CpuAffinity.acquireCore();
                 } catch (Exception e) {
                     LOG.warn("Unable to acquire CPU core for Journal ForceWrite thread: {}", e.getMessage(), e);
                 }
@@ -920,7 +920,7 @@ public class Journal extends BookieCriticalThread implements CheckpointSource {
 
         if (conf.isBusyWaitEnabled()) {
             try {
-                CpuAffinity.acquireCore();
+                //CpuAffinity.acquireCore();
             } catch (Exception e) {
                 LOG.warn("Unable to acquire CPU core for Journal thread: {}", e.getMessage(), e);
             }

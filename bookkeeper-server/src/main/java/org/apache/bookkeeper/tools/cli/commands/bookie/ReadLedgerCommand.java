@@ -34,15 +34,15 @@ import java.util.stream.LongStream;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.client.LedgerEntry;
 import org.apache.bookkeeper.client.LedgerHandle;
-import org.apache.bookkeeper.common.util.OrderedExecutor;
+//import org.apache.bookkeeper.common.util.OrderedExecutor;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.proto.BookieClient;
-import org.apache.bookkeeper.proto.BookieClientImpl;
+//import org.apache.bookkeeper.proto.BookieClientImpl;
 import org.apache.bookkeeper.proto.BookieProtocol;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.bookkeeper.tools.cli.helpers.BookieCommand;
@@ -154,7 +154,7 @@ public class ReadLedgerCommand extends BookieCommand<ReadLedgerCommand.ReadLedge
         ClientConfiguration conf = new ClientConfiguration();
         conf.addConfiguration(serverConf);
 
-        try (BookKeeperAdmin bk = new BookKeeperAdmin(conf)) {
+        /*try (BookKeeperAdmin bk = new BookKeeperAdmin(conf)) {
             if (flags.forceRecovery) {
                 // Force the opening of the ledger to trigger recovery
                 try (LedgerHandle lh = bk.openLedger(flags.ledgerId)) {
@@ -220,7 +220,7 @@ public class ReadLedgerCommand extends BookieCommand<ReadLedgerCommand.ReadLedge
                 executor.shutdown();
                 bookieClient.close();
             }
-        }
+        }*/
         return true;
     }
 

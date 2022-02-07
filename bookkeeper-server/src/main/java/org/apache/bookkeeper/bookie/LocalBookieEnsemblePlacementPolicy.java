@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.bookkeeper.client.BKException.BKNotEnoughBookiesException;
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.BookiesHealthInfo;
 import org.apache.bookkeeper.client.DistributionSchedule;
 import org.apache.bookkeeper.client.EnsemblePlacementPolicy;
@@ -121,10 +121,10 @@ public class LocalBookieEnsemblePlacementPolicy implements EnsemblePlacementPoli
         return PlacementResult.of(Lists.newArrayList(bookieAddress), PlacementPolicyAdherence.MEETS_STRICT);
     }
 
-    @Override
+   /* @Override
     public void updateBookieInfo(Map<BookieId, BookieInfo> bookieToFreeSpaceMap) {
         return;
-    }
+    }*/
 
     @Override
     public PlacementPolicyAdherence isEnsembleAdheringToPlacementPolicy(List<BookieId> ensembleList,

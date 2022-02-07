@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.HashMap;
 
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.common.util.JsonUtil;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.http.HttpServer;
@@ -43,12 +43,12 @@ public class LostBookieRecoveryDelayService implements HttpEndpointService {
     static final Logger LOG = LoggerFactory.getLogger(LostBookieRecoveryDelayService.class);
 
     protected ServerConfiguration conf;
-    protected BookKeeperAdmin bka;
+   // protected BookKeeperAdmin bka;
 
-    public LostBookieRecoveryDelayService(ServerConfiguration conf, BookKeeperAdmin bka) {
+    public LostBookieRecoveryDelayService(ServerConfiguration conf) {
         checkNotNull(conf);
         this.conf = conf;
-        this.bka = bka;
+        //this.bka = bka;
     }
 
     /*
@@ -72,7 +72,7 @@ public class LostBookieRecoveryDelayService implements HttpEndpointService {
             HashMap<String, Integer> configMap = JsonUtil.fromJson(requestBody, HashMap.class);
             if (configMap != null && configMap.containsKey("delay_seconds")) {
                 int delaySeconds = configMap.get("delay_seconds");
-                bka.setLostBookieRecoveryDelay(delaySeconds);
+                //bka.setLostBookieRecoveryDelay(delaySeconds);
                 response.setCode(HttpServer.StatusCode.OK);
                 response.setBody("Success set lostBookieRecoveryDelay to " + delaySeconds);
                 return response;
@@ -83,9 +83,9 @@ public class LostBookieRecoveryDelayService implements HttpEndpointService {
             }
         } else if (HttpServer.Method.GET == request.getMethod()) {
             try {
-                int delaySeconds = bka.getLostBookieRecoveryDelay();
+                //int delaySeconds = bka.getLostBookieRecoveryDelay();
                 response.setCode(HttpServer.StatusCode.OK);
-                response.setBody("lostBookieRecoveryDelay value: " + delaySeconds);
+               // response.setBody("lostBookieRecoveryDelay value: " + delaySeconds);
                 LOG.debug("response body:" + response.getBody());
                 return response;
             } catch (Exception e) {

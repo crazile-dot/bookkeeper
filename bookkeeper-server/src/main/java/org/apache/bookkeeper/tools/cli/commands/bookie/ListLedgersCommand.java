@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.meta.LedgerManager;
@@ -137,9 +137,7 @@ public class ListLedgersCommand extends BookieCommand<ListLedgersFlags> {
                     } else {
                         ledgerManager.readLedgerMetadata(ledgerId).whenComplete((metadata, exception) -> {
                             if (exception == null) {
-                                if ((bookieAddress == null)
-                                        || BookKeeperAdmin.areEntriesOfLedgerStoredInTheBookie
-                                               (ledgerId, bookieAddress, metadata.getValue())) {
+                                if (bookieAddress == null) {
                                     /*
                                      * the print method has to be in
                                      * synchronized scope, otherwise

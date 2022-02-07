@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see EnsemblePlacementPolicy
  */
-public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlacementPolicy {
+public class RegionAwareEnsemblePlacementPolicy  {
     static final Logger LOG = LoggerFactory.getLogger(RegionAwareEnsemblePlacementPolicy.class);
 
     public static final String REPP_REGIONS_TO_WRITE = "reppRegionsToWrite";
@@ -88,7 +88,7 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
     protected String getRegion(BookieId addr) {
         String region = address2Region.get(addr);
         if (null == region) {
-            String networkLocation = resolveNetworkLocation(addr);
+            String networkLocation = "";
             if (NetworkTopology.DEFAULT_REGION_AND_RACK.equals(networkLocation)) {
                 region = UNKNOWN_REGION;
             } else {
@@ -111,22 +111,22 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
         return getRegion(node.getAddr());
     }
 
-    @Override
+    //@Override
     public void handleBookiesThatLeft(Set<BookieId> leftBookies) {
-        super.handleBookiesThatLeft(leftBookies);
+       // super.handleBookiesThatLeft(leftBookies);
 
         for (TopologyAwareEnsemblePlacementPolicy policy: perRegionPlacement.values()) {
             policy.handleBookiesThatLeft(leftBookies);
         }
     }
 
-    @Override
+   // @Override
     public void handleBookiesThatJoined(Set<BookieId> joinedBookies) {
         Map<String, Set<BookieId>> perRegionClusterChange = new HashMap<String, Set<BookieId>>();
 
         // node joined
         for (BookieId addr : joinedBookies) {
-            BookieNode node = createBookieNode(addr);
+           /* BookieNode node = createBookieNode(addr);
             topology.add(node);
             knownBookies.put(addr, node);
             String region = getLocalRegion(node);
@@ -150,7 +150,7 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Cluster changed : bookie {} joined the cluster.", addr);
-            }
+            }*/
         }
 
         for (Map.Entry<String, TopologyAwareEnsemblePlacementPolicy> regionEntry : perRegionPlacement.entrySet()) {
@@ -162,14 +162,14 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
         }
     }
 
-    @Override
-    public RegionAwareEnsemblePlacementPolicy initialize(ClientConfiguration conf,
+  //  @Override
+    public void initialize(ClientConfiguration conf,
                                                          Optional<DNSToSwitchMapping> optionalDnsResolver,
                                                          HashedWheelTimer timer,
                                                          FeatureProvider featureProvider,
                                                          StatsLogger statsLogger,
                                                          BookieAddressResolver bookieAddressResolver) {
-        super.initialize(conf, optionalDnsResolver, timer, featureProvider, statsLogger, bookieAddressResolver)
+        /*super.initialize(conf, optionalDnsResolver, timer, featureProvider, statsLogger, bookieAddressResolver)
                 .withDefaultRack(NetworkTopology.DEFAULT_REGION_AND_RACK);
         myRegion = getLocalRegion(localNode);
         enableValidation = conf.getBoolean(REPP_ENABLE_VALIDATION, true);
@@ -494,7 +494,7 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
                  * in testing code there are test cases which would pass empty
                  * currentEnsemble
                  */
-                newEnsemble.add(candidateAddr);
+              /*  newEnsemble.add(candidateAddr);
             } else {
                 newEnsemble.set(currentEnsemble.indexOf(bookieToReplace), candidateAddr);
             }
@@ -590,6 +590,7 @@ public class RegionAwareEnsemblePlacementPolicy extends RackawareEnsemblePlaceme
          *
          * - https://github.com/apache/bookkeeper/issues/1898
          */
-        return PlacementPolicyAdherence.MEETS_STRICT;
-    }
+       /* return PlacementPolicyAdherence.MEETS_STRICT;
+    }*/
+}
 }

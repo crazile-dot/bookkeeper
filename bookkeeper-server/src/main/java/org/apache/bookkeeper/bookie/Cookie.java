@@ -43,7 +43,7 @@ import org.apache.bookkeeper.bookie.BookieException.UnknownBookieIdException;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.discover.RegistrationManager;
 import org.apache.bookkeeper.net.BookieId;
-import org.apache.bookkeeper.proto.DataFormats.CookieFormat;
+//import org.apache.bookkeeper.proto.DataFormats.CookieFormat;
 import org.apache.bookkeeper.util.BookKeeperConstants;
 import org.apache.bookkeeper.versioning.LongVersion;
 import org.apache.bookkeeper.versioning.Version;
@@ -156,7 +156,7 @@ public class Cookie {
         if (layoutVersion <= 3) {
             return toStringVersion3();
         }
-        CookieFormat.Builder builder = CookieFormat.newBuilder();
+        /*CookieFormat.Builder builder = CookieFormat.newBuilder();
         builder.setBookieHost(bookieId);
         builder.setJournalDir(journalDirs);
         builder.setLedgerDirs(ledgerDirs);
@@ -165,8 +165,8 @@ public class Cookie {
         }
         StringBuilder b = new StringBuilder();
         b.append(CURRENT_COOKIE_LAYOUT_VERSION).append("\n");
-        b.append(builder.build().toString());
-        return b.toString();
+        b.append(builder.build().toString());*/
+        return "";
     }
 
     private String toStringVersion3() {
@@ -197,7 +197,7 @@ public class Cookie {
             cBuilder.setJournalDirs(reader.readLine());
             cBuilder.setLedgerDirs(reader.readLine());
         } else if (layoutVersion >= 4) {
-            CookieFormat.Builder cfBuilder = CookieFormat.newBuilder();
+            /*CookieFormat.Builder cfBuilder = CookieFormat.newBuilder();
             TextFormat.merge(reader, cfBuilder);
             CookieFormat data = cfBuilder.build();
             cBuilder.setBookieId(data.getBookieHost());
@@ -206,7 +206,7 @@ public class Cookie {
             // Since InstanceId is optional
             if (null != data.getInstanceId() && !data.getInstanceId().isEmpty()) {
                 cBuilder.setInstanceId(data.getInstanceId());
-            }
+            }*/
         }
         return cBuilder;
     }

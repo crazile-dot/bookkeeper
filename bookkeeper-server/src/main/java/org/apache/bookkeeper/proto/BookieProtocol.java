@@ -26,7 +26,7 @@ import io.netty.util.Recycler;
 import io.netty.util.Recycler.Handle;
 import io.netty.util.ReferenceCountUtil;
 
-import org.apache.bookkeeper.proto.BookkeeperProtocol.AuthMessage;
+//import org.apache.bookkeeper.proto.BookkeeperProtocol.AuthMessage;
 import org.apache.bookkeeper.util.ByteBufList;
 
 /**
@@ -371,7 +371,7 @@ public interface BookieProtocol {
      * An authentication request.
      */
     class AuthRequest extends Request {
-        final AuthMessage authMessage;
+        /*final AuthMessage authMessage;
 
         AuthRequest(byte protocolVersion, AuthMessage authMessage) {
             init(protocolVersion, AUTH, -1, -1, FLAG_NONE, null);
@@ -380,7 +380,7 @@ public interface BookieProtocol {
 
         AuthMessage getAuthMessage() {
             return authMessage;
-        }
+        }*/
     }
 
     /**
@@ -514,7 +514,7 @@ public interface BookieProtocol {
      * A response with an authentication message.
      */
     class AuthResponse extends Response {
-        final AuthMessage authMessage;
+        /*final AuthMessage authMessage;
 
         AuthResponse(byte protocolVersion, AuthMessage authMessage) {
             init(protocolVersion, AUTH, EOK, -1, -1);
@@ -523,7 +523,7 @@ public interface BookieProtocol {
 
         AuthMessage getAuthMessage() {
             return authMessage;
-        }
+        }*/
     }
 
 }

@@ -33,37 +33,37 @@ import org.apache.bookkeeper.net.BookieId;
  */
 public class LedgerFragment {
     private final Set<Integer> bookieIndexes;
-    private final List<BookieId> ensemble;
+    private final List<BookieId> ensemble = null;
     private final long firstEntryId;
     private final long lastKnownEntryId;
-    private final long ledgerId;
-    private final DistributionSchedule schedule;
-    private final boolean isLedgerClosed;
+    private final long ledgerId = 0;
+    private final DistributionSchedule schedule = null;
+    private final boolean isLedgerClosed = false;
 
     LedgerFragment(LedgerHandle lh,
                    long firstEntryId,
                    long lastKnownEntryId,
                    Set<Integer> bookieIndexes) {
-        this.ledgerId = lh.getId();
+        //this.ledgerId = lh.getId();
         this.firstEntryId = firstEntryId;
         this.lastKnownEntryId = lastKnownEntryId;
         this.bookieIndexes = bookieIndexes;
-        this.ensemble = lh.getLedgerMetadata().getEnsembleAt(firstEntryId);
-        this.schedule = lh.getDistributionSchedule();
-        SortedMap<Long, ? extends List<BookieId>> ensembles = lh
+        //this.ensemble = lh.getLedgerMetadata().getEnsembleAt(firstEntryId);
+        //this.schedule = lh.getDistributionSchedule();
+        /*SortedMap<Long, ? extends List<BookieId>> ensembles = lh
                 .getLedgerMetadata().getAllEnsembles();
         this.isLedgerClosed = lh.getLedgerMetadata().isClosed()
-                || !ensemble.equals(ensembles.get(ensembles.lastKey()));
+                || !ensemble.equals(ensembles.get(ensembles.lastKey()));*/
     }
 
     LedgerFragment(LedgerFragment lf, Set<Integer> subset) {
-        this.ledgerId = lf.ledgerId;
+        //this.ledgerId = lf.ledgerId;
         this.firstEntryId = lf.firstEntryId;
         this.lastKnownEntryId = lf.lastKnownEntryId;
         this.bookieIndexes = subset;
-        this.ensemble = lf.ensemble;
-        this.schedule = lf.schedule;
-        this.isLedgerClosed = lf.isLedgerClosed;
+        //this.ensemble = lf.ensemble;
+        //this.schedule = lf.schedule;
+        //this.isLedgerClosed = lf.isLedgerClosed;
     }
 
     /**

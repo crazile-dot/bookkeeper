@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.bookkeeper.common.concurrent.FutureEventListener;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.common.util.SafeRunnable;
 import org.apache.bookkeeper.versioning.LongVersion;
 import org.apache.bookkeeper.versioning.Version;
@@ -175,13 +175,13 @@ public class ZKLogSegmentMetadataStore implements LogSegmentMetadataStore, Watch
     // log segment listeners
     final ConcurrentMap<String, Map<LogSegmentNamesListener, VersionedLogSegmentNamesListener>> listeners;
     // scheduler
-    final OrderedScheduler scheduler;
+    final Object scheduler;
     final ReentrantReadWriteLock closeLock;
     boolean closed = false;
 
     public ZKLogSegmentMetadataStore(DistributedLogConfiguration conf,
                                      ZooKeeperClient zkc,
-                                     OrderedScheduler scheduler) {
+                                     Object scheduler) {
         this.conf = conf;
         this.zkc = zkc;
         this.listeners =
@@ -200,7 +200,7 @@ public class ZKLogSegmentMetadataStore implements LogSegmentMetadataStore, Watch
             if (closed) {
                 return;
             }
-            scheduler.scheduleOrdered(key, r, delayMs, TimeUnit.MILLISECONDS);
+           // scheduler.scheduleOrdered(key, r, delayMs, TimeUnit.MILLISECONDS);
         } finally {
             closeLock.readLock().unlock();
         }
@@ -212,7 +212,7 @@ public class ZKLogSegmentMetadataStore implements LogSegmentMetadataStore, Watch
             if (closed) {
                 return;
             }
-            scheduler.executeOrdered(key, r);
+            //scheduler.executeOrdered(key, r);
         } finally {
             closeLock.readLock().unlock();
         }

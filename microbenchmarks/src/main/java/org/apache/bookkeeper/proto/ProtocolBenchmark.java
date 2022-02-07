@@ -30,11 +30,11 @@ import java.util.concurrent.TimeUnit;
 import org.apache.bookkeeper.proto.BookieProtoEncoding.EnDecoder;
 import org.apache.bookkeeper.proto.BookieProtoEncoding.RequestEnDeCoderPreV3;
 import org.apache.bookkeeper.proto.BookieProtoEncoding.RequestEnDecoderV3;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.AddRequest;
+/*import org.apache.bookkeeper.proto.BookkeeperProtocol.AddRequest;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.BKPacketHeader;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.OperationType;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.ProtocolVersion;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;*/
 import org.apache.bookkeeper.util.ByteBufList;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -100,25 +100,14 @@ public class ProtocolBenchmark {
     @Benchmark
     public void testAddEntryV3() throws Exception {
         // Build the request and calculate the total size to be included in the packet.
-        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()
-                .setVersion(ProtocolVersion.VERSION_THREE)
-                .setOperation(OperationType.ADD_ENTRY)
-                .setTxnId(0L);
+        Object headerBuilder = null;
 
         ByteBuf toSend = entry.slice();
         byte[] toSendArray = new byte[toSend.readableBytes()];
         toSend.getBytes(toSend.readerIndex(), toSendArray);
-        AddRequest.Builder addBuilder = AddRequest.newBuilder()
-                .setLedgerId(ledgerId)
-                .setEntryId(entryId)
-                .setMasterKey(ByteString.copyFrom(masterKey))
-                .setBody(ByteString.copyFrom(toSendArray))
-                .setFlag(AddRequest.Flag.RECOVERY_ADD);
+        Object addBuilder = null;
 
-        Request request = Request.newBuilder()
-                .setHeader(headerBuilder)
-                .setAddRequest(addBuilder)
-                .build();
+        Object request = null;
 
         Object res = this.reqEnDeV3.encode(request, ByteBufAllocator.DEFAULT);
         ReferenceCountUtil.release(res);
@@ -129,43 +118,26 @@ public class ProtocolBenchmark {
         MDC.put("parent_id", "LetsPutSomeLongParentRequestIdHere");
         MDC.put("request_id", "LetsPutSomeLongRequestIdHere");
         // Build the request and calculate the total size to be included in the packet.
-        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()
-                .setVersion(ProtocolVersion.VERSION_THREE)
-                .setOperation(OperationType.ADD_ENTRY)
-                .setTxnId(0L);
+        Object headerBuilder = null;
 
         ByteBuf toSend = entry.slice();
         byte[] toSendArray = new byte[toSend.readableBytes()];
         toSend.getBytes(toSend.readerIndex(), toSendArray);
-        AddRequest.Builder addBuilder = AddRequest.newBuilder()
-                .setLedgerId(ledgerId)
-                .setEntryId(entryId)
-                .setMasterKey(ByteString.copyFrom(masterKey))
-                .setBody(ByteString.copyFrom(toSendArray))
-                .setFlag(AddRequest.Flag.RECOVERY_ADD);
+        Object addBuilder = null;
 
-        Request request = PerChannelBookieClient.appendRequestContext(Request.newBuilder())
-                .setHeader(headerBuilder)
-                .setAddRequest(addBuilder)
-                .build();
+        Object request = null;
 
         Object res = this.reqEnDeV3.encode(request, ByteBufAllocator.DEFAULT);
         ReferenceCountUtil.release(res);
         MDC.clear();
     }
 
-    static Request.Builder appendRequestContextNoMdc(Request.Builder builder) {
-        final BookkeeperProtocol.ContextPair context1 = BookkeeperProtocol.ContextPair.newBuilder()
-                .setKey("parent_id")
-                .setValue("LetsPutSomeLongParentRequestIdHere")
-                .build();
-        builder.addRequestContext(context1);
+    static Object appendRequestContextNoMdc(Object builder) {
+        final Object context1 = null;
+        //builder.addRequestContext(context1);
 
-        final BookkeeperProtocol.ContextPair context2 = BookkeeperProtocol.ContextPair.newBuilder()
-                .setKey("request_id")
-                .setValue("LetsPutSomeLongRequestIdHere")
-                .build();
-        builder.addRequestContext(context2);
+        final Object context2 = null;
+        //builder.addRequestContext(context2);
 
         return builder;
     }
@@ -173,25 +145,14 @@ public class ProtocolBenchmark {
     @Benchmark
     public void testAddEntryV3WithExtraContextDataNoMdc() throws Exception {
         // Build the request and calculate the total size to be included in the packet.
-        BKPacketHeader.Builder headerBuilder = BKPacketHeader.newBuilder()
-                .setVersion(ProtocolVersion.VERSION_THREE)
-                .setOperation(OperationType.ADD_ENTRY)
-                .setTxnId(0L);
+        Object headerBuilder = null;
 
         ByteBuf toSend = entry.slice();
         byte[] toSendArray = new byte[toSend.readableBytes()];
         toSend.getBytes(toSend.readerIndex(), toSendArray);
-        AddRequest.Builder addBuilder = AddRequest.newBuilder()
-                .setLedgerId(ledgerId)
-                .setEntryId(entryId)
-                .setMasterKey(ByteString.copyFrom(masterKey))
-                .setBody(ByteString.copyFrom(toSendArray))
-                .setFlag(AddRequest.Flag.RECOVERY_ADD);
+        Object addBuilder = null;
 
-        Request request = appendRequestContextNoMdc(Request.newBuilder())
-                .setHeader(headerBuilder)
-                .setAddRequest(addBuilder)
-                .build();
+        Object request = null;
 
         Object res = this.reqEnDeV3.encode(request, ByteBufAllocator.DEFAULT);
         ReferenceCountUtil.release(res);

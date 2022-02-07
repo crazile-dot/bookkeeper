@@ -26,7 +26,6 @@ import org.apache.bookkeeper.api.StorageClient;
 import org.apache.bookkeeper.clients.admin.SimpleStorageAdminClientImpl;
 import org.apache.bookkeeper.clients.admin.StorageAdminClient;
 import org.apache.bookkeeper.clients.admin.StorageAdminClientImpl;
-import org.apache.bookkeeper.clients.config.StorageClientSettings;
 import org.apache.bookkeeper.clients.utils.ClientResources;
 
 /**
@@ -34,7 +33,7 @@ import org.apache.bookkeeper.clients.utils.ClientResources;
  */
 public class StorageClientBuilder implements Supplier<StorageClient> {
 
-    private StorageClientSettings settings = null;
+    private Object settings = null;
     private String namespaceName = null;
 
     /**
@@ -50,12 +49,12 @@ public class StorageClientBuilder implements Supplier<StorageClient> {
     }
 
     /**
-     * Configure the client with {@link StorageClientSettings}.
+     * Configure the client with {@link }.
      *
      * @param settings stream withSettings
      * @return stream client builder
      */
-    public StorageClientBuilder withSettings(StorageClientSettings settings) {
+    public StorageClientBuilder withSettings(Object settings) {
         this.settings = settings;
         return this;
     }
@@ -84,14 +83,15 @@ public class StorageClientBuilder implements Supplier<StorageClient> {
         checkNotNull(settings, "Stream settings is null");
         checkArgument(validateNamespaceName(namespaceName), "Namespace name '" + namespaceName + "'is invalid");
 
-        if (settings.enableServerSideRouting()) {
+        /*if (settings.enableServerSideRouting()) {
             return new SimpleStorageClientImpl(namespaceName, settings);
         } else {
             return new StorageClientImpl(
                 namespaceName,
                 settings,
                 ClientResources.create());
-        }
+        }*/
+        return null;
     }
 
     /**
@@ -102,11 +102,12 @@ public class StorageClientBuilder implements Supplier<StorageClient> {
     public StorageAdminClient buildAdmin() {
         checkNotNull(settings, "Storage client settings is null");
 
-        if (settings.enableServerSideRouting()) {
+        /*if (settings.enableServerSideRouting()) {
             return new SimpleStorageAdminClientImpl(settings);
         } else {
             return new StorageAdminClientImpl(settings, ClientResources.create());
-        }
+        }*/
+        return null;
     }
 
     @Override

@@ -125,8 +125,7 @@ public class BookieServer {
 
         shFactory = SecurityProviderFactoryFactory
                 .getSecurityProviderFactory(conf.getTLSProviderFactoryClass());
-        this.requestProcessor = new BookieRequestProcessor(conf, bookie,
-                statsLogger.scope(SERVER_SCOPE), shFactory, allocator);
+        this.requestProcessor = null;
         this.nettyServer.setRequestProcessor(this.requestProcessor);
     }
 
@@ -188,8 +187,8 @@ public class BookieServer {
     }
 
     @VisibleForTesting
-    public BookieRequestProcessor getBookieRequestProcessor() {
-        return (BookieRequestProcessor) requestProcessor;
+    public void getBookieRequestProcessor() {
+
     }
 
     /**

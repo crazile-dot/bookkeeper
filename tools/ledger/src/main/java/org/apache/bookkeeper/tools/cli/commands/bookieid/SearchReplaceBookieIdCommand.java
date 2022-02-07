@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.client.LedgerMetadataBuilder;
 import org.apache.bookkeeper.client.api.BookKeeper;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
@@ -79,7 +79,7 @@ public class SearchReplaceBookieIdCommand extends ClientCommand<SearchReplaceBoo
 
     @Override
     protected void run(BookKeeper bk, Flags flags) throws Exception {
-        try (BookKeeperAdmin admin = new BookKeeperAdmin((org.apache.bookkeeper.client.BookKeeper) bk)) {
+        /*try (BookKeeperAdmin admin = new BookKeeperAdmin((org.apache.bookkeeper.client.BookKeeper) bk)) {
             LedgerManager ledgerManager = ((org.apache.bookkeeper.client.BookKeeper) bk).getLedgerManager();
             long i = 0;
 
@@ -125,6 +125,6 @@ public class SearchReplaceBookieIdCommand extends ClientCommand<SearchReplaceBoo
                 }
             }
             System.out.println("Replaced bookie ID in " + i + " ledgers");
-        }
+        }*/
     }
 }

@@ -39,7 +39,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Supplier;
 
-import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
+//import org.apache.bookkeeper.client.BookieInfoReader.BookieInfo;
 import org.apache.bookkeeper.client.WeightedRandomSelection.WeightedObject;
 import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.net.BookieNode;
@@ -708,7 +708,7 @@ abstract class TopologyAwareEnsemblePlacementPolicy implements
     /*
      * this method should be called in writelock scope of 'rwLock'
      */
-    @Override
+   /* @Override
     public void handleBookiesThatJoined(Set<BookieId> joinedBookies) {
         // node joined
         for (BookieId addr : joinedBookies) {
@@ -755,7 +755,7 @@ abstract class TopologyAwareEnsemblePlacementPolicy implements
         }
     }
 
-    @Override
+    /*@Override
     public void updateBookieInfo(Map<BookieId, BookieInfo> bookieInfoMap) {
         if (!isWeighted) {
             LOG.info("bookieFreeDiskInfo callback called even without weighted placement policy being used.");
@@ -778,7 +778,7 @@ abstract class TopologyAwareEnsemblePlacementPolicy implements
         } finally {
             rwLock.writeLock().unlock();
         }
-    }
+    }*/
 
     protected BookieNode createBookieNode(BookieId addr) {
         return new BookieNode(addr, resolveNetworkLocation(addr));

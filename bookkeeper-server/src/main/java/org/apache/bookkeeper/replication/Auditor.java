@@ -76,8 +76,8 @@ import java.util.stream.Collectors;
 
 import org.apache.bookkeeper.client.BKException;
 import org.apache.bookkeeper.client.BKException.Code;
-import org.apache.bookkeeper.client.BookKeeper;
-import org.apache.bookkeeper.client.BookKeeperAdmin;
+//import org.apache.bookkeeper.client.BookKeeper;
+//import org.apache.bookkeeper.client.BookKeeperAdmin;
 import org.apache.bookkeeper.client.EnsemblePlacementPolicy.PlacementPolicyAdherence;
 import org.apache.bookkeeper.client.LedgerChecker;
 import org.apache.bookkeeper.client.LedgerFragment;
@@ -123,19 +123,19 @@ import org.slf4j.LoggerFactory;
  * re-replication activities by keeping all the corresponding ledgers of the
  * failed bookie as underreplicated znode in zk.
  *
- * <p>TODO: eliminate the direct usage of zookeeper here {@link https://github.com/apache/bookkeeper/issues/1332}
+ * <p>TODO: eliminate the direct usage of zookeeper here {@link
  */
-@StatsDoc(
+/*@StatsDoc(
     name = AUDITOR_SCOPE,
     help = "Auditor related stats"
 )
-public class Auditor implements AutoCloseable {
+/*public class Auditor implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(Auditor.class);
     private static final int MAX_CONCURRENT_REPLICAS_CHECK_LEDGER_REQUESTS = 100;
     private static final int REPLICAS_CHECK_TIMEOUT_IN_SECS = 120;
     private static final BitSet EMPTY_BITSET = new BitSet();
     private final ServerConfiguration conf;
-    private final BookKeeper bkc;
+    //private final BookKeeper bkc;
     private final boolean ownBkc;
     private final BookKeeperAdmin admin;
     private final boolean ownAdmin;
@@ -256,9 +256,9 @@ public class Auditor implements AutoCloseable {
             help = "Gauge for number of ledgers having an entry with less than WQ number of replicas"
                     + ", this doesn't include ledgers counted towards numLedgersHavingLessThanAQReplicasOfAnEntry"
     )
-    private final Gauge<Integer> numLedgersHavingLessThanWQReplicasOfAnEntry;
+  /*  private final Gauge<Integer> numLedgersHavingLessThanWQReplicasOfAnEntry;
 
-    static BookKeeper createBookKeeperClient(ServerConfiguration conf) throws InterruptedException, IOException {
+   /* static BookKeeper createBookKeeperClient(ServerConfiguration conf) throws InterruptedException, IOException {
         return createBookKeeperClient(conf, NullStatsLogger.INSTANCE);
     }
 
@@ -846,7 +846,7 @@ public class Auditor implements AutoCloseable {
                              * placementPolicyCheck, it found few ledgers not
                              * adhering to placement policy. So reporting it.
                              */
-                            ledgersNotAdheringToPlacementPolicyGuageValue
+                         /*   ledgersNotAdheringToPlacementPolicyGuageValue
                                     .set(numOfLedgersFoundInPlacementPolicyCheckValue);
                         }
 
@@ -858,7 +858,7 @@ public class Auditor implements AutoCloseable {
                              * placementPolicyCheck, it found few ledgers softly
                              * adhering to placement policy. So reporting it.
                              */
-                            ledgersSoftlyAdheringToPlacementPolicyGuageValue
+                         /*   ledgersSoftlyAdheringToPlacementPolicyGuageValue
                                     .set(numOfLedgersFoundSoftlyAdheringInPlacementPolicyCheckValue);
                         }
 
@@ -870,7 +870,7 @@ public class Auditor implements AutoCloseable {
                              * placementPolicyCheck, it found few urledgers have
                              * elapsed recovery graceperiod. So reporting it.
                              */
-                            numOfURLedgersElapsedRecoveryGracePeriodGuageValue
+                          /*  numOfURLedgersElapsedRecoveryGracePeriodGuageValue
                                     .set(numOfURLedgersElapsedRecoveryGracePeriodValue);
                         }
 
@@ -960,7 +960,7 @@ public class Auditor implements AutoCloseable {
                          * replicasCheck, it found few ledgers having no replica
                          * of an entry. So reporting it.
                          */
-                        numLedgersHavingNoReplicaOfAnEntryGuageValue.set(numLedgersFoundHavingNoReplicaOfAnEntryValue);
+                    /*    numLedgersHavingNoReplicaOfAnEntryGuageValue.set(numLedgersFoundHavingNoReplicaOfAnEntryValue);
                     }
                     int numLedgersFoundHavingLessThanAQReplicasOfAnEntryValue =
                             numLedgersFoundHavingLessThanAQReplicasOfAnEntry.get();
@@ -970,7 +970,7 @@ public class Auditor implements AutoCloseable {
                          * replicasCheck, it found few ledgers having an entry
                          * less than AQ num of Replicas. So reporting it.
                          */
-                        numLedgersHavingLessThanAQReplicasOfAnEntryGuageValue
+                      /*  numLedgersHavingLessThanAQReplicasOfAnEntryGuageValue
                                 .set(numLedgersFoundHavingLessThanAQReplicasOfAnEntryValue);
                     }
                     int numLedgersFoundHavingLessThanWQReplicasOfAnEntryValue =
@@ -981,7 +981,7 @@ public class Auditor implements AutoCloseable {
                          * replicasCheck, it found few ledgers having an entry
                          * less than WQ num of Replicas. So reporting it.
                          */
-                        numLedgersHavingLessThanWQReplicasOfAnEntryGuageValue
+                      /*  numLedgersHavingLessThanWQReplicasOfAnEntryGuageValue
                                 .set(numLedgersFoundHavingLessThanWQReplicasOfAnEntryValue);
                     }
                 }
@@ -1037,7 +1037,7 @@ public class Auditor implements AutoCloseable {
      * @param shutDownTask
      *      A boolean that indicates whether or not to schedule shutdown task on any failure
      */
-    private void startAudit(boolean shutDownTask) {
+  /*  private void startAudit(boolean shutDownTask) {
         try {
             auditBookies();
             shutDownTask = false;
@@ -1141,7 +1141,7 @@ public class Auditor implements AutoCloseable {
     /**
      * Process the result returned from checking a ledger.
      */
-    private class ProcessLostFragmentsCb implements GenericCallback<Set<LedgerFragment>> {
+   /* private class ProcessLostFragmentsCb implements GenericCallback<Set<LedgerFragment>> {
         final LedgerHandle lh;
         final AsyncCallback.VoidCallback callback;
 
@@ -1188,7 +1188,7 @@ public class Auditor implements AutoCloseable {
      * List all the ledgers and check them individually. This should not
      * be run very often.
      */
-    void checkAllLedgers() throws BKException, IOException, InterruptedException, KeeperException {
+   /* void checkAllLedgers() throws BKException, IOException, InterruptedException, KeeperException {
         final BookKeeper localClient = createBookKeeperClient(conf);
         final BookKeeperAdmin localAdmin = new BookKeeperAdmin(localClient, statsLogger);
 
@@ -1379,14 +1379,14 @@ public class Auditor implements AutoCloseable {
         /*
          * segment details, like start entryid of the segment and ensemble List.
          */
-        private final Entry<Long, ? extends List<BookieId>> segmentEnsemble;
+     /*   private final Entry<Long, ? extends List<BookieId>> segmentEnsemble;
         // bookie missing these entries
         private final BookieId bookieMissingEntries;
         /*
          * entries of this segment which are supposed to contain in this bookie
          * but missing in this bookie.
          */
-        private final List<Long> unavailableEntriesList;
+      /*  private final List<Long> unavailableEntriesList;
 
         private MissingEntriesInfo(long ledgerId, Entry<Long, ? extends List<BookieId>> segmentEnsemble,
                 BookieId bookieMissingEntries, List<Long> unavailableEntriesList) {
@@ -1508,7 +1508,7 @@ public class Auditor implements AutoCloseable {
              * since there are multiple segments, MultiCallback should be
              * created for (ensembleSize * segments.size()) calls.
              */
-            MultiCallback mcbForThisLedger = new MultiCallback(ensembleSize * segments.size(), mcbForThisLedgerRange,
+         /*   MultiCallback mcbForThisLedger = new MultiCallback(ensembleSize * segments.size(), mcbForThisLedgerRange,
                     null, BKException.Code.OK, BKException.Code.ReadException);
             HashMap<BookieId, List<BookieExpectedToContainSegmentInfo>> bookiesSegmentInfoMap =
                     new HashMap<BookieId, List<BookieExpectedToContainSegmentInfo>>();
@@ -1526,7 +1526,7 @@ public class Auditor implements AutoCloseable {
                  * startEntry will be same as startEntry of the following
                  * segment.
                  */
-                final boolean emptySegment = lastSegment ? (startEntryIdOfSegment > lastEntryId)
+              /*  final boolean emptySegment = lastSegment ? (startEntryIdOfSegment > lastEntryId)
                         : (startEntryIdOfSegment == segments.get(segmentNum + 1).getKey());
                 for (int bookieIndex = 0; bookieIndex < ensembleOfSegment.size(); bookieIndex++) {
                     final BookieId bookieInEnsemble = ensembleOfSegment.get(bookieIndex);
@@ -1540,7 +1540,7 @@ public class Auditor implements AutoCloseable {
                          * getListOfEntriesOfLedger call for this bookie. So
                          * instead callback with success result.
                          */
-                        if (LOG.isDebugEnabled()) {
+                    /*    if (LOG.isDebugEnabled()) {
                             LOG.debug(
                                     "For ledger: {}, in Segment: {}, no entry is expected to contain in"
                                             + " this bookie: {}. So skipping getListOfEntriesOfLedger call",
@@ -1646,8 +1646,8 @@ public class Auditor implements AutoCloseable {
                      * in the case of NoSuchLedgerExistsException, it should be
                      * considered as empty AvailabilityOfEntriesOfLedger.
                      */
-                    availabilityOfEntriesOfLedger = AvailabilityOfEntriesOfLedger.EMPTY_AVAILABILITYOFENTRIESOFLEDGER;
-                } else {
+                //    availabilityOfEntriesOfLedger = AvailabilityOfEntriesOfLedger.EMPTY_AVAILABILITYOFENTRIESOFLEDGER;
+           /*     } else {
                     LOG.warn("Unable to GetListOfEntriesOfLedger for ledger: {} from: {}", ledgerInRange,
                             bookieInEnsemble, listOfEntriesException);
                     MissingEntriesInfoOfLedger unavailableBookiesInfoOfThisLedger = ledgersWithUnavailableBookies
@@ -1675,7 +1675,7 @@ public class Auditor implements AutoCloseable {
                          * ledgersWithUnavailableBookies, so that replicascheck
                          * will report these ledgers/bookies appropriately.
                          */
-                        mcbForThisLedger.processResult(BKException.Code.OK, null, null);
+                   /*     mcbForThisLedger.processResult(BKException.Code.OK, null, null);
                     }
                     return;
                 }
@@ -1713,7 +1713,7 @@ public class Auditor implements AutoCloseable {
                  * missingEntriesInfoOfThisLedger, so that replicascheck will
                  * report these ledgers/bookies/missingentries appropriately.
                  */
-                mcbForThisLedger.processResult(BKException.Code.OK, null, null);
+            /*    mcbForThisLedger.processResult(BKException.Code.OK, null, null);
             }
         }
     }
@@ -1795,7 +1795,7 @@ public class Auditor implements AutoCloseable {
                      * if ledger is marked underreplicated, then ignore this
                      * ledger for replicascheck.
                      */
-                    continue;
+               /*     continue;
                 }
                 ledgerManager.readLedgerMetadata(ledgerInRange)
                         .whenComplete(new ReadLedgerMetadataCallbackForReplicasCheck(ledgerInRange,
@@ -1809,7 +1809,7 @@ public class Auditor implements AutoCloseable {
                  * blocking the single threaded auditor executor thread is not
                  * expected.
                  */
-                if (!replicasCheckLatch.await(REPLICAS_CHECK_TIMEOUT_IN_SECS, TimeUnit.SECONDS)) {
+             /*   if (!replicasCheckLatch.await(REPLICAS_CHECK_TIMEOUT_IN_SECS, TimeUnit.SECONDS)) {
                     LOG.error(
                             "For LedgerRange with num of ledgers : {} it didn't complete replicascheck"
                                     + " in {} secs, so giving up",
@@ -1928,7 +1928,7 @@ public class Auditor implements AutoCloseable {
              * this ledger is marked underreplicated, so ignore it for
              * replicasCheck.
              */
-            LOG.debug("Ledger: {} is marked underrreplicated, ignore this ledger for replicasCheck",
+         /*   LOG.debug("Ledger: {} is marked underrreplicated, ignore this ledger for replicasCheck",
                     ledgerInRange);
             mcbForThisLedgerRange.processResult(BKException.Code.OK, null, null);
             return true;
@@ -1942,7 +1942,7 @@ public class Auditor implements AutoCloseable {
     /**
      * Shutdown the auditor.
      */
-    public void shutdown() {
+  /*  public void shutdown() {
         LOG.info("Shutting down auditor");
         executor.shutdown();
         try {
@@ -1974,7 +1974,7 @@ public class Auditor implements AutoCloseable {
      *
      * @return auditor status
      */
-    public boolean isRunning() {
+    /*public boolean isRunning() {
         return !executor.isShutdown();
     }
 
@@ -2000,4 +2000,4 @@ public class Auditor implements AutoCloseable {
     Future<?> getAuditTask() {
         return auditTask;
     }
-}
+}*/

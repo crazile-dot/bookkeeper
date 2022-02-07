@@ -422,7 +422,7 @@ public class SimpleLedgerAllocator implements LedgerAllocator, FutureEventListen
     }
 
     private void markAsAllocated(final LedgerHandle lh) {
-        byte[] data = DLUtils.logSegmentId2Bytes(lh.getId());
+        byte[] data = DLUtils.logSegmentId2Bytes(0);
         Utils.zkSetData(zkc, allocatePath, data, getVersion())
             .whenComplete(new FutureEventListener<LongVersion>() {
                 @Override
@@ -439,9 +439,9 @@ public class SimpleLedgerAllocator implements LedgerAllocator, FutureEventListen
                 @Override
                 public void onFailure(Throwable cause) {
                     setPhase(Phase.ERROR);
-                    deleteLedger(lh.getId());
+                    deleteLedger(0);
                     LOG.error("Fail mark ledger {} as allocated under {} : ",
-                        lh.getId(), allocatePath, cause);
+                       0, allocatePath, cause);
                     // fail the allocation since failed to mark it as allocated
                     failAllocation(cause);
                 }
@@ -515,7 +515,7 @@ public class SimpleLedgerAllocator implements LedgerAllocator, FutureEventListen
             public void onSuccess(LedgerHandle lh) {
                 // try obtain succeed
                 // if we could obtain the ledger handle, we have the responsibility to close it
-                deleteLedger(lh.getId());
+                deleteLedger(0);
                 // wait for deletion to be completed
                 List<CompletableFuture<Void>> outstandingDeletions;
                 synchronized (ledgerDeletions) {

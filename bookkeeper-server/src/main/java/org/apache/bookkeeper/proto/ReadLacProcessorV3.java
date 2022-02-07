@@ -30,11 +30,11 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.bookkeeper.bookie.Bookie;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadLacRequest;
+/*import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadLacRequest;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.ReadLacResponse;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Request;
 import org.apache.bookkeeper.proto.BookkeeperProtocol.Response;
-import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;
+import org.apache.bookkeeper.proto.BookkeeperProtocol.StatusCode;*/
 import org.apache.bookkeeper.util.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,14 +45,14 @@ import org.slf4j.LoggerFactory;
 class ReadLacProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(ReadLacProcessorV3.class);
 
-    public ReadLacProcessorV3(Request request, Channel channel,
-                             BookieRequestProcessor requestProcessor) {
+    public ReadLacProcessorV3(Object request, Channel channel,
+                             Object requestProcessor) {
         super(request, channel, requestProcessor);
     }
 
     // Returns null if there is no exception thrown
-    private ReadLacResponse getReadLacResponse() {
-        final long startTimeNanos = MathUtils.nowInNano();
+    private Object getReadLacResponse() {
+        /*final long startTimeNanos = MathUtils.nowInNano();
         ReadLacRequest readLacRequest = request.getReadLacRequest();
         long ledgerId = readLacRequest.getLedgerId();
 
@@ -109,23 +109,23 @@ class ReadLacProcessorV3 extends PacketProcessorBaseV3 implements Runnable {
                 .registerFailedEvent(MathUtils.elapsedNanos(startTimeNanos), TimeUnit.NANOSECONDS);
         }
         // Finally set the status and return
-        readLacResponse.setStatus(status);
-        return readLacResponse.build();
+        readLacResponse.setStatus(status);*/
+        return 1;
     }
 
     @Override
     public void safeRun() {
-        ReadLacResponse readLacResponse = getReadLacResponse();
-        sendResponse(readLacResponse);
+        /*ReadLacResponse readLacResponse = getReadLacResponse();
+        sendResponse(readLacResponse);*/
     }
 
-    private void sendResponse(ReadLacResponse readLacResponse) {
-        Response.Builder response = Response.newBuilder()
+    private void sendResponse(Object readLacResponse) {
+        /*Response.Builder response = Response.newBuilder()
             .setHeader(getHeader())
             .setStatus(readLacResponse.getStatus())
             .setReadLacResponse(readLacResponse);
         sendResponse(response.getStatus(),
                 response.build(),
                 requestProcessor.getRequestStats().getReadLacRequestStats());
-    }
-}
+    }*/
+}}

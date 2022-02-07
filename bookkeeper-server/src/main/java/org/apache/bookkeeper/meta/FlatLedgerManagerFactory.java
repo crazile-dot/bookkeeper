@@ -85,6 +85,6 @@ public class FlatLedgerManagerFactory extends AbstractZkLedgerManagerFactory {
     @Override
     public LedgerUnderreplicationManager newLedgerUnderreplicationManager()
             throws KeeperException, InterruptedException, ReplicationException.CompatibilityException {
-        return new ZkLedgerUnderreplicationManager(conf, zk);
+        return null;
     }
 }

@@ -35,20 +35,20 @@ abstract class PacketProcessorBase<T extends Request> extends SafeRunnable {
     private static final Logger logger = LoggerFactory.getLogger(PacketProcessorBase.class);
     T request;
     Channel channel;
-    BookieRequestProcessor requestProcessor;
+   // BookieRequestProcessor requestProcessor;
     long enqueueNanos;
 
-    protected void init(T request, Channel channel, BookieRequestProcessor requestProcessor) {
+    protected void init(T request, Channel channel, Object requestProcessor) {
         this.request = request;
         this.channel = channel;
-        this.requestProcessor = requestProcessor;
+        //this.requestProcessor = requestProcessor;
         this.enqueueNanos = MathUtils.nowInNano();
     }
 
     protected void reset() {
         request = null;
         channel = null;
-        requestProcessor = null;
+        //requestProcessor = null;
         enqueueNanos = -1;
     }
 
@@ -99,8 +99,8 @@ abstract class PacketProcessorBase<T extends Request> extends SafeRunnable {
     public void safeRun() {
         if (!isVersionCompatible()) {
             sendResponse(BookieProtocol.EBADVERSION,
-                         ResponseBuilder.buildErrorResponse(BookieProtocol.EBADVERSION, request),
-                         requestProcessor.getRequestStats().getReadRequestStats());
+                         ResponseBuilder.buildErrorResponse(BookieProtocol.EBADVERSION, request), null);
+                         //requestProcessor.getRequestStats().getReadRequestStats());
             return;
         }
         processPacket();

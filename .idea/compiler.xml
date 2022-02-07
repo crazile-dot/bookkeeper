@@ -54,7 +54,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="circe-checksum" target="1.8" />
-      <module name="stream-storage-parent" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -79,7 +78,7 @@
       <module name="bookkeeper-tools-ledger" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="bookkeeper-tools-parent" options="" />
       <module name="buildtools" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
-      <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\bookkeeper\circe-checksum\target/nar/javah-include" />
+      <module name="circe-checksum" options="-Xlint:deprecation -Xlint:unchecked -Xpkginfo:always -h C:\Users\Ilenia\git\bookkeeper-1\circe-checksum\target/nar/javah-include" />
       <module name="codahale-metrics-provider" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="cpu-affinity" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />
       <module name="distributedlog-common" options="-Werror -Xlint:deprecation -Xlint:unchecked -Xpkginfo:always" />

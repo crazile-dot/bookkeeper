@@ -73,7 +73,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple zoneaware ensemble placement policy.
  */
-public class ZoneawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsemblePlacementPolicy {
+public abstract class ZoneawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsemblePlacementPolicy {
 
     static final Logger LOG = LoggerFactory.getLogger(ZoneawareEnsemblePlacementPolicyImpl.class);
 
@@ -132,6 +132,7 @@ public class ZoneawareEnsemblePlacementPolicyImpl extends TopologyAwareEnsembleP
         public String getUpgradeDomain() {
             return upgradeDomain;
         }
+
 
         @Override
         public int hashCode() {

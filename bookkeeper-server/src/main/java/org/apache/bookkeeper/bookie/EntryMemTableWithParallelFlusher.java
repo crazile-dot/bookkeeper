@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.bookie.Bookie.NoLedgerException;
 import org.apache.bookkeeper.bookie.CheckpointSource.Checkpoint;
-import org.apache.bookkeeper.common.util.OrderedExecutor;
+//import org.apache.bookkeeper.common.util.OrderedExecutor;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.stats.StatsLogger;
 import org.apache.bookkeeper.util.SafeRunnable;
@@ -39,13 +39,13 @@ import org.apache.bookkeeper.util.SafeRunnable;
 @Slf4j
 class EntryMemTableWithParallelFlusher extends EntryMemTable {
 
-    final OrderedExecutor flushExecutor;
+    //final OrderedExecutor flushExecutor;
 
     public EntryMemTableWithParallelFlusher(final ServerConfiguration conf, final CheckpointSource source,
             final StatsLogger statsLogger) {
         super(conf, source, statsLogger);
-        this.flushExecutor = OrderedExecutor.newBuilder().numThreads(conf.getNumOfMemtableFlushThreads())
-                .name("MemtableFlushThreads").build();
+        //this.flushExecutor = OrderedExecutor.newBuilder().numThreads(conf.getNumOfMemtableFlushThreads())
+               // .name("MemtableFlushThreads").build();
     }
 
     /**
@@ -84,7 +84,7 @@ class EntryMemTableWithParallelFlusher extends EntryMemTable {
                         ConcurrentNavigableMap<EntryKey, EntryKeyValue> thisLedgerEntries = keyValues
                                 .subMap(thisLedgerFirstEntry, thisLedgerCeilingKeyMarker);
                         pendingNumOfLedgerFlushes.register();
-                        flushExecutor.executeOrdered(thisLedgerId, new SafeRunnable() {
+                        /*flushExecutor.executeOrdered(thisLedgerId, new SafeRunnable() {
                             @Override
                             public void safeRun() {
                                 try {
@@ -112,10 +112,10 @@ class EntryMemTableWithParallelFlusher extends EntryMemTable {
                                      * ledger, then terminate the
                                      * pendingNumOfLedgerFlushes phaser.
                                      */
-                                    pendingNumOfLedgerFlushes.forceTermination();
+                                    /*pendingNumOfLedgerFlushes.forceTermination();
                                 }
                             }
-                        });
+                        });*/
                         thisLedgerFirstMapEntry = keyValues.ceilingEntry(thisLedgerCeilingKeyMarker);
                     }
 
@@ -150,6 +150,6 @@ class EntryMemTableWithParallelFlusher extends EntryMemTable {
 
     @Override
     public void close() throws Exception {
-        flushExecutor.shutdown();
+        //flushExecutor.shutdown();
     }
 }

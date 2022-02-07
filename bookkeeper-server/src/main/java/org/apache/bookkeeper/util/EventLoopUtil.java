@@ -68,7 +68,7 @@ public class EventLoopUtil {
             for (int i = 0; i < numThreads; i++) {
                 eventLoopGroup.next().submit(() -> {
                     try {
-                        CpuAffinity.acquireCore();
+                        //CpuAffinity.acquireCore();
                     } catch (Throwable t) {
                         log.warn("Failed to acquire CPU core for thread {} err {} {}",
                                 Thread.currentThread().getName(), t.getMessage(), t);

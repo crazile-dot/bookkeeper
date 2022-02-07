@@ -26,8 +26,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import org.apache.bookkeeper.common.util.OrderedExecutor;
-import org.apache.bookkeeper.common.util.OrderedScheduler;
+//import org.apache.bookkeeper.common.util.OrderedExecutor;
+//import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
@@ -51,10 +51,10 @@ import org.openjdk.jmh.annotations.Warmup;
 @Measurement(iterations = 3, time = 10, timeUnit = TimeUnit.SECONDS)
 public class OrderedExecutorBenchmark {
 
-    private static Map<String, Supplier<ExecutorService>> providers = ImmutableMap.of( //
+    /*private static Map<String, Supplier<ExecutorService>> providers = ImmutableMap.of( //
             "JDK-ThreadPool", () -> Executors.newFixedThreadPool(1),
             "OrderedExecutor", () -> OrderedExecutor.newBuilder().numThreads(1).build(), //
-            "OrderedScheduler", () -> OrderedScheduler.newSchedulerBuilder().numThreads(1).build());
+            "OrderedScheduler", () -> OrderedScheduler.newSchedulerBuilder().numThreads(1).build());*/
 
     @State(Scope.Benchmark)
     public static class TestState {
@@ -65,7 +65,7 @@ public class OrderedExecutorBenchmark {
 
         @Setup(Level.Trial)
         public void setup() {
-            executor = providers.get(executorName).get();
+            //executor = providers.get(executorName).get();
         }
 
         @TearDown(Level.Trial)

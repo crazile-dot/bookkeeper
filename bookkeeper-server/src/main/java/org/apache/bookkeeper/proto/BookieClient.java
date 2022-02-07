@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 import org.apache.bookkeeper.client.api.WriteFlag;
 import org.apache.bookkeeper.net.BookieId;
 import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ForceLedgerCallback;
-import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.GetBookieInfoCallback;
+//import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.GetBookieInfoCallback;
 import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ReadEntryCallback;
 import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.ReadLacCallback;
 import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.WriteCallback;
@@ -74,7 +74,7 @@ public interface BookieClient {
      * to a bookie at {@code address} for a ledger with {@code ledgerId}.
      * It is necessary to specify the ledgerId as there may be multiple
      * channels for a single bookie if pooling is in use.
-     * If the bookie is not {@link #isWritable(BookieSocketAddress,long) writable},
+     * If the bookie is not {@link  },
      * then the {@link #PENDINGREQ_NOTWRITABLE_MASK} will be logically or'd with
      * the returned value.
      *
@@ -135,9 +135,9 @@ public interface BookieClient {
      * @param options a bit mask of flags from BookieProtocol.FLAG_*
      *                {@link org.apache.bookkeeper.proto.BookieProtocol}
      * @param allowFastFail fail the add immediately if the channel is non-writable
-     *                      {@link #isWritable(BookieSocketAddress,long)}
+     *                      {@link }
      * @param writeFlags a set of write flags
-     *                   {@link org.apache.bookkeeper.client.api.WriteFlags}
+     *                   {@link }
      */
     void addEntry(BookieId address, long ledgerId, byte[] masterKey,
                   long entryId, ByteBufList toSend, WriteCallback cb, Object ctx,
@@ -145,7 +145,7 @@ public interface BookieClient {
 
     /**
      * Read entry with a null masterkey, disallowing failfast.
-     * @see #readEntry(BookieSocketAddress,long,long,ReadEntryCallback,Object,int,byte[],boolean)
+     * @see
      */
     default void readEntry(BookieId address, long ledgerId, long entryId,
                            ReadEntryCallback cb, Object ctx, int flags) {
@@ -154,7 +154,7 @@ public interface BookieClient {
 
     /**
      * Read entry, disallowing failfast.
-     * @see #readEntry(BookieSocketAddress,long,long,ReadEntryCallback,Object,int,byte[],boolean)
+     * @see
      */
     default void readEntry(BookieId address, long ledgerId, long entryId,
                            ReadEntryCallback cb, Object ctx, int flags, byte[] masterKey) {
@@ -174,7 +174,7 @@ public interface BookieClient {
      * @param masterKey the master key of the ledger being read from. This is only required
      *                  if the FLAG_DO_FENCING is specified.
      * @param allowFastFail fail the read immediately if the channel is non-writable
-     *                      {@link #isWritable(BookieSocketAddress,long)}
+     *                      {@link
      */
     void readEntry(BookieId address, long ledgerId, long entryId,
                    ReadEntryCallback cb, Object ctx, int flags, byte[] masterKey,
@@ -208,14 +208,14 @@ public interface BookieClient {
      *
      * @param address the address of the bookie to request information from
      * @param requested a bitset specifying which pieces of information to request
-     *                  {@link org.apache.bookkeeper.proto.BookkeeperProtocol.GetBookieInfoRequest}
+     *                  {@link
      * @param cb the callback notified when the request completes
      * @param ctx a context object passed to the callback on completion
      *
      * @see org.apache.bookkeeper.client.BookieInfoReader.BookieInfo
      */
     void getBookieInfo(BookieId address, long requested,
-                       GetBookieInfoCallback cb, Object ctx);
+                       Object cb, Object ctx);
 
     /**
      * Makes async request for getting list of entries of ledger from a bookie

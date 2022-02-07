@@ -40,7 +40,7 @@ class BKLogSegmentAllocator implements Allocator<LogSegmentEntryWriter, Object> 
 
         @Override
         public LogSegmentEntryWriter apply(LedgerHandle lh) {
-            return new BKLogSegmentEntryWriter(lh);
+            return null;
         }
     }
 
@@ -61,7 +61,7 @@ class BKLogSegmentAllocator implements Allocator<LogSegmentEntryWriter, Object> 
         return allocator.tryObtain(txn, new Transaction.OpListener<LedgerHandle>() {
             @Override
             public void onCommit(LedgerHandle lh) {
-                listener.onCommit(new BKLogSegmentEntryWriter(lh));
+                //listener.onCommit(new BKLogSegmentEntryWriter(lh));
             }
 
             @Override
