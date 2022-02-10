@@ -3,13 +3,16 @@ package org.apache.bookkeeper.bookie.storage.Idb;
 import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.apache.bookkeeper.bookie.Params;
+import io.netty.buffer.CompositeByteBuf;
+import io.netty.buffer.PooledByteBufAllocator;
+import org.apache.bookkeeper.bookie.TestInput;
 import org.apache.bookkeeper.bookie.storage.ldb.WriteCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 //import java.util.HexFormat;
@@ -35,7 +38,7 @@ public class TestWriteCacheClass {
     private long[] entryList;
     private ByteBuf[] bufList;
 
-    public TestWriteCacheClass(Params params) {
+    public TestWriteCacheClass(TestInput params) {
         this.allocator = params.getAllocator();
         this.maxCacheSize = params.getMaxCacheSize();
         this.maxSegmentSize = params.getMaxSegmentSize();
@@ -46,14 +49,24 @@ public class TestWriteCacheClass {
     }
 
     @Parameterized.Parameters
-    public static Collection<Object[]> configure() throws Exception {
-        return Arrays.asList(new Object[][]{ });
+    public static Collection<TestInput> configure() throws Exception {
+        Collection<TestInput> params = new ArrayList<>();
+        params.add(new TestInput(new PooledByteBufAllocator(), 512, 1024, 1, 1, 64));
+        params.add(new TestInput(new PooledByteBufAllocator(), 1024, 1024, 1, 1, 128));
+        params.add(new TestInput(new PooledByteBufAllocator(), 512, 1024, 1, 1, 32));
+        params.add(new TestInput(new PooledByteBufAllocator(), 1024, 512, 1, 1, 0));
+        params.add(new TestInput(null, 128, 128, 0, 0, 0));
+
+        return params;
     }
 
     @Test
     public void putTest() {
         WriteCache writeCache = new WriteCache(this.allocator, this.maxCacheSize, this.maxSegmentSize);
-        ByteBuf newEntry = this.allocator.buffer(this.bufSize, this.bufSize);
+        ByteBuf newEntry = null;
+        if (this.allocator != null) {
+             newEntry = this.allocator.buffer(this.bufSize, this.bufSize);
+        }
         boolean bool1 = false;
         boolean bool2 = false;
         try {
@@ -74,8 +87,12 @@ public class TestWriteCacheClass {
     @Test
     public void getTest() {
         WriteCache writeCache = new WriteCache(this.allocator, this.maxCacheSize, this.maxSegmentSize);
-        ByteBuf newEntry = this.allocator.buffer(this.bufSize, this.bufSize);
+        ByteBuf newEntry = null;
         ByteBuf ret = null;
+
+        if (this.allocator != null) {
+            newEntry = this.allocator.buffer(this.bufSize, this.bufSize);
+        }
         try {
             if(writeCache.size() == 0) {
                 assertNull(writeCache.get(this.ledgerId, this.entryId));
@@ -95,10 +112,14 @@ public class TestWriteCacheClass {
 
     @Test
     public void getLastEntryTest() {
-        ByteBuf res = this.allocator.buffer();
+        ByteBuf res = null;
+        ByteBuf last = null;
+        if(this.allocator != null) {
+            res = this.allocator.buffer();
+            last = this.allocator.buffer();
+        }
         WriteCache writeCache = new WriteCache(this.allocator, this.maxCacheSize, this.maxSegmentSize);
         //writeCache.clear();
-        ByteBuf last = this.allocator.buffer();
         long i = 0L;
         try {
             if(writeCache.size() == 0) {

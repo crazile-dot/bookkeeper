@@ -35,6 +35,8 @@ From: 'an unknown organization'
     License: Bouncy Castle Licence  (https://www.bouncycastle.org/licence.html)
   - Checker Qual (https://checkerframework.org) org.checkerframework:checker-qual:jar:3.5.0
     License: The MIT License  (http://opensource.org/licenses/MIT)
+  - Hamcrest Core (https://github.com/hamcrest/JavaHamcrest/hamcrest-core) org.hamcrest:hamcrest-core:jar:1.3
+    License: New BSD License  (http://www.opensource.org/licenses/bsd-license.php)
   - Java Concurrency Tools Core Library (https://github.com/JCTools) org.jctools:jctools-core:bundle:2.1.2
     License: Apache License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - cvsclient (http://javacvs.netbeans.org/library/) org.netbeans.lib:cvsclient:jar:20060125
@@ -79,6 +81,10 @@ From: 'FasterXML' (http://fasterxml.com/)
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - jackson-databind (http://github.com/FasterXML/jackson) com.fasterxml.jackson.core:jackson-databind:bundle:2.11.0
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+From: 'JUnit' (http://www.junit.org)
+  - JUnit (http://junit.org) junit:junit:jar:4.13.2
+    License: Eclipse Public License 1.0  (http://www.eclipse.org/legal/epl-v10.html)
 
 From: 'org.pitest'
   - pitest (http://pitest.org) org.pitest:pitest:jar:1.5.1

@@ -1,23 +1,16 @@
 package org.apache.bookkeeper.bookie;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import org.apache.bookkeeper.bookie.FileInfo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-//import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.lang.Object;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -36,8 +29,7 @@ public class TestFileInfoClass {
 
     private static String pathname = "C:\\Users\\Ilenia\\Desktop\\test.txt";
 
-    //prova
-    public TestFileInfoClass(Params params) {
+    public TestFileInfoClass(TestInput params) {
         this.testBuf = params.getTestBuf();
         this.position = params.getPosition();
         this.masterKey = params.getMasterKey();
@@ -49,8 +41,8 @@ public class TestFileInfoClass {
     }
 
     @Parameterized.Parameters
-    public static Collection<Params> configure() throws Exception {
-        Collection<Params> params = new ArrayList<>();
+    public static Collection<TestInput> configure() throws Exception {
+        Collection<TestInput> params = new ArrayList<>();
         ByteBuffer[] buf = new ByteBuffer[5];
         for(int i=0; i<5; i++) {
             ByteBuffer b = ByteBuffer.allocate(1024);
@@ -58,8 +50,11 @@ public class TestFileInfoClass {
             buf[i] = b;
         }
         masterKey = "e04fd020ea3a6910a2d808002b30309d".getBytes("UTF-8");
-        params.add(new Params(buf, 0L, masterKey, FileInfo.V1, 1024, true, 2048));
-        params.add(new Params (buf, 0L, masterKey, FileInfo.V1, 55, false, 1024));
+        params.add(new TestInput(buf, 0L, masterKey, FileInfo.V1, 1024, true, 2048));
+        params.add(new TestInput(buf, 0L, masterKey, FileInfo.V0, 55, false, 1024));
+        params.add(new TestInput(buf, 1L, masterKey, FileInfo.V1, 55, true, 1024));
+        params.add(new TestInput(buf, -1, masterKey, FileInfo.V0, 1024, false, 2048));
+        params.add(new TestInput(new ByteBuffer[0], 0L, masterKey, FileInfo.V1, 0, true, 0));
         return params;
     }
 

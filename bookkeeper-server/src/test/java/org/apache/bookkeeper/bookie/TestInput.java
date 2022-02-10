@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBufAllocator;
 
 import java.nio.ByteBuffer;
 
-public class Params {
+public class TestInput {
     private ByteBuffer[] testBuf;
     private long position;
     private byte[] masterKey;
@@ -22,7 +22,7 @@ public class Params {
     //private ByteBuf entry;
     private int bufSize;
 
-    public Params(
+    public TestInput(
             ByteBuffer[] testBuf, long position, byte[] masterkey, int fileInfoVersionToWrite,
             int size, boolean bestEffort, long fileSize) {
         this.testBuf = testBuf;
@@ -35,7 +35,7 @@ public class Params {
     }
 
 
-    public Params(ByteBufAllocator allocator, long maxCacheSize, int maxSegmentSize, long ledgerId, long entryId, int bufSize) {
+    public TestInput(ByteBufAllocator allocator, long maxCacheSize, int maxSegmentSize, long ledgerId, long entryId, int bufSize) {
         this.allocator = allocator;
         this.maxCacheSize = maxCacheSize;
         this.maxSegmentSize = maxSegmentSize;
